@@ -1,6 +1,6 @@
-# QQ技术群交流
-欢迎加入QQ技术群(155353383) ，一起探讨技术问题。<br>
-![QQ技术群：155353383](https://github.com/dgynfi/Script/raw/master/images/qq155353383.jpg)
+# 技术交流群
+欢迎加入技术交流群(群号:155353383) ，一起探讨技术问题。<br>
+![群号:155353383](https://github.com/dgynfi/Script/raw/master/images/qq155353383.jpg)
 
 [搜到此项目的同学，希望给此项目一个star，激历我更好的创作。](https://github.com/dgynfi/Script/tree/master/iOS自动化打包脚本)
 
