@@ -1,6 +1,6 @@
 [如果你觉得能帮助到你，请给一颗小星星。谢谢！(If you think it can help you, please give it a star. Thanks!](https://github.com/dgynfi/Script/tree/master/iOS自动化打包脚本)
 
-[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](iOS自动化打包脚本/LICENSE)&nbsp;
+[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
 
 ## 技术交流群(群号:155353383)
 
