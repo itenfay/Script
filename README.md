@@ -1,10 +1,10 @@
 [如果你觉得能帮助到你，请给一颗小星星。谢谢！(If you think it can help you, please give it a star. Thanks!)](https://github.com/dgynfi/Script)
 
-[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
-
 ## Script
 
 编写和收集Shell, Python, Ruby等实用脚本。如需了解使用说明，请查看脚本文件注释。
+
+[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
 
 ## 技术交流群(群号:155353383)
 
@@ -26,8 +26,6 @@
 
 ## ExcelTxtScript
 
-- 一个将excel文件(.xlsx)与TXT文件(.txt)互相转换一个脚本项目。
-
 - [ExcelTxtScript: 传送门](https://github.com/dgynfi/Script/tree/master/ExcelTxtScript)
 
-- [ExcelTxtScript的应用 -『MacExcelTool (MacOS应用) 』](https://github.com/dgynfi/MacExcelTool)
+一个将excel文件(.xlsx)与TXT文件(.txt)互相转换一个脚本项目。[ExcelTxtScript的应用 -『MacExcelTool (MacOS应用) 』](https://github.com/dgynfi/MacExcelTool)
