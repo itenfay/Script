@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>$ cd `dirname $0` 和PWD%/* shell变量的一些特殊用法 - 雲中鶴 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=iaIBFyx6Vr94NzNO_3ZPrlgjC7pN1OGR4X2wPvP0lwg1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/LessIsMore/bundle-LessIsMore.css?v=0F7NKnmmVYJDCp-KQ2sA7Dn1GREfDmWWyNjiJP9YrzE1"/>
+<link type="text/css" rel="stylesheet" href="/blog/customcss/64082.css?v=FC3fNA%2bhU%2b1RYcMb0BF%2f8MtLpD4%3d"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/aoyihuashao/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/aoyihuashao/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/aoyihuashao/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'aoyihuashao', cb_enable_mathjax=false;</script>
+<script src="/bundles/blog-common.js?v=ykDTFH9FE4CgKmGT6HilV870QfVPxO515wqgmKkq4MU1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/aoyihuashao/">翔鹤岭</a></div>
+<div class="subtitle">傲衣华少的技术博客</div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li id="nav_myhome"><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/aoyihuashao/">首页</a></li>
+<li id="nav_q"><a class="menu" href="http://q.cnblogs.com/">博问</a></li>
+<li id="nav_ing"><a class="menu" href="http://home.cnblogs.com/ing/">闪存</a></li>
+<li id="nav_newpost"><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li id="nav_contact"><a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://msg.cnblogs.com/send/%E9%9B%B2%E4%B8%AD%E9%B6%B4">联系</a></li>
+<li id="nav_rss"><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/aoyihuashao/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/aoyihuashao/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔-290&nbsp;
+文章-11&nbsp;
+评论-43&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class = "post">
+		<h1 class = "postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/aoyihuashao/p/3147924.html">$ cd `dirname $0` 和PWD%/* shell变量的一些特殊用法</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><div class="cnt">
+<div id="blog_text" class="cnt">在命令行状态下单纯执行 $ cd `dirname $0` 是毫无意义的。因为他返回当前路径的"."。<br /><strong><span>这个命令写在脚本文件里才有作用，他返回这个脚本文件放置的目录，并可以根据这个目录来定位所要运行程序的相对位置（绝对位置除外）。</span></strong><br />在/home/admin/test/下新建test.sh内容如下：
+<div class="blockcode">
+<div><ol>
+<li>cd `dirname $0` 
+</li>
+<li>echo `pwd` </li>
+
+</ol></div>
+
+</div>
+
+然后返回到/home/admin/执行
+<div class="blockcode">
+<div><ol>
+<li>sh test/test.sh </li>
+
+</ol></div>
+
+</div>
+
+运行结果:
+<div class="blockcode">
+<div><ol>
+<li>/home/admin/test 
+</li>
+
+</ol></div>
+
+</div>
+
+这样就可以知道一些和脚本一起部署的文件的位置了，只要知道相对位置就可以根据这个目录来定位，而可以不用关心绝对位置。这样脚本的可移植性就提高了，扔到任何一台服务器，（如果是部署脚本）都可以执行。</div>
+
+</div>
+<div class="cnt">
+<h2 class="title content-title">PWD%/* shell变量的一些特殊用法</h2>
+<div id="content" class="content text-content clearfix">
+<p><strong>BASH使用基础</strong></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>关于命令及命令类型</strong></p>
+<p>对于使用的命令BASH使用hash表，以加速下次的查找，为添加一个经常使用的命令，可以使用hash 
+cmd<br />BASH在执行命令时对路径中找到的同名命令按以下的类型顺序执行：别名 keywords 函数 内置命令 
+可执行文件或脚本<br />BASH在执行用户输入的一条指令时，首先要判断命令的类型，可以使用type 
+cmd来查看cmd是类型。<br />enable命令用来决定是否开启某个内置的命令，可以用enable -n 
+cmd来禁用某个内置命令。<br />command命令用来消除别名和函数的查找。<br />builtin命令将只查找内置命令，而忽略函数和可执行文件。</p>
+<p>&nbsp;</p>
+<p>作业控制：jobs %1 fg bg kill stop等<br />别名：alias dir='dir -l' unalisa 
+dir<br />操作目录栈：dirs&nbsp; pushd popd<br />文件名替换：dir d[1-3]&nbsp; ls .bash{rc,profile}&nbsp; 
+支持[]对数字及{}对字符串的集合</p>
+<p>&nbsp;</p>
+<p><strong>变量<br /></strong>变量声明：declare -a 数组 -f 函数 -i 整数 -r 只读 -x 
+导出变量<br />本地变量只在其所声明的shell中有效，只读变量不能被修改，除非重新声明其属性<br />常见的环境变量：<br />BASH_VERSION 
+DIRSTACK EUID EDITOR GROUPS HISTFILE HISTSIZE HOME LANG PWD OLDPWD PATH<br />PPID 
+PS1-4 RANDOM SHELL UID&nbsp;<br />export var = value -f 导出的变量为函数 -n 将全局转为局部变量 
+-p只打印导出的变量<br />非只读变量可以通过unset清除、</p>
+<p>&nbsp;</p>
+<p><strong>变量替换</strong><br />${var:-word}&nbsp; 
+如果变量var已经设置且非空，结果为var的值，否则结果为word<br />${var:=word}&nbsp; 
+如果变量var已经设置且非空，结果为var的值，否则设置var为word<br />${var:+word}&nbsp; 
+如果变量var已经设置且非空，则设置var的值为word;否则不替换<br />${var:?word}&nbsp; 
+如果变量var已经设置且非空，则替换为word，否则退出shell。<br />${var:n}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 替换为从n开始的子串<br />${var:n:len}&nbsp; 
+替换为从n开始长len的子串<br /><strong>变量扩展</strong></p>
+<p>${var%pattern}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 去掉最小匹配的后缀&nbsp;&nbsp; echo ${PWD%/*}&nbsp;&nbsp; 
+显示当前的父目录路径<br />${var%%pattern}&nbsp;&nbsp;&nbsp;&nbsp; 去掉最大匹配的后缀<br />${var#pattern}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+去掉最小匹配的前缀&nbsp;&nbsp;&nbsp;<br />${var##pattern}&nbsp;&nbsp;&nbsp;&nbsp; 去掉最大匹配的前缀&nbsp;&nbsp; echo ${PWD##*/}&nbsp; 
+显示当前目录名称<br />${#var}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 替换为变量字符个数<br /><strong>特殊变量</strong><br />$ 
+当前SHELL的PID<br />? 前一个命令的退出状态<br />! 后台执行的上一个工作的PID</p>
+<p><strong>读取用户输入</strong><br />read&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+从终端读取输入存入内置变量REPLY<br />read var&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 从终端读取输入存入变量var&nbsp;&nbsp;&nbsp;&nbsp;<br />read first 
+.. last&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 从终端读取多个变量依次存入，若输入较多，则最后一个变量成为包含多个值的字串<br />read -a 
+array&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从终端读取多个值存入数组中<br />read -p pmtstring var&nbsp;&nbsp; 
+向终端输出提示串，然后读入输入到var中<br />read -r line&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 读取一行，并允许/</p>
+<p><strong>变量类型转换<br /></strong>如果变量在声明时没确定类型，则变量根据赋值情况可以动态转换类型，但如果声明时变量类型已经确定，若赋值为其他类型，将导致原有数据丢失或出错。除非重新声明类型。<br />对于整数类型的变量，则在命令行支持算法扩展，如num=3*4，支持""，不支持空格。<br /><strong>进制</strong></p>
+<p>var=16#abc&nbsp;&nbsp; var为16进制数abc</p>
+<p><strong>输出</strong><br />printf "The number is %.2f/n" 100<br />echo -ne 
+"hello/nworld/n"&nbsp; -e 表示需要解析转义字符，-n 表示不自动添加换行符</p>
+<p><br /><strong>位置参数</strong><br />$0 1-0 ${10}<br />$#&nbsp; 求值位置参数个数<br />$*&nbsp; 
+求值所有位置参数<br />"$*"<br />$@<br />"$@"</p>
+<p>&nbsp;</p>
+<p><strong>引用</strong><br />() 命令组，创建子SHELL执行<br />{} 命令组，不创建子SHELL<br />' ' 
+保护所有的元字符不被解析，想打印'，必须放在双引号内，或者使用/转义<br />" " 只允许变量和命令替换，保护其余的元字符不被解析</p>
+<p>&nbsp;</p>
+<p><strong>命令替换</strong><br />`cmd`<br />$(cmd)<br />二者结果都是一个字符串，如果加""，则保留换行，否则丢失换行。</p>
+<p>&nbsp;</p>
+<p><strong>数学表达式扩展<br /></strong>$[ exp ]<br />$(( exp ))</p>
+<p>f</p>
+<p><strong>数组</strong></p>
+<p>declare -a array=(item1 item2 ...)<br />数组元素的引用 ${array[i]}&nbsp;<br />引用整个数组 
+${array[*]}&nbsp;<br />unset array</p>
+<p>&nbsp;</p>
+<p><strong>函数定义<br /></strong>function f()<br />{<br />cmd;cmd;<br />}</p>
+<p>&nbsp;</p>
+<p><strong>I/O重定向</strong><br />find . name /*.c print &gt; foundit 
+2&gt;&amp;1</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>命令行参数</strong></p>
+<p>set可用来设置位置参数，使用set --将清除所有位置参数<br />$*与$@的区别只在于" 
+"时，当$*放在""内时，参数表成为单个字符串，而$@放在""内时，每个参数都被引号括住。</p>
+<p>&nbsp;</p>
+<p><strong>表达式</strong></p>
+<p>&nbsp;</p>
+<p><strong>评估表达式</strong></p>
+<p>expr $[3+4] $[ 3+4 ]&nbsp; $(( 3+4 ))</p>
+<p><strong>let算术扩展</strong><br />let i=i+1 
+支持任何C类型的运算符，但只支持整形数运算<br />bash不支持小数运行，因此需要在bc或者awk中进行相应的运行，再把结果回。由于bash没有浮点型，所以小数是以字符串表示。</p>
+<p><strong>测试表达式</strong><br />测试可以使用test或者单纯的[ expr1 cmp 
+expr2]，结果保存于?变量中，即test与[]等价<br /><strong>字符串测试</strong><br />[ str1 = str2 ]&nbsp;&nbsp;&nbsp; 
+str1与str2相同或==<br />[ str1 != str2 ]&nbsp;&nbsp; st1与str2不相同<br />[ str ]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+str非空<br />[ -z str ]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; str的长度为0<br />[ -n str ]&nbsp;&nbsp;&nbsp; str的长度非0<br />[ -l str ] &nbsp;&nbsp;&nbsp; 
+str的长度<br />[ str1 -a str2 ]&nbsp;&nbsp; and&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -o &nbsp;&nbsp;&nbsp; or<br />!&nbsp;&nbsp;&nbsp;&nbsp; 
+not<br /><strong>复合条件测试</strong><br />[[ p1 &amp;&amp; p2 ]]&nbsp;&nbsp;&nbsp;&nbsp; p1与p2均为真<br />[[ p1 
+|| p2 ]]<br />[[ !p2 ]]<br /><strong>整数测试</strong><br />[ num1 -eq num2 ]<br />[ numb1 
+-ne num2 ]<br />gt ge lt le&nbsp;<br /><strong>文件属性测试</strong><br />[ file1 nt file2 ]&nbsp; 
+文件1比文件2新<br />[ file1 ot file2 ]<br />[ file1 ef file2 ]<br />[-d file]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+file为目录<br />-b&nbsp; -c&nbsp; -p -L -S&nbsp;&nbsp;&nbsp; 块文件,字符文件，管道，链接，socket<br />-e&nbsp; -f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+文件存在，常规文件<br />-G&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 文件存在且拥有有效GID<br />-O&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 文件存在且拥有有效UID<br />-g 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 设置GID<br />-k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 设置stick位<br />-r -w -x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+文件可读，可写，可执行的<br />-s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 文件大小非0<br />-t&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+文件fd在终端打开<br />-u&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setUID位设置</p>
+<p>测试表达可以与let的运算扩展及(( ))中的C型运算扩展是等价的，后者也许更容易理解，C-like。</p>
+<p>&nbsp;</p>
+<p><strong>条件控制</strong><br />if command<br />then<br />command<br />command<br />fi</p>
+<p>&nbsp;</p>
+<p>if test expression<br />then<br />command<br />fi</p>
+<p>&nbsp;</p>
+<p>if [ string/numeric expression ] then<br />command<br />fi</p>
+<p>&nbsp;</p>
+<p>if [[ string expression ]] then<br />command<br />fi</p>
+<p>&nbsp;</p>
+<p>if (( numeric expression ))</p>
+<p><br />if command<br />then<br />command(s)<br />else<br />command(s)<br />fi</p>
+<p>if command<br />then<br />command(s)<br />elif 
+command<br />then<br />commands(s)<br />elif 
+command<br />then<br />command(s)<br />else<br />command(s)<br />fi</p>
+<p>&nbsp;</p>
+<p>空命令&nbsp; ：</p>
+<p>&nbsp;</p>
+<p><strong>分支跳转</strong><br />case variable 
+in&nbsp;<br />value1)<br />command(s)<br />;;<br />value2)<br />command(s)<br />;;<br />*)<br />command(s)<br />;;<br />esac</p>
+<p>&nbsp;</p>
+<p><strong>循环<br /></strong>for variable in 
+word_list<br />do<br />command(s)<br />done</p>
+<p>while condition<br />do<br />command(s)<br />done</p>
+<p>until command<br />do<br />&nbsp;&nbsp;&nbsp;&nbsp; command(s)<br />done</p>
+<p>&nbsp;</p>
+<p><strong>构建菜单的select<br /></strong>select program in 'ls -F' pwd 
+date<br />&nbsp;do<br />&nbsp;$program<br />&nbsp;done</p>
+<p>&nbsp;</p>
+<p><strong>中断循环<br /></strong>break [n]&nbsp;&nbsp;&nbsp;&nbsp; 从第n层循环中跳出<br />continue [n]&nbsp; 继续第n层循环</p>
+<p>&nbsp;</p>
+<p><strong>捕获信号</strong><br /><strong>信号列表</strong><br />1) SIGHUP 9) SIGKILL 17) 
+SIGCHLD 25) SIGXFSZ<br />2) SIGINT 10) SIGUSR1 18) SIGCONT 26) SIGVTALRM<br />3) 
+SIGQUIT 11) SIGSEGV 19) SIGSTOP 27) SIGPROF<br />4) SIGILL 12) SIGUSR2 20) SIGTSTP 
+28) SIGWINCH<br />5) SIGTRAP 13) SIGPIPE 21) SIGTTIN 29) SIGIO<br />6) SIGABRT 14) 
+SIGALRM 22) SIGTTOU 30) SIGPWR<br />7) SIGBUS 15) SIGTERM 23) SIGURG<br />8) SIGFPE 
+16) SIGSTKFLT 24) SIGXCPU<br />trap 'command; command' signal-number-list<br />trap 
+'command; command' signal-name-list&nbsp; 处理信号，当收到singal-list中的信号后，执行 ''中的命令<br />trap 
+singal&nbsp;&nbsp; 重置信号处理函数<br />trap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出已经设置信号处理</p>
+<p>&nbsp;</p>
+<p><strong>调试脚本</strong><br />bash -x&nbsp;&nbsp; script&nbsp;&nbsp;&nbsp; 显示命令执行过程，及结果<br />bash -v&nbsp;&nbsp; 
+script&nbsp;&nbsp;&nbsp; 显示脚本中的各行<br />bash -n&nbsp;&nbsp; script&nbsp;&nbsp;&nbsp; 解释但不执行</p>
+<p>&nbsp;</p>
+<p><strong>附录:</strong></p>
+<p><strong>常用命令</strong><br />script myfile&nbsp; 
+将终端交互信息保存在myfile中，使用control+d退出<br />fuser -n tcp 22 获得打开tcp 
+22的进程<br />lsof&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 获得进程打开的文件</p>
+
+</div>
+
+</div></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<div class = "postDesc">posted @ <span id="post-date">2013-06-21 11:34</span> <a href='http://www.cnblogs.com/aoyihuashao/'>雲中鶴</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=3147924" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(3147924);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=64082,cb_entryId=3147924,cb_blogApp=currentBlogApp,cb_blogUserGuid='ee2d70d4-14e6-de11-ba8f-001cf0cd104b',cb_entryCreatedDate='2013/6/21 11:34:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='ad_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='ad_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright &copy;2016 雲中鶴
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+<!--PageEndHtml Block Begin-->
+<script language="javascript" type="text/javascript" src="http://js.users.51.la/3438658.js"></script>
+<noscript><a href="http://www.51.la/?3438658" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/3438658.asp" style="border:none" /></a></noscript>
+<!--PageEndHtml Block End-->
+</body>
+</html>

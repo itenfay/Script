@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<!--[if IE 6]><html class="ie lt-ie8"><![endif]-->
+<!--[if IE 7]><html class="ie lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="ie ie8"><![endif]-->
+<!--[if IE 9]><html class="ie ie9"><![endif]-->
+<!--[if !IE]><!--> <html> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="description"  content="本文始发于我的博文详解Shell脚本实现iOS自动化编译打包提交，现转发至此。目录前言Shell脚本涉及的工具xcodebuild和xcrunaltoolfir-cliPlistBuddy一些概念的区别具体实现xcodebuild和xcrun准备Plist文件获取命令行参数清理构建目录编译打包成Archive将Archive导出上传到Fir验证并上传到AppStore邮件通知相关同事对比实验三种方式的对比xcodebuild+xc...">
+  <meta property="wb:webmaster" content="294ec9de89e7fadb" />
+  <meta property="qc:admins" content="104102651453316562112116375" />
+  <meta property="qc:admins" content="11635613706305617" />
+  <meta property="qc:admins" content="1163561616621163056375" />
+  <meta name="google-site-verification" content="cV4-qkUJZR6gmFeajx_UyPe47GW9vY6cnCrYtCHYNh4" />
+  <meta name="google-site-verification" content="HF7lfF8YEGs1qtCE-kPml8Z469e2RHhGajy6JPVy5XI" />
+  <meta http-equiv="mobile-agent" content="format=html5; url=http://www.jianshu.com/p/bd4c22952e01">
+    <!--  Meta for Smart App Banner -->
+  <meta name="apple-itunes-app" content="app-id=888237539, app-argument=jianshu://notes/3108720">
+  <!-- End -->
+
+  <!--  Meta for Twitter Card -->
+  <meta content="summary" property="twitter:card">
+  <meta content="@jianshucom" property="twitter:site">
+  <meta content="详解Shell脚本实现iOS自动化编译打包提交" property="twitter:title">
+  <meta content="本文始发于我的博文详解Shell脚本实现iOS自动化编译打包提交，现转发至此。目录前言Shell脚本涉及的工具xcodebuild和xcrunaltoolfir-cliPlistBuddy一些概念的区别具体实现xcodebuild和xcrun准备Plist文件获取命令行参数清理构建目录编译打包成Archive将Archive导出上传到Fir验证并上传到AppStore邮件通知相关同事对比实验三种方式的对比xcodebuild+xc..." property="twitter:description">
+  <meta content="http://www.jianshu.com/p/bd4c22952e01" property="twitter:url">
+  <!-- End -->
+
+  <!--  Meta for OpenGraph -->
+  <meta property="fb:app_id" content="865829053512461">
+  <meta property="og:site_name" content="简书">
+  <meta property="og:title" content="详解Shell脚本实现iOS自动化编译打包提交">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="http://www.jianshu.com/p/bd4c22952e01">
+  <meta property="og:description" content="本文始发于我的博文详解Shell脚本实现iOS自动化编译打包提交，现转发至此。目录前言Shell脚本涉及的工具xcodebuild和xcrunaltoolfir-cliPlistBuddy一些概...">
+
+  <!-- End -->
+
+  <!--  Meta for Facebook Applinks -->
+  <meta property="al:ios:url" content="jianshu://notes/3108720" />
+  <meta property="al:ios:app_store_id" content="888237539" />
+  <meta property="al:ios:app_name" content="简书" />
+
+  <meta property="al:android:url" content="jianshu://notes/3108720" />
+  <meta property="al:android:package" content="com.jianshu.haruki" />
+  <meta property="al:android:app_name" content="简书" />
+  <!-- End -->
+
+  <title>详解Shell脚本实现iOS自动化编译打包提交 - 简书</title>
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="BrAwIYKTfKJGquXf/qG3xkfsp9m9k+UZQoEKA7b3gWP3VbtVEkcClB3eZ8yBOJlXGHNjJ6orVXKZW9ch0Fxsfg==" />
+  <!--[if lte IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="stylesheet" media="all" href="http://cdn-qn0.jianshu.io/assets/base-c45209a7091a4c2d45daaad985c9188e.css" />
+
+    <link rel="stylesheet" media="all" href="http://cdn-qn0.jianshu.io/assets/reading-note-4158a6eeb7c4e4a9fd15332778cfb52c.css" />
+  <link rel="stylesheet" media="all" href="http://cdn-qn0.jianshu.io/assets/base-read-mode-64acccf6966299cfa3d580140a2582fe.css" />
+  <script src="http://cdn-qn0.jianshu.io/assets/modernizr-613ea63b5aa2f0e2a1946e9c28c8eedb.js"></script>
+  <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+  <!--[if IE 8]><link rel="stylesheet" media="all" href="http://cdn-qn0.jianshu.io/assets/scaffolding/for_ie-7f1c477ffedc13c11315103e8787dc6c.css" /><![endif]-->
+  <!--[if lt IE 9]><link rel="stylesheet" media="all" href="http://cdn-qn0.jianshu.io/assets/scaffolding/for_ie-7f1c477ffedc13c11315103e8787dc6c.css" /><![endif]-->
+  <link href="http://baijii-common.b0.upaiyun.com/icons/favicon.ico" rel="icon">
+      <link rel="apple-touch-icon-precomposed" href="http://cdn0.jianshu.io/assets/apple-touch-icons/57-7597f1cff93b0f41cd16ca7641e477eb.png" sizes="57x57" />
+      <link rel="apple-touch-icon-precomposed" href="http://cdn0.jianshu.io/assets/apple-touch-icons/72-e02c647005f01e2d24778ac8e7f9dc45.png" sizes="72x72" />
+      <link rel="apple-touch-icon-precomposed" href="http://cdn0.jianshu.io/assets/apple-touch-icons/76-4788ffdcd445555b5b93bfb4d1f4747c.png" sizes="76x76" />
+      <link rel="apple-touch-icon-precomposed" href="http://cdn0.jianshu.io/assets/apple-touch-icons/114-e89d888a7bce6222606e46082dcab634.png" sizes="114x114" />
+      <link rel="apple-touch-icon-precomposed" href="http://cdn0.jianshu.io/assets/apple-touch-icons/120-c7cdad6dd50db5a93175a6e015d6dc08.png" sizes="120x120" />
+      <link rel="apple-touch-icon-precomposed" href="http://cdn0.jianshu.io/assets/apple-touch-icons/152-21fa4ed7968f6503816524e90dcb3d91.png" sizes="152x152" />
+  <!-- Baidu stats -->
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?0c0e9d9b1e7d617b3e6842e85b9fb068";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+</head>
+
+<body class="post output zh cn mac reader-day-mode reader-font2" data-js-module="note-show" data-locale="zh-CN">
+  
+  <div class="navbar navbar-jianshu shrink">
+  <div class="dropdown">
+    <a class="dropdown-toggle logo" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0)">
+      简
+    </a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+      <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+      <li><a href="/collections"><i class="fa fa-th"></i> 专题</a></li>
+      <li><a href="/user_invitations"><i class="fa fa-money"></i> 发钱啦</a></li>
+    </ul>
+  </div>
+</div>
+<div class="navbar-user">
+    <a class="login" data-signup-link="true" data-toggle="modal" href="/sign_up">
+      <i class="fa fa-user"></i> 注册
+</a>    <a class="login" data-signin-link="true" data-toggle="modal" href="/sign_in">
+      <i class="fa fa-sign-in"></i> 登录
+</a>    <a class="daytime set-view-mode pull-right" href="javascript:void(0)"><i class="fa fa-moon-o"></i></a>
+</div>
+<div class="navbar navbar-jianshu expanded">
+  <div class="dropdown">
+      <a class="active logo" role="button" data-original-title="个人主页" data-container="div.expanded" href="/">
+        <b>简</b><i class="fa fa-home"></i><span class="title">首页</span>
+</a>      <a data-toggle="tooltip" data-placement="right" data-original-title="专题" data-container="div.expanded" href="/collections">
+        <i class="fa fa-th"></i><span class="title">专题</span>
+</a>    <a class="ad-selector" href="/apps">
+      <i class="fa fa-mobile"></i><span class="title">下载手机应用</span>
+</a>    <div class="ad-container ">
+      <div class="ad-pop">
+        <img class="ad-logo" src="http://cdn-qn0.jianshu.io/assets/apple-touch-icons/114-8dae53b3bcea3f06bb139e329d1edab3.png" alt="114" />
+        <p class="ad-title">简书</p>
+        <p class="ad-subtitle">交流故事，沟通想法</p>
+        <img class="ad-qrcode" src="http://cdn-qn0.jianshu.io/assets/app-page/download-app-qrcode-053849fa25f9b44573ef8dd3c118a20f.png" alt="Download app qrcode" />
+        <div>
+          <a class="ad-link" href="https://itunes.apple.com/cn/app/jian-shu/id888237539?ls=1&amp;mt=8">iOS</a>·
+          <a class="ad-link" href="http://downloads.jianshu.io/apps/haruki/JianShu-1.10.4.apk">Android</a>
+        </div>
+      </div> 
+    </div>
+  </div>
+  <div class="nav-user">
+      <a href='#view-mode-modal' data-toggle='modal'><i class="fa fa-font"></i><span class="title">显示模式</span></a>
+
+      <a class="signin" data-signin-link="true" data-toggle="modal" data-placement="right" data-original-title="登录" data-container="div.expanded" href="/sign_in">
+        <i class="fa fa-sign-in"></i><span class="title">登录</span>
+</a>    </div>
+  </div>
+
+  
+    <div class="fixed-btn">
+    <a class="go-top hide-go-top" href="#"> <i class="fa fa-angle-up"></i></a>
+    <a class="qrcode" data-target="#bottom-qrcode" data-toggle="modal" href="javascript:void(0)"><i class="fa fa-qrcode"></i></a>
+    <a class="writer" href="/writer#/" data-toggle="tooltip" data-placement="left" title="写篇文章"><i class="fa fa-pencil"></i></a>
+    <!-- qrcode modal -->
+    <div id="bottom-qrcode" class="modal panel-modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <h4>下载简书移动应用</h4>
+      <div class="panel-body"><img src="http://cdn0.jianshu.io/assets/app-page/download-app-qrcode-85008f146773a25ce86bcc4d7858af68.png" alt="Download app qrcode" /></div>
+    </div>
+  </div>
+
+
+  <div id="show-note-container">
+    
+
+<div class="post-bg" id="flag">
+  <div class="wrap-btn">
+    <!-- Notebook and collections button upper left -->
+      <div class="article-related pull-left">
+          <a data-toggle="tooltip" data-placement="bottom" data-original-title="未加入专题" href="javascript:void(null);">
+            <i class="fa fa-th"></i>
+</a>          <a class="notebooks-menu-btn" data-toggle="modal" data-target="#notebooks-menu" href="javascript:void(null);"><i class="fa fa-list-ul"></i></a>
+        <div class="related-avatar-group activities"></div>
+      </div>
+    <!-- ******* -->
+
+      <a class="login" data-signup-link="true" data-toggle="modal" href="/sign_up">
+    <i class="fa fa-user"></i> 注册
+</a>  <a class="login" data-signin-link="true" data-toggle="modal" href="/sign_in">
+    <i class="fa fa-sign-in"></i> 登录
+</a>
+
+    <!-- Buttons upper right -->
+    <!-- ******* -->
+  </div>
+
+  <div class="container">
+    <!-- Article activities for width under 768px -->
+    <div class="related-avatar-group activities"></div>
+      <div class="article">
+        <div class="preview">
+          <div class="author-info">
+              <div class="btn btn-small btn-success follow">
+    <a data-signin-link="true" data-toggle="modal" href="/sign_in"><i class="fa fa-plus"></i>  <span>添加关注</span></a>
+  </div>
+
+            <a class="avatar" href="/users/f2cb04042781">
+              <img src="http://upload.jianshu.io/users/upload_avatars/304530/840218489e98.JPG?imageMogr/thumbnail/90x90/quality/100" alt="100" />
+</a>            <span class="label">
+                作者
+            </span>
+            <a class="author-name blue-link" href="/users/f2cb04042781">
+              <span>zackzheng</span>
+</a>              <span>2016.02.27 23:25</span>
+            <div>
+              <span>写了10436字</span>，<span>被14人关注</span>，<span>获得了17个喜欢</span>
+            </div>
+          </div>
+          <h1 class="title">详解Shell脚本实现iOS自动化编译打包提交</h1>
+          <div class="meta-top">
+            <span class="wordage"></span>
+            <span class="views-count"></span>
+            <span class="comments-count"></span>
+            <span class="likes-count"></span>
+          </div>
+
+          <!-- Collection/Bookmark/Share for width under 768px -->
+          <div class="article-share"></div>
+          <!-- -->
+
+          <div class="show-content"><p>本文始发于我的博文<a href="http://zackzheng.info/blog/2015/12/27/an-automated-script-for-building-archiving-submission-sending-emails/" target="_blank">详解Shell脚本实现iOS自动化编译打包提交</a>，现转发至此。</p>
+<h1>目录</h1>
+<ul>
+<li>前言</li>
+<li>Shell脚本涉及的工具<ul>
+<li>xcodebuild和xcrun</li>
+<li>altool</li>
+<li>fir-cli</li>
+<li>PlistBuddy</li>
+</ul>
+</li>
+<li>一些概念的区别</li>
+<li>具体实现<ul>
+<li>xcodebuild和xcrun</li>
+<li>准备Plist文件</li>
+<li>获取命令行参数</li>
+<li>清理构建目录</li>
+<li>编译打包成Archive</li>
+<li>将Archive导出</li>
+<li>上传到Fir</li>
+<li>验证并上传到App Store</li>
+<li>邮件通知相关同事</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>对比实验<ul>
+<li>三种方式的对比</li>
+<li>xcodebuild+xcrun和仅xcodebuild的比较</li>
+<li>命令到底做了什么</li>
+</ul>
+</li>
+<li>总结</li>
+</ul>
+<h2>前言</h2>
+<p>现在涉及到编译打包的工作主要是以下两个：</p>
+<ol>
+<li>提交测试版本给测试同事</li>
+<li>提交App Store审核</li>
+</ol>
+<p>两个流程分别是：</p>
+<ul>
+<li>修改证书和配置文件，然后「Product -&gt; Archive」编译打包，之后在自动弹出的 「Organizer」 中进行选择，根据需要导出 ad hoc enterprise 类型的 ipa 包。等待导出之后再提交到Fir上，等Fir提交完成就需要告知测试同事。整个流程下来一般都要半个多小时，而且需要人工监守操作。</li>
+<li>第二个也是差不多，打包完之后需要操作几个步骤然后上传到App Store，上传时间较长，而且中间可能会有错误需要处理。上传后等待苹果处理二进制包，苹果处理后上去选择构建包，点击提交审核。</li>
+</ul>
+<p>所以研究下自动化编译打包，提高下效率，减少人工操作成本。</p>
+<p>主要有两种实现途径，AppleScript和Shell脚本，<code>AppleScript</code>没怎么研究，网上说是很强大的脚本语言。</p>
+<p>下面主要讲Shell脚本的实现，网上也有人实现了并托管在<code>github</code>上，可以参考下。</p>
+<blockquote><p><a href="https://github.com/webfrogs/xcode_shell" target="_blank">https://github.com/webfrogs/xcode_shell</a></p></blockquote>
+<h2>Shell脚本涉及的工具</h2>
+<p>主要是以下几个工具：</p>
+<ol>
+<li>xcodebuild</li>
+<li>xcrun</li>
+<li>altool（提交到App Store使用）</li>
+<li>fir-cli（上传到fir时使用）</li>
+<li>Python的smtplib（之前已经写过python的发邮件了，所以就直接用没有用Shell写。）</li>
+<li>PlistBuddy</li>
+</ol>
+<h3>xcodebuild和xcrun</h3>
+<p><code>xcodebuild</code>和<code>xcrun</code>都是来自<code>Command Line Tools</code>，Xcode自带，如果没有可以通过以下命令安装：</p>
+<pre><code>xcode-select --install</code></pre>
+<p>或者在下面的链接下载安装：</p>
+<blockquote><p> <a href="https://developer.apple.com/downloads/" target="_blank">https://developer.apple.com/downloads/</a> </p></blockquote>
+<p>安装完可在以下路径看到这两个工具：</p>
+<blockquote><p>/Applications/Xcode.app/Contents/Developer/usr/bin/</p></blockquote>
+<ul>
+<li>xcodebuild<br>主要是用来编译，打包成Archive和导出ipa包。</li>
+</ul>
+<blockquote><p><a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html" target="_blank">https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html</a></p></blockquote>
+<p>可以执行 <code>xcodebuild -help</code> 查看，主要展示了几种用法、一些可选项，最后是比较重要的exportOptionsPlist文件的一些可选key，这个文件在后面导出ipa包会用到。</p>
+<p>主要下面三个查看的命令比较重要：</p>
+<pre><code>-showsdks                           display a compact list of the installed SDKs
+-showBuildSettings                  display a list of build settings and values
+-list                               lists the targets and configurations in a project, or the schemes in a workspace</code></pre>
+<p>后面两个需要在Xcode的project或者workspace目录下才能用。</p>
+<ul>
+<li>xcrun<pre><code>xcrun -h</code></pre>
+</li>
+</ul>
+<p>主要是打包，看网上比较多是用这个工具打包各种渠道包。</p>
+<h3>altool</h3>
+<p>这个工具在网上搜索几乎没有什么结果，大概国内直接用命令行工具提交App Store的比较少。后来在StackOverflow上才找到相关的文档：</p>
+<blockquote><p><a href="https://itunesconnect.apple.com/docs/UsingApplicationLoader.pdf" target="_blank">https://itunesconnect.apple.com/docs/UsingApplicationLoader.pdf</a></p></blockquote>
+<p>在上面的文档第38页讲述了如何使用altool上传二进制文件。</p>
+<p>这个工具实际上是ApplicationLoader，打开Xcode-左上角Xcode-Open Developer Tool-Application Loader 可看到。有个“交付您的应用”操作，网上看到有人是直接用这个工具上传的。</p>
+<p>altool的路径是：</p>
+<blockquote><p>/Applications/Xcode.app/Contents/Applications/Application\ Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Support/altool</p></blockquote>
+<p>使用时会提示下面的错误：</p>
+<pre><code>altool[] *** Error: Exception while launching iTunesTransporter: 
+Transporter not found at path: /usr/local/itms/bin/iTMSTransporter. 
+You should reinstall the application.</code></pre>
+<p>建立个软链接可解决（类似于Windows的快捷方式）：</p>
+<pre><code>ln -s /Applications/Xcode.app/Contents/Applications/Application\ Loader.app/Contents/itms /usr/local/itms</code></pre>
+<h3>fir-cli</h3>
+<p>安装时会提示各种权限不允许，可以执行下面命令：</p>
+<pre><code>echo 'gem: --bindir /usr/local/bin' &gt;&gt; ~/.gemrc
+sudo 'gem install fir-cli</code></pre>
+<p>fir有提供Android Studio、Eclipse、gradle插件，可以看下。</p>
+<blockquote><p><a href="http://fir.im/tools" target="_blank">http://fir.im/tools</a></p></blockquote>
+<p>这是它的github地址，其中讲到有对?<code>xcodebuild</code>?原生指令进行了封装。</p>
+<blockquote><p><a href="https://github.com/FIRHQ/fir-cli/blob/master/README.md" target="_blank">https://github.com/FIRHQ/fir-cli/blob/master/README.md</a></p></blockquote>
+<h3>PlistBuddy</h3>
+<p>Plist在Mac OSX系统中起着举足轻重的作用，系统和程序使用Plist文件来存储自己的安装/配置/属性等信息。而PlistBuddy是Mac里一个用于命令行下读写plist文件的工具，在/usr/libexec/下。可以通过它读取或修改plist文件的内容。</p>
+<p>这里我仅通过它来获取内部版本号、外部版本号。在一些文章中见过用来修改plist文件的信息来导出出不同需要的包。</p>
+<h2>一些概念的区别</h2>
+<p>Workspace、Project、Scheme、Target的区别。</p>
+<p>下面是官方文档：</p>
+<blockquote><p><a href="https://developer.apple.com/library/ios/featuredarticles/XcodeConcepts/Concept-Targets.html#//apple_ref/doc/uid/TP40009328-CH4-SW1" target="_blank">https://developer.apple.com/library/ios/featuredarticles/XcodeConcepts/Concept-Targets.html#//apple_ref/doc/uid/TP40009328-CH4-SW1</a></p></blockquote>
+<p>下面从上往下大概说下，具体看文档比较好：</p>
+<ul>
+<li>
+<p>Workspace<br><code>Workspace</code>是最大的集合，可以包含多个<code>Project</code>，可以管理不同的<code>Project</code>之间的关系。<code>Workspace</code>是以<code>xcworkspace</code>的文件形式存在的。（这点和<code>Project</code>一致）。<code>Workspace</code>的存在是为了解决原来仅有<code>Project</code>的时候不同的<code>Project</code>之间的引用和调用困难的问题。同时，一个<code>Workspace</code>的<code>Project</code>共用一个编译路径。比如使用CocoaPod、或者使用其他开发库/框架。</p>
+</li>
+<li>
+<p>Project<br><code>Project</code>是一个仓库，包含编译一个或多个<code>product</code>所需的文件、资源和信息，保持和聚合这些元素间的关系。（每个<code>Target</code>能指定自己的<code>Build Settings</code>来覆盖<code>Project</code>的）</p>
+</li>
+</ul>
+<blockquote><ul>
+<li>Source code, including header files and implementation files</li>
+<li>Libraries and frameworks, internal and external</li>
+<li>Resource files</li>
+<li>Image files</li>
+<li>Interface Builder (nib) files</li>
+</ul></blockquote>
+<ul>
+<li>
+<p>Scheme<br><code>Scheme</code>包含了一些要构建的Scheme，一些构建时用到的设置，一些要运行的测试。同时只能有一个<code>Scheme</code>是有效的。</p>
+</li>
+<li>
+<p>Target<br><code>Target</code>是对应了具体一个想要构建的<code>Product</code>,包含了一些构建这个<code>Product</code>所需的配置和文件（<code>build settings</code>和<code>build phases</code>）。一个<code>Project</code>可以包含多个<code>Target</code>。</p>
+</li>
+</ul>
+<h2>具体实现</h2>
+<p>看起来有两种实现方法：</p>
+<ul>
+<li>网上可以查到的文章，大多数都是用<code>xcodebuild</code>和<code>xcrun</code>实现的，比如：<pre><code>xcodebuild -workspace XXX -scheme XXX -configuration Release
+xcrun -sdk iphoneos PackageApplication -v "/XXX/XXX.app" -o "/XXX/XXX"</code></pre>
+</li>
+</ul>
+<p>这些文章都是相对比早期的，大多数用于打包不同渠道包。</p>
+<ul>
+<li>另一种是<code>xcodebuild</code>的<code>archive</code>和<code>-exportArchive</code>，只有一两篇文章是用这个，而且也过时了，因为现在最新是需要用<code>-exportOptionsPlist</code>这个选项。</li>
+</ul>
+<p>我用的是第二种，并用上<code>-exportOptionsPlist</code>选项，后面我会简单给下这两种的结果比较。脚本流程是：</p>
+<ol>
+<li>准备两个<code>Plist</code>文件，用于导出不同<code>ipa</code>包时使用。</li>
+<li>获取命令行参数，区分上传到<code>Fir</code>还是<code>App Store</code>
+</li>
+<li>清理构建目录</li>
+<li>编译打包</li>
+<li>导出包</li>
+<li>上传到<code>Fir</code>或者验证并上传到<code>App Store</code>
+</li>
+<li>发邮件通知</li>
+</ol>
+<h3>准备Plist文件</h3>
+<p>根据<code>xcodebuild -help</code>提供的可选key可以知道，<code>compileBitcode</code>、<code>embedOnDemandResourcesAssetPacksInBundle</code>、<code>iCloudContainerEnvironment</code>、<code>manifest</code>、<code>onDemandResourcesAssetPacksBaseURL</code>、<code>thinning</code>这几个key用于非<code>App Store</code>导出的；<code>uploadBitcode</code>、<code>uploadSymbols</code>用于<code>App Store</code>导出；<code>method</code>、<code>teamID</code>共用。</p>
+<p>method的可选值为:</p>
+<blockquote><p>app-store, package, ad-hoc, enterprise, development, and developer-id</p></blockquote>
+<p>所以我建了两个文件：<code>AppStoreExportOptions.plist</code>、<code>AdHocExportOptions.plist</code>。</p>
+<p>AppStoreExportOptions.plist：method＝app-store，uploadBitcode＝YES，uploadSymbols＝YES</p>
+<p>AdHocExportOptions.plist：method＝ad-hoc，compileBitcode＝NO</p>
+<h3>获取命令行参数</h3>
+<p>用<code>Shell</code>内置的<code>getopts</code>命令，这属于Shell的范畴就不多讲了：</p>
+<pre><code>if [ $# -lt 1 ];then
+    echo "Error! Should enter the archive type (AdHoc or AppStore)."
+    echo ""
+    exit 2
+fi
+while getopts 't:' optname
+do
+    case "$optname" in
+    t)
+        if [ ${OPTARG} != "AdHoc" ] &amp;&amp; [ ${OPTARG} != "AppStore" ];then
+            echo "invalid parameter of $OPTARG"
+            echo ""
+            exit 1
+        fi
+        type=${OPTARG}
+        ;;
+    *)
+        echo "Error! Unknown error while processing options"
+        echo ""
+        exit 2
+        ;;
+    esac
+done</code></pre>
+<h3>清理构建目录</h3>
+<p>就如在Xcode操作「Product -&gt; Clean」。</p>
+<pre><code>log_path="/XXX/XXX"
+configuration="Release"
+xcodebuild clean -configuration "$configuration" -alltargets &gt;&gt; $log_path</code></pre>
+<p>log_path是一个文档路径，只是用来记录命令的输出，因为都打在终端会很多，另外也方便后面分析。后面的命令也是如此。这里面带的选项可以根据需要参考<code>xcodebuild -help</code>的信息。</p>
+<h3>编译打包成Archive</h3>
+<p>就如在Xcode操作「Product -&gt; Archive」</p>
+<pre><code>workspaceName="XXX.xcworkspace"
+scheme="XXX"
+configurationBuildDir="XXX/build"
+codeSignIdentity="iPhone Distribution: XXX, Ltd. (xxxxxxxxxx)"
+adHocProvisioningProfile="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+appStoreProvisioningProfile="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+configuration="Release"
+archivePath="/xxx/XXX.xcarchive"
+
+xcodebuild archive -workspace "$workspaceName" -scheme "$scheme" -configuration "$configuration" -archivePath "$archivePath" CONFIGURATION_BUILD_DIR="$configurationBuildDir" CODE_SIGN_IDENTITY="$codeSignIdentity" PROVISIONING_PROFILE="$provisioningProfile" &gt;&gt; $log_path</code></pre>
+<p>这里的<code>CONFIGURATION_BUILD_DIR</code>是中间文件生成的路径，可以不指定；<code>CODE_SIGN_IDENTITY</code>是证书名（在对应<code>TARGETS</code>的<code>Build Settings</code>中选择完<code>Code Sinning</code>，再点击选择<code>Other...</code>，就可以得到这串东西）；<code>PROVISIONING_PROFILE</code>是配置文件（获取方法同CODE_SIGN_IDENTITY，格式一般是<code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>）。还可以添加其他参数，不设置的都是默认使用项目Build Settings里面的配置，包括<code>CODE_SIGN_IDENTITY</code>和<code>PROVISIONING_PROFILE</code>。</p>
+<p>如果是workspace就用<code>-workspace</code>，就像编译带有<code>CocoaPods</code>的项目，如果是普通项目则用<code>-project</code>。</p>
+<p>执行完会生成一个.xcarchive文件和build文件夹如下：</p>
+<pre><code>.xcarchive
+build文件夹
+    |------.a
+    |------.app
+    |------.app.dSYM
+    |------.swiftmodule文件夹
+        |------arm.swiftdoc
+        |------arm.swiftmodule
+        |------arm64.swiftdoc
+        |------arm64.swiftmodule</code></pre>
+<h3>将Archive导出</h3>
+<pre><code>xcodebuild -exportArchive -archivePath "$archivePath" -exportOptionsPlist "$exportOptionsPlist" -exportPath "/XXX/XXX" &gt;&gt; $log_path</code></pre>
+<p>其中<code>$exportOptionsPlist</code>是对应使用的Plist的完整路径（包括文件名）。</p>
+<p>然后就会在指定的<code>exportPath</code>路径下生成.ipa文件。</p>
+<h3>上传到Fir</h3>
+<pre><code>firApiToken="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+ipaPath="/xxx/xxx.ipa"
+fir publish "$ipaPath" -T "$firApiToken" &gt;&gt; $log_path</code></pre>
+<p><code>firApiToken</code>在登录Fir后，右上角-API token看到。</p>
+<h3>验证并上传到App Store</h3>
+<pre><code>altoolPath="/Applications/Xcode.app/Contents/Applications/Application\ Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Versions/A/Support/altool"
+${altoolPath} --validate-app -f ${ipaPath} -u xxxxxx -p xxxxxx -t ios --output-format xml &gt;&gt;
+${altoolPath} --upload-app -f ${ipaPath} -u xxxxxx -p xxxxxx -t ios --output-format xml</code></pre>
+<p>在上面的PDF文档第38页讲明了用法和各个可选项，具体可以看下PDF。需要说明的是，生成的结果是xml打印在终端，可以保存到文档再解析出key来判断是否成功，目前这步还没做。</p>
+<p>这是成功的结果：</p>
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
+&lt;plist version="1.0"&gt;
+&lt;dict&gt;
+    &lt;key&gt;os-version&lt;/key&gt;
+    &lt;string&gt;10.11.2&lt;/string&gt;
+    &lt;key&gt;success-message&lt;/key&gt;
+    &lt;string&gt;No errors validating archive at /XXX/XXX.ipa&lt;/string&gt;
+    &lt;key&gt;tool-version&lt;/key&gt;
+    &lt;string&gt;1.1.902&lt;/string&gt;
+    &lt;key&gt;xcode-versions&lt;/key&gt;
+    &lt;array&gt;
+        &lt;dict&gt;
+            &lt;key&gt;path&lt;/key&gt;
+            &lt;string&gt;/Applications/Xcode.app&lt;/string&gt;
+            &lt;key&gt;version.plist&lt;/key&gt;
+            &lt;dict&gt;
+                &lt;key&gt;BuildVersion&lt;/key&gt;
+                &lt;string&gt;7&lt;/string&gt;
+                &lt;key&gt;CFBundleShortVersionString&lt;/key&gt;
+                &lt;string&gt;7.2&lt;/string&gt;
+                &lt;key&gt;CFBundleVersion&lt;/key&gt;
+                &lt;string&gt;9548&lt;/string&gt;
+                &lt;key&gt;ProductBuildVersion&lt;/key&gt;
+                &lt;string&gt;7C68&lt;/string&gt;
+                &lt;key&gt;ProjectName&lt;/key&gt;
+                &lt;string&gt;IDEFrameworks&lt;/string&gt;
+                &lt;key&gt;SourceVersion&lt;/key&gt;
+                &lt;string&gt;9548000000000000&lt;/string&gt;
+            &lt;/dict&gt;
+        &lt;/dict&gt;
+    &lt;/array&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;</code></pre>
+<p>这是失败的结果（找不到iTMSTransporter的情况，用前面说的ln -s解决）：</p>
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
+&lt;plist version="1.0"&gt;
+&lt;dict&gt;
+    &lt;key&gt;os-version&lt;/key&gt;
+    &lt;string&gt;10.11.2&lt;/string&gt;
+    &lt;key&gt;product-errors&lt;/key&gt;
+    &lt;array&gt;
+        &lt;dict&gt;
+            &lt;key&gt;code&lt;/key&gt;
+            &lt;integer&gt;-10001&lt;/integer&gt;
+            &lt;key&gt;message&lt;/key&gt;
+            &lt;string&gt;Transporter not found at path: /usr/local/itms/bin/iTMSTransporter.  You should reinstall the application.&lt;/string&gt;
+            &lt;key&gt;userInfo&lt;/key&gt;
+            &lt;dict&gt;
+                &lt;key&gt;MZUnderlyingException&lt;/key&gt;
+                &lt;string&gt;Transporter not found at path: /usr/local/itms/bin/iTMSTransporter.  You should reinstall the application.&lt;/string&gt;
+                &lt;key&gt;NSLocalizedDescription&lt;/key&gt;
+                &lt;string&gt;Transporter not found at path: /usr/local/itms/bin/iTMSTransporter.  You should reinstall the application.&lt;/string&gt;
+                &lt;key&gt;NSLocalizedFailureReason&lt;/key&gt;
+                &lt;string&gt;Transporter not found at path: /usr/local/itms/bin/iTMSTransporter.  You should reinstall the application.&lt;/string&gt;
+            &lt;/dict&gt;
+        &lt;/dict&gt;
+    &lt;/array&gt;
+    &lt;key&gt;tool-version&lt;/key&gt;
+    &lt;string&gt;1.1.902&lt;/string&gt;
+    &lt;key&gt;xcode-versions&lt;/key&gt;
+    &lt;array&gt;
+        &lt;dict&gt;
+            &lt;key&gt;path&lt;/key&gt;
+            &lt;string&gt;/Applications/Xcode.app&lt;/string&gt;
+            &lt;key&gt;version.plist&lt;/key&gt;
+            &lt;dict&gt;
+                &lt;key&gt;BuildVersion&lt;/key&gt;
+                &lt;string&gt;7&lt;/string&gt;
+                &lt;key&gt;CFBundleShortVersionString&lt;/key&gt;
+                &lt;string&gt;7.2&lt;/string&gt;
+                &lt;key&gt;CFBundleVersion&lt;/key&gt;
+                &lt;string&gt;9548&lt;/string&gt;
+                &lt;key&gt;ProductBuildVersion&lt;/key&gt;
+                &lt;string&gt;7C68&lt;/string&gt;
+                &lt;key&gt;ProjectName&lt;/key&gt;
+                &lt;string&gt;IDEFrameworks&lt;/string&gt;
+                &lt;key&gt;SourceVersion&lt;/key&gt;
+                &lt;string&gt;9548000000000000&lt;/string&gt;
+            &lt;/dict&gt;
+        &lt;/dict&gt;
+    &lt;/array&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;</code></pre>
+<p>可见，成功会有个<code>success-message</code>的key，而失败会有<code>product-errors</code>的key。</p>
+<h3>邮件通知相关同事</h3>
+<p>发邮件时可能会想带上当前版本的一些信息，如版本号、内部版本号等，可以用PlistBuddy实现读取甚至修改Plist文件。</p>
+<pre><code>appInfoPlistPath="`pwd`/xxx/xxx-Info.plist"
+bundleShortVersion=$(/usr/libexec/PlistBuddy -c "print CFBundleShortVersionString" ${appInfoPlistPath})
+bundleVersion=$(/usr/libexec/PlistBuddy -c "print CFBundleVersion" ${appInfoPlistPath})</code></pre>
+<p>之后便是发邮件：</p>
+<pre><code>python sendEmail.py "测试版本 iOS ${bundleShortVersion}(${bundleVersion})上传成功" "赶紧下载体验吧！http://fir.im/meijia"</code></pre>
+<p>或者</p>
+<pre><code>python sendEmail.py "正式版本 iOS ${bundleShortVersion}(${bundleVersion})提交成功" "iOS ${bundleShortVersion} 提交成功！"</code></pre>
+<p>python主要用smtplib，网上的文章大多都是旧的，特别是讲到SSL时特别复杂，其实具体看下smtplib的接口文档就可以实现了。另外有可能出现标题、内容乱码的现象。整合了下面的链接解决了：</p>
+<p>下面是实现了SSL Smtp登录的。</p>
+<pre><code>#!/usr/bin/env python3
+#coding: utf-8
+
+# sendEmail title content
+import sys
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
+
+sender = 'xxxxxx@qq.com;'
+receiver = 'xxx@qq.com;'
+smtpserver = 'smtp.qq.com'
+#smtpserver = 'smtp.exmail.qq.com'
+
+username = sender
+password = 'xxxxxx'
+
+def send_mail(title, content):
+
+    try:
+        msg = MIMEText(content,'plain','utf-8')
+        if not isinstance(title,unicode):
+            title = unicode(title, 'utf-8')
+        msg['Subject'] = title
+        msg['From'] = sender
+        msg['To'] = receiver
+        msg["Accept-Language"]="zh-CN"
+        msg["Accept-Charset"]="ISO-8859-1,utf-8"
+
+        smtp = smtplib.SMTP_SSL(smtpserver,465)
+        smtp.login(username, password)
+        smtp.sendmail(sender, receiver, msg.as_string())
+        smtp.quit()
+        return True
+    except Exception, e:
+        print str(e)
+        return False
+
+if send_mail(sys.argv[1], sys.argv[2]):
+    print "done!"
+else:
+    print "failed!"</code></pre>
+<p>可以赋值给msg['CC']实现抄送，经过测试，抄送的人过多会有一部分不成功，网上查了是这个库的bug。发送多个人用分号，另外末尾也要用分号。</p>
+<h2>对比实验</h2>
+<p>为了了解一些区别，我做了几个对比。我这里定义下三种方式，方便下面说明。</p>
+<ul>
+<li>xcodebuild+xcrun（xcodebuild build和xcrun）</li>
+<li>只用xcodebuild（archive和exportArchive），</li>
+<li>Xcode。</li>
+</ul>
+<h3>三种方式的对比</h3>
+<p>我使用xcodebuild+xcrun、仅xcodebuild、Xcode三种分别对相同代码和配置进行操作，根据结果做比较：</p>
+<ul>
+<li>xcodebuild+xcrun</li>
+</ul>
+<p>ipa：40.7MB，.app：93.3MB，编译耗时：8m31s，打包耗时：15s。</p>
+<ul>
+<li>仅xcodebuild</li>
+</ul>
+<p>ipa：37.3MB，.app：74MB，.xcarchive：227.3MB，编译耗时：8m24s，打包耗时：26s。</p>
+<ul>
+<li>Xcode</li>
+</ul>
+<p>ipa：37.3MB，.app：74MB，.xcarchive：227.3MB，编译耗时：8m40s，打包耗时：30s。</p>
+<p>Xcode生成的<code>.xcarchive</code>文件可以在以下路径看到：</p>
+<blockquote><p>/Users/double/Library/Developer/Xcode/Archives</p></blockquote>
+<p>可以看出，<u>仅使用xcodebuild的结果和使用Xcode编译打包的结果是一致的</u>，并且最终的ipa也可以正常安装使用。而第一种xcodebuild+xcrun的结果略大些，但是ipa也是可以正常使用的。这时需要了解下他们的区别。</p>
+<h3>xcodebuild+xcrun和仅xcodebuild的比较</h3>
+<ul>
+<li>使用xcrun打包方式二产生的.xcarchive中的.app</li>
+</ul>
+<p>打包生成的.ipa文件大小同样为37.3MB，与方式二使用Xcodebuild -exportArchive的结果一致！这样说明：<strong>使用xcrun的打包方法是正常的</strong>，和xcodebuild -exportArchive的结果一致，而且<strong>.ipa包仅和.app有关</strong>。那么说明，<u>这两种方式的不同仅在于xcodebuild build和xcodebuild archive之间的不同</u>。</p>
+<ul>
+<li>删除.xcarchive中其他文件然后<code>exportArchive</code>
+</li>
+</ul>
+<p>这时命令提示错误，但是上面我们已经得出结论.ipa的生成只和.app有关，所以可能的原因是，这个<code>exportArchive</code>命令会检查.archive的完整性和正确性，防止生成的.archive不完整或者是伪造的。下面做个实验看下。</p>
+<h3>命令到底做了什么</h3>
+<p>根据命令运行时输出的内容，看下中间做了什么</p>
+<ul>
+<li>xcrun -sdk iphoneos PackageApplication -v xxx.app -o xxx.ipa</li>
+</ul>
+<pre><code>Packaging application: '/xxx/xxx.app'
+Arguments: output=/xxx/xxx.ipa  verbose=1  
+Environment variables:
+SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk
+......
+SHELL = /bin/bash
+
+Output directory: '/xxx/xxx.ipa'
+Temporary Directory: '/var/folders/21/6s9bb23j0s1343pm7ltnlgpm0000gn/T/taOIiK9AyK'  (will NOT be deleted on exit when verbose set)
++ /bin/cp -Rp /xxx/xxx.app /var/folders/21/6s9bb23j0s1343pm7ltnlgpm0000gn/T/taOIiK9AyK/Payload
+Program /bin/cp returned 0 : []
+### Checking original app
++ /usr/bin/codesign --verify -vvvv /xxx/xxx.app
+Program /usr/bin/codesign returned 0 : [/xxx/xxx.app: valid on disk
+/xxx/xxx.xcarchive/Products/Applications/xxx.app: satisfies its Designated Requirement
+]
+Done checking the original app
++ /usr/bin/zip --symlinks --verbose --recurse-paths /Users/double/Desktop/1.ipa .
+Program /usr/bin/zip returned 0 : [  adding: Payload/    (in=0) (out=0) (stored 0%)
+  adding: Payload/xxx.app/    (in=0) (out=0) (stored 0%)
+  ......</code></pre>
+<p>主要检查了环境变量，然后验证签名，然后压缩（看到了吗，居然是/usr/bin/zip），后面adding的基本都是.nib和.png等的压缩。看起来.archive只是一种压缩形式，包含了.app、.dSYM、.plist和其他一些文件。</p>
+<p>这里的<code>codesign</code>工具就是签名相关的，可以查看说明：</p>
+<pre><code>SYNOPSIS
+     codesign -s identity [-i identifier] [-r requirements] [-fv] [path ...]
+     codesign -v [-R requirement] [-v] [path|pid ...]
+     codesign -d [-v] [path|pid ...]
+     codesign -h [-v] [pid ...]</code></pre>
+<p>-s是签名，-v是验证。所以可以在.app生成后再签名。</p>
+<ul>
+<li>xcodebuild clean</li>
+</ul>
+<p>清理工作，根据参数删除指定的workplace、target、configuration（release或debug） 的中间文件，都是工程目录下的build文件夹。</p>
+<ul>
+<li>xcodebuild archive</li>
+</ul>
+<p>下面是里面主要的步骤：</p>
+<ol>
+<li>Create product structure 创建.app文件</li>
+<li>CompileC 编译文件（clang编译，指定了编译的SDK版本和指令集）</li>
+<li>Ld</li>
+<li>CreateUniversalBinary (lipo)</li>
+<li>CompileStoryboard (ibtool )</li>
+<li>CompileAssetCatalog (actool )</li>
+<li>ProcessInfoPlistFile (builtin-infoPlistUtility )</li>
+<li>GenerateDSYMFile (dsymutil )</li>
+<li>LinkStoryboards(ibtool )</li>
+<li>Strip </li>
+<li>ProcessProductPackaging (builtin-productPackagingUtility )</li>
+<li>CodeSign (codesign --force --sign)</li>
+<li>Validate (builtin-validationUtility )</li>
+</ol>
+<h2>总结</h2>
+<p>呼呼写了这么多，终于到总结部分了。这个过程学到了很多东西，脚本成果确实方便了很多，减少了编译打包过程中人工监守、人工操作的成本，并且测试和提交到appStore的包都验证过可用。不过提交到appStore的那个是在TestFlight下载使用的，虽然应该没什么区别，但还是说明下。</p>
+</div>
+        </div>
+      </div>
+
+      <div class="visitor_edit">
+        <!-- further readings -->
+        <div id="further-readings" data-user-slug="" data-user-nickname="">
+          <div id="further-reading-line" class="hide further-reading-line"></div>
+          <ul id="further-readings-list" class="reading-list unstyled"></ul>
+          <div id="further-reading-new" class="reading-edit">
+              <a data-signin-link="true" data-toggle="modal" href="/sign_in">
+                <i class="fa fa-plus-circle"></i> 推荐拓展阅读
+</a>            <div id="further-reading-form"></div>
+          </div>
+        </div>
+        <div class="pull-right">
+          <!-- copyright -->
+          <div class="author-copyright pull-right" data-toggle="tooltip" data-html="true" title="转载请联系作者获得授权，并标注“简书作者”。">
+            <a><i class="fa fa-copyright"></i> 著作权归作者所有</a>
+          </div>
+        </div>   
+      </div>
+
+      <!-- Reward / Support Author -->
+        <div class="support-author">
+          <p>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</p>
+            <a class="btn btn-pay" data-toggle="modal" href="#pay-modal">¥ 打赏支持</a>
+          <div class="avatar-list"></div>
+        </div>
+
+      <!-- article meta bottom -->
+      <div class="meta-bottom clearfix">
+        <!--  Like Button -->
+        <div class="like ">
+            <div class="like-button">
+              <a id="like-note" class="like-content" data-signin-link="true" data-toggle="modal" href="/sign_in">
+                <i class="fa fa-heart-o"></i>  喜欢
+</a></div>          <span id="likes-count" data-toggle="tooltip" data-placement="right" title="查看所有喜欢的用户">
+            <i class="fa fa-spinner fa-pulse"></i>
+</span>        </div>
+        <!--  share group -->
+        <div class="share-group pull-right">
+          <a href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=&#39;http://v.t.sina.com.cn/share/share.php?appkey=1881139527&#39;,u=z||d.location,p=[&#39;&amp;url=&#39;,e(u),&#39;&amp;title=&#39;,e(t||d.title),&#39;&amp;source=&#39;,e(r),&#39;&amp;sourceUrl=&#39;,e(l),&#39;&amp;content=&#39;,c||&#39;gb2312&#39;,&#39;&amp;pic=&#39;,e(p||&#39;&#39;)].join(&#39;&#39;);function%20a(){if(!window.open([f,p].join(&#39;&#39;),&#39;mb&#39;,[&#39;toolbar=0,status=0,resizable=1,width=440,height=430,left=&#39;,(s.width-440)/2,&#39;,top=&#39;,(s.height-430)/2].join(&#39;&#39;)))u.href=[f,p].join(&#39;&#39;);};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,&#39;&#39;,&#39;&#39;,&#39;http://cwb.assets.jianshu.io/notes/images/3108720/weibo/image_ce7c2a03fd72.jpg&#39;, &#39;推荐 zackzheng 的文章《详解Shell脚本实现iOS自动化编译打包提交》（ 分享自 @简书 ）&#39;,&#39;http://www.jianshu.com/p/bd4c22952e01&#39;,&#39;页面编码gb2312|utf-8默认gb2312&#39;));" data-name="weibo">
+            <i class="fa fa-weibo"></i><span>分享到微博</span>
+          </a>
+          <a data-toggle="modal" href="#share-weixin-modal" data-name="weixin">
+            <i class="fa fa-weixin"></i><span>分享到微信</span>
+          </a>
+          <div class="more">
+            <a href="javascript:void(0)" data-toggle="dropdown">更多分享<i class="fa fa-caret-down"></i></a>
+            <ul class="dropdown-menu arrow-top">
+                <li><a href="http://cwb.assets.jianshu.io/notes/images/3108720/weibo/image_ce7c2a03fd72.jpg" target="_blank" data-name="changweibo"><i class="fa fa-arrow-circle-o-down"></i> 下载长微博图片</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;url=&#39;+e(&#39;http://www.jianshu.com/p/bd4c22952e01&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 zackzheng 的文章《详解Shell脚本实现iOS自动化编译打包提交》（ 分享自 @jianshuio ）&#39;),x=function(){if(!window.open(r,&#39;tweibo&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();" data-name="tweibo"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/tweibo.png">分享到腾讯微博</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;+e(&#39;http://www.jianshu.com/p/bd4c22952e01&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 zackzheng 的文章《详解Shell脚本实现iOS自动化编译打包提交》&#39;),x=function(){if(!window.open(r,&#39;qzone&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();" data-name="qzone"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/qzone.png">分享到QQ空间</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://twitter.com/share?url=&#39;+e(&#39;http://www.jianshu.com/p/bd4c22952e01&#39;)+&#39;&amp;text=&#39;+e(&#39;推荐 zackzheng 的文章《详解Shell脚本实现iOS自动化编译打包提交》（ 分享自 @jianshucom ）&#39;)+&#39;&amp;related=&#39;+e(&#39;jianshucom&#39;),x=function(){if(!window.open(r,&#39;twitter&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();" data-name="twitter"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/twitter.png">分享到Twitter</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://www.facebook.com/sharer.php?s=100&amp;p[url]=&#39;+e(&#39;http://www.jianshu.com/p/bd4c22952e01&#39;)+&#39;&amp;p[title]=&#39;+e(&#39;详解Shell脚本实现iOS自动化编译打包提交 - 简书社&#39;)+&#39;&amp;p[summary]=&#39;+e(&#39;推荐 zackzheng 的文章《详解Shell脚本实现iOS自动化编译打包提交》&#39;),x=function(){if(!window.open(r,&#39;facebook&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();" data-name="facebook"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/facebook.png">分享到Facebook</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://plus.google.com/share?url=&#39;+e(&#39;http://www.jianshu.com/p/bd4c22952e01&#39;),x=function(){if(!window.open(r,&#39;google_plus&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();" data-name="google_plus"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/google_plus.png">分享到Google+</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://widget.renren.com/dialog/share?resourceUrl=&#39;+e(&#39;http://www.jianshu.com/p/bd4c22952e01&#39;)+&#39;&amp;description=&#39;+e(&#39;推荐 zackzheng 的文章《详解Shell脚本实现iOS自动化编译打包提交》&#39;)+&#39;&amp;title=&#39;+e(&#39;详解Shell脚本实现iOS自动化编译打包提交&#39;),x=function(){if(!window.open(r,&#39;renren&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();" data-name="renren"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/renren.png">分享到人人网</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:&#39;&#39;,r=&#39;http://www.douban.com/recommend/?url=&#39;+e(&#39;http://www.jianshu.com/p/bd4c22952e01&#39;)+&#39;&amp;title=&#39;+e(&#39;详解Shell脚本实现iOS自动化编译打包提交&#39;)+&#39;&amp;sel=&#39;+e(s)+&#39;&amp;v=1&#39;,x=function(){if(!window.open(r,&#39;douban&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r+&#39;&amp;r=1&#39;};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()" data-name="douban"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/douban.png">分享到豆瓣</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modals -->
+      <div id="share-weixin-modal" class="modal hide fade share-weixin-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  </div>
+  <div class="modal-body">
+    <h5>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</h5>
+  </div>
+</div>
+
+      
+      <div id="notebooks-menu" class="panel notebooks-menu arrow-top modal hide fade"><img class="loader-tiny" src="http://baijii-common.b0.upaiyun.com/loaders/tiny.gif" alt="Tiny" /></div>
+      <div id="collection-menu" class="panel collection-menu arrow-top modal hide fade"><img class="loader-tiny" src="http://baijii-common.b0.upaiyun.com/loaders/tiny.gif" alt="Tiny" /></div>
+      
+      <div id="likes-modal" class="modal modal_new support_list-modal fullscreen hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>喜欢的用户</h3>
+      </div>
+      <div class="modal-body">
+        <ul class="unstyled users">
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Comments -->
+    <div id="comments" class="comment-list clearfix">
+        <div class="comment-head clearfix">
+          0条评论
+          <span class="order">
+            （
+            <a data-order="asc" class="active" href="javascript:void(0)">按时间正序</a>·
+            <a data-order="desc" href="javascript:void(0)">按时间倒序</a>·
+            <a data-order="likes_count" href="javascript:void(0)">按喜欢排序</a>
+            ）
+          </span>
+            <a class="goto-comment pull-right" data-signin-link="true" data-toggle="modal" href="/sign_in">
+              <i class="fa fa-pencil"></i>添加新评论
+</a>        </div>
+        <div id="comment-list">
+          <img class="loader-tiny" src="http://baijii-common.b0.upaiyun.com/loaders/tiny.gif" alt="Tiny" />
+        </div>
+          <p class="signout-comment">
+    <a class="btn btn-info" data-signin-link="true" data-toggle="modal" href="/sign_in">
+      登录后发表评论
+</a>  </p>
+
+    </div>
+    <!-- -->
+
+  </div>
+
+  <script type='application/json' data-name='note'>
+    {"id":3108720,"abbr":"本文始发于我的博文详解Shell脚本实现iOS自动化编译打包提交，现转发至此。目录前言Shell脚本涉及的工具xcodebuild和xcrunaltoolfir-cliPlistBuddy一些概念的区别具体实现xcodebuild和xcrun准备Plist文件获取命令行参数清理构建目录编译打包成Archive将Archive导出上传到Fir验证并上传到AppStore邮件通知相关同事对比实验三种方式的对比xcodebuild+xc...","slug":"bd4c22952e01","url":"http://www.jianshu.com/p/bd4c22952e01","image_url":"http://cwb.assets.jianshu.io/notes/images/3108720/weibo/image_ce7c2a03fd72.jpg","wordage":4673,"has_further_readings":false,"views_count":151,"likes_count":1,"comments_count":0,"rewards_total_count":0}
+  </script>
+
+  <script type='application/json' data-name='uuid'>
+    {"uuid":"022033b0-d136-0133-2197-525400918cd7"}
+  </script>
+
+  <script type='application/json' data-name='author'>
+    {"id":304530,"nickname":"zackzheng","slug":"f2cb04042781","public_notes_count":2,"followers_count":14,"total_likes_count":17,"is_current_user":false,"is_signed_author":false}
+  </script>
+
+
+
+  <!-- Modal -->
+    <div class="modal pay-modal text-center hide fade" id="pay-modal">
+  <div class="modal-header clearfix">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  </div>
+  <form id="new_reward" class="new_reward" target="_blank" action="/notes/3108720/rewards" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="Nz1UvgnFN98losNymOkBcjyw0KL2dp1Fk49gN4M+tqPG2N/KmRFJ6X7WQWHncC/jYy8UXOHOLS5IVb0V5ZVbvg==" />
+    <div class="modal-body">
+      <a href="/users/f2cb04042781">
+        <div class="avatar"><img src="http://upload.jianshu.io/users/upload_avatars/304530/840218489e98.JPG?imageMogr/thumbnail/90x90/quality/100" alt="100" /></div>
+</a>      <p><i class="fa fa-quote-left pull-left"></i>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！<i class="fa fa-quote-right pull-right"></i></p>
+      <div class="main-inputs text-left">
+        <div class="control-group">
+          <label for="reward_amount">打赏金额</label><i class="fa fa-yen"></i>
+          <input value="2.00" type="text" name="reward[amount_in_yuan]" id="reward_amount_in_yuan" />
+        </div>
+        <div class="control-group message">
+          <textarea placeholder="给Ta留言" name="reward[message]" id="reward_message">
+</textarea>
+        </div>
+      </div>
+      <div class="choose-pay text-left">
+        <h5>选择支付方式：</h5>
+        <div>
+          <label for="reward_channel_alipay">
+            <input type="radio" value="alipay" checked="checked" name="reward[channel]" id="reward_channel_alipay" />
+            <span class="alipay-bg"></span>
+</label>
+          
+          <label for="reward_channel_wx_pub_qr">
+            <input type="radio" value="wx_pub_qr" name="reward[channel]" id="reward_channel_wx_pub_qr" />
+            微信支付
+</label>        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button name="button" type="submit" class="btn btn-large btn-pay">立即支付</button>
+    </div>
+</form></div>
+
+    <div class="modal success-pay text-center hide fade" id="success-pay">
+  <div class="modal-header clearfix">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  </div>
+  <div class="modal-body">
+    <h3><i class="icon-ok"></i>打赏成功</h3>
+    <img src="http://cdn-qn0.jianshu.io/assets/complete-pay-25426877089eb23bd76d9d0e6aad89c1.png" alt="Complete pay" />
+  </div>
+  <div class="modal-footer">
+    
+  </div>
+</div>
+
+</div>
+  </div>
+  <div id="flash" class="hide"></div>
+  
+  <div id="view-mode-modal" tabindex="-1" class="modal hide read-modal" aria-hidden="false" data-js-module='view-mode-modal'>
+    <div class="btn-group change-background" data-toggle="buttons-radio">
+      <a class="btn btn-daytime active" data-mode="day" href="javascript:void(null);">
+        <i class="fa fa-sun-o"></i>
+</a>      <a class="btn btn-nighttime " data-mode="night" href="javascript:void(null);">
+        <i class="fa fa-moon-o"></i>
+</a>    </div>
+    <div class="btn-group change-font" data-toggle="buttons-radio">
+      <a class="btn font " data-font="font1" href="javascript:void(null);">宋体</a>
+      <a class="btn font hei active" data-font="font2" href="javascript:void(null);">黑体</a>
+    </div>
+    <div class="btn-group change-locale" data-toggle="buttons-radio">
+      <a class="btn font active" data-locale="zh-CN" href="javascript:void(null);">简</a>
+      <a class="btn font hei " data-locale="zh-TW" href="javascript:void(null);">繁</a>
+    </div>
+  </div>
+
+  
+
+  <script src="http://cdn-qn0.jianshu.io/assets/base-8f20b806c8514691a8ea324f286cacdd.js"></script>
+  
+  <script src="http://cdn-qn0.jianshu.io/assets/reading-base-ae453024ce413538a38513b556d5215a.js"></script>
+  <script src="http://cdn-qn0.jianshu.io/assets/reading/module_sets/note_show-5e9884d616ba507946b10e8cedd676e8.js"></script>
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-35169517-1']);
+  _gaq.push(['_setCustomVar', 2, 'User Type', 'Visitor', 1 ]);
+  _gaq.push(['_trackPageview']);
+
+  
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>

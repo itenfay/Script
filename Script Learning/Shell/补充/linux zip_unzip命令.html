@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8"/>
+<title>linux zip/unzip命令 - lucyjiayou - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=iaIBFyx6Vr94NzNO_3ZPrlgjC7pN1OGR4X2wPvP0lwg1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/facebook/bundle-facebook.css?v=Oag8KsS8_cwZ4F_t0wyyfAmlDyAnWfEJ_NR3vz8aILc1"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/lucyjiayou/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/lucyjiayou/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/lucyjiayou/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'lucyjiayou', cb_enable_mathjax=false;</script>
+<script src="/bundles/blog-common.js?v=ykDTFH9FE4CgKmGT6HilV870QfVPxO515wqgmKkq4MU1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<h1><a id="Header2_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/lucyjiayou/">lucyjiayou</a></h1>
+<h2>学习笔记</h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<!--done-->
+			<ul id="navList">
+				<li><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+				<li><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/lucyjiayou/">首页</a></li>
+				<li><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+				<li><a id="MyLinks1_ContactLink" accesskey="9" class="menu" rel="nofollow" href="http://msg.cnblogs.com/send/lucyjiayou">联系</a></li>
+				<li><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+				<li><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/lucyjiayou/rss">订阅</a>
+				<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/lucyjiayou/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a></li>
+			</ul>
+
+
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔- 47&nbsp;
+文章- 0&nbsp;
+评论- 26&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class = "post">
+		<h1 class = "postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/lucyjiayou/archive/2011/12/25/2301046.html">linux zip/unzip命令</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><div class="cnt">
+<p><strong>命令名：<span style="font-family: Times New Roman;"> zip</span></strong></p>
+<p>&nbsp;</p>
+<p>功能说明：压缩文件。</p>
+<p>语　　法：<span style="font-family: Times New Roman;">zip [-AcdDfFghjJKlLmoqrSTuvVwXyz$][-b &lt;</span>工 作目录<span style="font-family: Times New Roman;">&gt;][-ll][-n &lt;</span>字 尾字符串<span style="font-family: Times New Roman;">&gt;][-t &lt;</span>日 期时间<span style="font-family: Times New Roman;">&gt;][-&lt;</span>压 缩效率<span style="font-family: Times New Roman;">&gt;][</span>压 缩文件<span style="font-family: Times New Roman;">][</span>文件<span style="font-family: Times New Roman;">...][-i &lt;</span>范本样式<span style="font-family: Times New Roman;">&gt;][-x &lt;</span>范本样式<span style="font-family: Times New Roman;">&gt;]</span></p>
+<p>补充说明：<span style="font-family: Times New Roman;">zip</span>是个使用广泛的压缩程序，文件经它压缩后会另外产生具 有<span style="font-family: Times New Roman;">".zip"</span>扩展名 的压缩文件。</p>
+<p>参　　数：</p>
+<p><span style="font-family: Times New Roman;">-A&nbsp;&nbsp; </span>调 整可执行的自动解压缩文件。</p>
+<p><span style="font-family: Times New Roman;">-b&lt;</span>工作目录<span style="font-family: Times New Roman;">&gt;&nbsp;&nbsp; </span>指 定暂时存放文件的目录。</p>
+<p><span style="font-family: Times New Roman;">-c&nbsp;&nbsp; </span>替 每个被压缩的文件加上注释。</p>
+<p><span style="font-family: Times New Roman;">-d&nbsp;&nbsp; </span>从 压缩文件内删除指定的文件。</p>
+<p><span style="font-family: Times New Roman;">-D&nbsp;&nbsp; </span>压 缩文件内不建立目录名称。</p>
+<p><span style="font-family: Times New Roman;">-f&nbsp;&nbsp; </span>此 参数的效果和指定<span style="font-family: Times New Roman;">"-u"</span>参 数类似，但不仅更新既有文件，如果某些文件原本不存在于压缩文件内，使用本参数会一并将其加入压缩文件中。</p>
+<p><span style="font-family: Times New Roman;">-F&nbsp;&nbsp; </span>尝 试修复已损坏的压缩文件。</p>
+<p><span style="font-family: Times New Roman;">-g&nbsp;&nbsp; </span>将 文件压缩后附加在既有的压缩文件之后，而非另行建立新的压缩文件。</p>
+<p><span style="font-family: Times New Roman;">-h&nbsp;&nbsp; </span>在 线帮助。</p>
+<p><span style="font-family: Times New Roman;">-i&lt;</span>范本样式<span style="font-family: Times New Roman;">&gt;&nbsp;&nbsp; </span>只 压缩符合条件的文件。</p>
+<p><span style="font-family: Times New Roman;">-j&nbsp;&nbsp; </span>只 保存文件名称及其内容，而不存放任何目录名称。</p>
+<p><span style="font-family: Times New Roman;">-J&nbsp;&nbsp; </span>删 除压缩文件前面不必要的数据。</p>
+<p><span style="font-family: Times New Roman;">-k&nbsp;&nbsp; </span>使 用<span style="font-family: Times New Roman;">MS-DOS</span>兼容格 式的文件名称。</p>
+<p><span style="font-family: Times New Roman;">-l&nbsp;&nbsp; </span>压 缩文件时，把<span style="font-family: Times New Roman;">LF</span>字符 置换成<span style="font-family: Times New Roman;">LF+CR</span>字 符。</p>
+<p><span style="font-family: Times New Roman;">-ll&nbsp;&nbsp; </span>压 缩文件时，把<span style="font-family: Times New Roman;">LF+CR</span>字 符置换成<span style="font-family: Times New Roman;">LF</span>字符。</p>
+<p><span style="font-family: Times New Roman;">-L&nbsp;&nbsp; </span>显 示版权信息。</p>
+<p><span style="font-family: Times New Roman;">-m&nbsp;&nbsp; </span>将 文件压缩并加入压缩文件后，删除原始文件，即把文件移到压缩文件中。</p>
+<p><span style="font-family: Times New Roman;">-n&lt;</span>字尾字符串<span style="font-family: Times New Roman;">&gt;&nbsp;&nbsp; </span>不 压缩具有特定字尾字符串的文件。</p>
+<p><span style="font-family: Times New Roman;">-o&nbsp;&nbsp; </span>以 压缩文件内拥有最新更改时间的文件为准，将压缩文件的更改时间设成和该文件相同。</p>
+<p><span style="font-family: Times New Roman;">-q &nbsp;&nbsp;</span>不显 示指令执行过程。</p>
+<p><span style="font-family: Times New Roman;">-r&nbsp;&nbsp; </span>递 归处理，将指定目录下的所有文件和子目录一并处理。</p>
+<p><span style="font-family: Times New Roman;">-S&nbsp;&nbsp; </span>包 含系统和隐藏文件。</p>
+<p><span style="font-family: Times New Roman;">-t&lt;</span>日期时间<span style="font-family: Times New Roman;">&gt;&nbsp;&nbsp; </span>把 压缩文件的日期设成指定的日期。</p>
+<p><span style="font-family: Times New Roman;">-T&nbsp;&nbsp; </span>检 查备份文件内的每个文件是否正确无误。</p>
+<p><span style="font-family: Times New Roman;">-u&nbsp;&nbsp; </span>更 换较新的文件到压缩文件内。</p>
+<p><span style="font-family: Times New Roman;">-v&nbsp;&nbsp; </span>显 示指令执行过程或显示版本信息。</p>
+<p><span style="font-family: Times New Roman;">-V&nbsp;&nbsp; </span>保 存<span style="font-family: Times New Roman;">VMS</span>操作系统的文 件属性。</p>
+<p><span style="font-family: Times New Roman;">-w&nbsp;&nbsp; </span>在 文件名称里假如版本编号，本参数仅在<span style="font-family: Times New Roman;">VMS</span>操 作系统下有效。</p>
+<p><span style="font-family: Times New Roman;">-x&lt;</span>范本样式<span style="font-family: Times New Roman;">&gt;&nbsp;&nbsp; </span>压 缩时排除符合条件的文件。</p>
+<p><span style="font-family: Times New Roman;">-X&nbsp;&nbsp; </span>不 保存额外的文件属性。</p>
+<p><span style="font-family: Times New Roman;">-y&nbsp;&nbsp; </span>直 接保存符号连接，而非该连接所指向的文件，本参数仅在<span style="font-family: Times New Roman;">UNIX</span>之 类的系统下有效。</p>
+<p><span style="font-family: Times New Roman;">-z&nbsp;&nbsp; </span>替 压缩文件加上注释。</p>
+<p><span style="font-family: Times New Roman;">-$&nbsp;&nbsp; </span>保 存第一个被压缩文件所在磁盘的卷册名称。</p>
+<p><span style="font-family: Times New Roman;">-&lt;</span>压缩效率<span style="font-family: Times New Roman;">&gt;&nbsp;&nbsp; </span>压 缩效率是一个介于<span style="font-family: Times New Roman;">1-9</span>的 数值。</p>
+<p>&nbsp;</p>
+<p>例子</p>
+<p>&nbsp;</p>
+<p>例<span style="font-family: Times New Roman;">1. </span>压缩<span style="font-family: Times New Roman;">test.MYI</span></p>
+<p>&nbsp;</p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]# zip test1.zip test.MYI</span></p>
+<p><span style="font-family: Times New Roman;">adding: test.MYI (deflated 42%)</span></p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]#ll</span></p>
+<p><span style="font-family: Times New Roman;">-rw-r--r-- 1 root&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp; 1033755 09-24 10:03 test1.zip</span></p>
+<p>&nbsp;</p>
+<p>压缩率为<span style="font-family: Times New Roman;">8</span>的</p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]# zip test2.zip -8 test.MYI</span></p>
+<p><span style="font-family: Times New Roman;">adding: test.MYI (deflated 42%)</span></p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]#ll</span></p>
+<p><span style="font-family: Times New Roman;">-rw-r--r-- 1 root&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp; 1033451 09-24 10:03 test2.zip</span></p>
+<p>&nbsp;</p>
+<p>例<span style="font-family: Times New Roman;">2.&nbsp;&nbsp; </span>将当前目录下的所有文件和文件夹全部压缩成test.zip文件,-r表示递归压缩子目录下所有文件</p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]# </span>zip -r test.zip ./*</p>
+<p>&nbsp;</p>
+<p>打包目录</p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]# </span>zip test2.zip test2/*</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>例<span style="font-family: Times New Roman;">3.&nbsp;&nbsp; </span>删除压缩文件test1.zip中<span style="font-family: Times New Roman;">test.MYI</span>文件</p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]# </span>zip -d test1.zip <span style="font-family: Times New Roman;">test.MYI</span></p>
+<p>&nbsp;</p>
+<p>删除打包文件目录下的文件</p>
+<p>&nbsp;</p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]# zip -d </span>test2<span style="font-family: Times New Roman;">.zip test2/ln.log</span></p>
+<p><span style="font-family: Times New Roman;">deleting: tests/ln.log</span></p>
+<p>&nbsp;</p>
+<p>例<span style="font-family: Times New Roman;">4.&nbsp;&nbsp; </span>向压缩文件中test1.zip中添加test.<span style="font-family: Times New Roman;"> MYI</span>文件</p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]# </span>zip -m test1.zip test.<span style="font-family: Times New Roman;"> MYI</span></p>
+<p>&nbsp;</p>
+<p>例<span style="font-family: Times New Roman;">5.&nbsp;&nbsp; </span>压缩文件时排除某个文件</p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]# </span>zip test3.zip tests/* -x tests/ln.log</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="cnt">
+<p><strong>命令名</strong>：<span style="font-family: Times New Roman;"> unzip</span></p>
+<p><strong>功 能说明</strong>：解压缩<span style="font-family: Times New Roman;">zip</span>文 件</p>
+<p>语　　法：<span style="font-family: Times New Roman;">unzip [-cflptuvz][-agCjLMnoqsVX][-P &lt;</span>密 码<span style="font-family: Times New Roman;">&gt;][.zip</span>文 件<span style="font-family: Times New Roman;">][</span>文件<span style="font-family: Times New Roman;">][-d &lt;</span>目录<span style="font-family: Times New Roman;">&gt;][-x &lt;</span>文件<span style="font-family: Times New Roman;">&gt;] </span>或<span style="font-family: Times New Roman;"> unzip [-Z]</span></p>
+<p>补充说明：<span style="font-family: Times New Roman;">unzip</span>为<span style="font-family: Times New Roman;">.zip</span>压缩文件的解压缩程序。</p>
+<p>参　　数：</p>
+<p><span style="font-family: Times New Roman;">-c&nbsp;&nbsp; </span>将 解压缩的结果显示到屏幕上，并对字符做适当的转换。</p>
+<p><span style="font-family: Times New Roman;">-f&nbsp;&nbsp; </span>更 新现有的文件。</p>
+<p><span style="font-family: Times New Roman;">-l&nbsp;&nbsp; </span>显 示压缩文件内所包含的文件。</p>
+<p><span style="font-family: Times New Roman;">-p&nbsp;&nbsp; </span>与<span style="font-family: Times New Roman;">-c</span>参数类似，会将解压缩的结果显示到屏幕上，但不会执行任 何的转换。</p>
+<p><span style="font-family: Times New Roman;">-t&nbsp;&nbsp; </span>检 查压缩文件是否正确。，但不解压。</p>
+<p><span style="font-family: Times New Roman;">-u&nbsp;&nbsp; </span>与<span style="font-family: Times New Roman;">-f</span>参数类似，但是除了更新现有的文件外，也会将压缩文件中 的其他文件解压缩到目录中。</p>
+<p><span style="font-family: Times New Roman;">-v&nbsp;&nbsp; </span>执 行是时显示详细的信息。或查看压缩文件目录，但不解压。</p>
+<p><span style="font-family: Times New Roman;">-z&nbsp;&nbsp; </span>仅 显示压缩文件的备注文字。</p>
+<p><span style="font-family: Times New Roman;">-a&nbsp;&nbsp; </span>对 文本文件进行必要的字符转换。</p>
+<p><span style="font-family: Times New Roman;">-b&nbsp;&nbsp; </span>不 要对文本文件进行字符转换。</p>
+<p><span style="font-family: Times New Roman;">-C&nbsp;&nbsp; </span>压 缩文件中的文件名称区分大小写。</p>
+<p><span style="font-family: Times New Roman;">-j&nbsp;&nbsp; </span>不 处理压缩文件中原有的目录路径。</p>
+<p><span style="font-family: Times New Roman;">-L&nbsp;&nbsp; </span>将 压缩文件中的全部文件名改为小写。</p>
+<p><span style="font-family: Times New Roman;">-M&nbsp;&nbsp; </span>将 输出结果送到<span style="font-family: Times New Roman;">more</span>程 序处理。</p>
+<p><span style="font-family: Times New Roman;">-n&nbsp;&nbsp; </span>解 压缩时不要覆盖原有的文件。</p>
+<p><span style="font-family: Times New Roman;">-o&nbsp;&nbsp; </span>不 必先询问用户，<span style="font-family: Times New Roman;">unzip</span>执 行后覆盖原有文件。</p>
+<p><span style="font-family: Times New Roman;">-P&lt;</span>密码<span style="font-family: Times New Roman;">&gt;&nbsp;&nbsp; </span>使 用<span style="font-family: Times New Roman;">zip</span>的密码选项。</p>
+<p><span style="font-family: Times New Roman;">-q&nbsp;&nbsp; </span>执 行时不显示任何信息。</p>
+<p><span style="font-family: Times New Roman;">-s&nbsp;&nbsp; </span>将 文件名中的空白字符转换为底线字符。</p>
+<p><span style="font-family: Times New Roman;">-V&nbsp;&nbsp; </span>保 留<span style="font-family: Times New Roman;">VMS</span>的文件版本信 息。</p>
+<p><span style="font-family: Times New Roman;">-X&nbsp;&nbsp; </span>解 压缩时同时回存文件原来的<span style="font-family: Times New Roman;">UID/GID</span>。</p>
+<p><span style="font-family: Times New Roman;">[.zip</span>文件<span style="font-family: Times New Roman;">]&nbsp;&nbsp; </span>指定<span style="font-family: Times New Roman;">.zip</span>压缩文件。</p>
+<p><span style="font-family: Times New Roman;">[</span>文件<span style="font-family: Times New Roman;">]&nbsp;&nbsp; </span>指定 要处理<span style="font-family: Times New Roman;">.zip</span>压缩文 件中的哪些文件。</p>
+<p><span style="font-family: Times New Roman;">-d&lt;</span>目录<span style="font-family: Times New Roman;">&gt;&nbsp;&nbsp; </span>指 定文件解压缩后所要存储的目录。</p>
+<p><span style="font-family: Times New Roman;">-x&lt;</span>文件<span style="font-family: Times New Roman;">&gt;&nbsp;&nbsp; </span>指 定不要处理<span style="font-family: Times New Roman;">.zip</span>压 缩文件中的哪些文件。</p>
+<p><span style="font-family: Times New Roman;">-Z&nbsp;&nbsp; unzip -Z</span>等 于执行<span style="font-family: Times New Roman;">zipinfo</span>指 令。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>例<span style="font-family: Times New Roman;">1</span>：将压缩文件<span style="font-family: Times New Roman;">text.zip</span>在当前目录下解压缩。</p>
+<p>&nbsp;</p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]# unzip test.zip</span></p>
+<p>&nbsp;</p>
+<p>例<span style="font-family: Times New Roman;">2</span>：将压缩文件<span style="font-family: Times New Roman;">text.zip</span>在指定目录<span style="font-family: Times New Roman;">/tmp</span>下解压缩，如果已有相同的文件存在，要求<span style="font-family: Times New Roman;">unzip</span>命令不覆盖原先的文件。</p>
+<p>&nbsp;</p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]# unzip -n test.zip -d /tmp</span></p>
+<p>&nbsp;</p>
+<p>例<span style="font-family: Times New Roman;">3</span>：查看压缩文件目录，但不解压。</p>
+<p>&nbsp;</p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]# unzip -v test.zip</span></p>
+<p>&nbsp;</p>
+<p>例<span style="font-family: Times New Roman;">4</span>：将压缩文件<span style="font-family: Times New Roman;">test.zip</span>在指定目录<span style="font-family: Times New Roman;">tmp</span>下解压缩，如果已有相同的文件存在，要求<span style="font-family: Times New Roman;">unzip</span>命令覆盖原先的文件。</p>
+<p>&nbsp;</p>
+<p><span style="font-family: Times New Roman;">[root@mysql test]# unzip -o test.zip -d tmp/</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-family: Times New Roman;">使用</span></p>
+<p><span style="font-family: Times New Roman;">unzip "*.zip" </span></p>
+<p><span style="font-family: Times New Roman;">ls *.zip | xargs -n1 unzip</span></p>
+<p><span style="font-family: Times New Roman;">解压当前目录下的所有zip文件</span></p>
+<p>&nbsp;</p>
+</div>
+</div></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<div class = "postDesc">posted @ <span id="post-date">2011-12-25 15:47</span> <a href='http://www.cnblogs.com/lucyjiayou/'>lucyjiayou</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=2301046" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(2301046);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=79551,cb_entryId=2301046,cb_blogApp=currentBlogApp,cb_blogUserGuid='37a6a3af-a5f7-df11-ac81-842b2b196315',cb_entryCreatedDate='2011/12/25 15:47:00';loadViewCount(cb_entryId);</script>
+	
+</div>
+<!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='ad_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='ad_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+		<div id="calendar"><div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+			
+			
+			<DIV id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</DIV>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright &copy;2016 lucyjiayou
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+</body>
+</html>

@@ -1,0 +1,314 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<title>Shell for&amp;while 循环详细总结_Linux编程_Linux公社-Linux系统门户网站</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<link rel="icon" href="../../favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon"/>
+<meta name="description" content="#!/usr/bin/ksh#数字段形式for i in {1..10}do echo $idone#详细列出（字符且项数不多）for File in 1 2 3 4 5"/>
+<meta name="keywords" content="shell,Shell for&amp;while 循环详细总结,编程,Linux编程,Linux Shell,Android,Android教程,JAVA,C语言,Python,HTML5"/>
+<link rel="canonical" href="http://www.linuxidc.com/Linux/2012-02/53030.htm"/>
+<meta name="generator" content="Linux公社"/>
+<meta name="generator" content="Linux"/>
+<link rel="stylesheet" href="../../style/systems/style.css" type="text/css"/>
+<meta name="generator" content="专业的Linux网站"/>
+<script type="text/javascript" src="../../inc/jquery.js"></script>
+<script type="text/javascript" src="../../inc/iwms.js"></script>
+<script type="text/javascript">iwms.urlPrefix="../../";</script>
+
+<script type="text/javascript" src="../../inc/show.js"></script>
+</head>
+<body>
+<div class="topBar">
+	<div class="twidth">
+	
+	<div style="float:right">
+		<script type="text/javascript" src="../../inc/language.js"></script>
+	</div>
+	
+	<div id="topUser">你好，游客 <a href="#" onclick="iwms.logPop()">登录</a>
+	<a href="../../memberreg.aspx" rel="nofollow">注册</a>
+	<a href="../../search.aspx" rel="nofollow">搜索</a>
+	</div>
+	</div>
+</div>
+<div class="twidth">
+<div id="sitehead">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<table width="100%">
+	<tr align="center"><td width="160">
+	<a href="http://www.linuxidc.com/"><img style="filter: chroma(color=#FFFFFF);" src="../../pic/logo.jpg" alt="Linux公社" width="155" height="53" border="0" /></a>
+	</td><td>
+	<div align="center"><script src="/linuxfile/linux.js" type="text/javascript" language="javaScript"></script></div>
+	</td>
+	</tr></table>
+</div>
+</div>
+<div id="navbar">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<a href="../../index.htm" class="first">首页</a><a href="../../it/">Linux新闻</a><a href="../../Linuxit/">Linux教程</a><a href="../../MySql/">数据库技术</a><a href="../../RedLinux/" class="thisclass">Linux编程</a><a href="../../Apache/">服务器应用</a><a href="../../Unix/">Linux安全</a><a href="../../download/">Linux下载</a><a href="../../Linuxrz/">Linux认证</a><a href="../../theme/">Linux主题</a><a href="../../Linuxwallpaper/">Linux壁纸</a><a href="../../linuxsoft/">Linux软件</a><a href="../../digi/">数码</a><a href="../../mobile/">手机</a><a href="../../diannao/">电脑</a>
+
+</div>
+</div>
+
+<div id="navsub">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<a href="../../index.htm">首页</a> → <a href="../../RedLinux/">Linux编程</a>
+</div>
+</div>
+<div class="linuxe1"><script type="text/javascript" language="javaScript" src="/linuxfile/linuxe1.js"></script></div>
+<div class="linux1"><script type="text/javascript" language="javaScript" src="/linuxfile/linux1.js"></script></div>
+<div class="linuxa"><script type="text/javascript" language="javaScript" src="/linuxfile/linuxa.js"></script></div>
+<div class="linuxa1"><script type="text/javascript" language="javaScript" src="/linuxfile/linuxa1.js"></script></div>
+<table id="middle" width="100%" cellspacing="0" cellpadding="0" style="table-layout:fixed">
+<tr valign="top"><td>
+
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<div class="moreR">
+			背景：<script type="text/javascript">WriteBg()</script>
+		</div>
+		<span class="tt">阅读新闻</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm" id="bodyTd">
+		<div id="printBody" style="word-break:break-all;">
+			<div style="text-align:center"><h1 class="aTitle">Shell for&amp;while 循环详细总结</h1></div>
+			
+			<table width="97%" align="center">
+				<tr>
+				<td width="140">[日期：2012-02-02]</td>
+				<td align="center">来源：csdn&nbsp;
+				作者：润明</td>
+				<td width="160" align="right">[字体：<a href="javascript:ContentSize(16)">大</a> <a href="javascript:ContentSize(0)">中</a> <a href="javascript:ContentSize(12)">小</a>]
+				</td></tr>
+			</table>
+<div id="li_all">
+<div id="li_1"><script type="text/javascript" src="/linuxfile/linux201.js"></script></div>
+<div id="li_2"><script type="text/javascript" src="/linuxfile/linux2.js"></script></div>
+</div>
+			<div id="content"><div class="linux19"><script type="text/javascript" language="javaScript" src="/linuxfile/linux19.js"></script></div> <P>#!/usr/bin/ksh</P>
+<P>#数字段形式<BR>for i in {1..10}<BR>do<BR>&nbsp;&nbsp; echo $i<BR>done</P>
+<P>#详细列出（字符且项数不多）<BR>for File in 1 2 3 4 5 <BR>do <BR>&nbsp;&nbsp;&nbsp; echo $File <BR>done </P>
+<P>#对存在的文件进行循环<BR>for shname in `ls *.sh`<BR>do <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name=`echo "$shname" | awk -F. '{print $1}'`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo $name<BR>done</P>
+<P>#查找循环（ls数据量太大的时候也可以用这种方法）<BR>for shname in `find . -type f -name "*.sh"`<BR>do <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name=`echo "$shname" | awk -F/ '{print $2}'`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo $name<BR>done</P>
+<P>#((语法循环--有点像C语法，但记得双括号<BR>for((i=1;i&lt;100;i++))<BR>do<BR>&nbsp;&nbsp;&nbsp; if((i%3==0))<BR>&nbsp;&nbsp;&nbsp; then<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo $i<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; continue<BR>&nbsp;&nbsp;&nbsp; fi<BR>done</P>
+<P>#seq形式 起始从1开始<BR>for i in `seq 100`<BR>do<BR>&nbsp;&nbsp;&nbsp; if((i%3==0))<BR>&nbsp;&nbsp;&nbsp; then<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo $i<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; continue<BR>&nbsp;&nbsp;&nbsp; fi<BR>done</P>
+<P>#while循环注意为方括号[],且注意空格<BR>min=1<BR>max=100<BR>while [ $min -le $max ]<BR>do<BR>&nbsp;&nbsp;&nbsp; echo $min<BR>&nbsp;&nbsp;&nbsp; min=`expr $min + 1`<BR>done&nbsp;&nbsp; </P>
+<P>#双括号形式，内部结构有点像C的语法，注意赋值：i=$(($i+1))<BR>i=1<BR>while(($i&lt;100))<BR>do<BR>&nbsp;&nbsp;&nbsp; if(($i%4==0))<BR>&nbsp;&nbsp;&nbsp; then<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo $i<BR>&nbsp;&nbsp;&nbsp; fi<BR>&nbsp;&nbsp;&nbsp; i=$(($i+1))<BR>done</P>
+<P>#从配置文件读取，并可以控制进程数量<BR>MAX_RUN_NUM=8<BR>cat cfg/res_card_partition.cfg |grep -v '^$'|grep -v "#" | grep -v grep |while read partition <BR>do&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nohup sh inv_res_card_process.sh $partition &gt;log/resCard$partition.log 2&gt;&amp;1 &amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while [ 1 -eq 1 ]<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; do<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; psNum=`ps -ef | grep "inv_res_card_process" | grep -v "grep" | wc -l`<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if [ $psNum -ge $MAX_RUN_NUM ]<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; then<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sleep 5<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; done&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <BR>done </P>
+<P><BR># 三.循环控制语句 <BR># break 命令不执行当前循环体内break下面的语句从当前循环退出. <BR># continue 命令是程序在本循体内忽略下面的语句,从循环头开始执行</P><a href="http://www.linuxidc.com" target="_blank"><img src="/linuxfile/logo.gif" alt="linux" width="15" height="17" /></div>
+<div class="linux301"><script type="text/javascript" src="/linuxfile/linux301.js"></script></div>
+<div class="linux3"><script type="text/javascript" src="/linuxfile/linux3.js"></script></div>
+<div class="linux302"><script type="text/javascript" src="/linuxfile/linux302.js"></script></div>		
+			
+			
+		</div>
+		<div style="padding:0 15px">
+			<ul id="digg" class="digg">
+				<li class="digg1">0</li>
+				<li class="digg2"><a href="###" onclick="iwms.diggIt(this,iwms.aId)">顶一下</a></li>
+			</ul>	
+		</div>
+<div class="linuxfx"><script type="text/javascript" language="javaScript" src="/linuxfile/fx.js"></script></div>	
+<div class="linux8"><script type="text/javascript" language="javaScript" src="/linuxfile/linux8.js"></script></div>
+<div class="linux801"><script type="text/javascript" language="javaScript" src="/linuxfile/linux801.js"></script></div>
+		<div class="nearNews">
+			<div class="prevNews"><a href="../../Linux/2012-02/53023.htm">自己编译Android gdbserver（解决运行 gdbserver时 Segmentation fault 问题）</a></div>
+			<div class="nextNews"><a href="../../Linux/2012-02/53064.htm">Android中style和theme巧用:Android应用程序启动时背景画面的切换</a></div>
+		</div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">相关资讯</span> &nbsp; &nbsp; &nbsp;
+		<a href="../../search.aspx?where=nkey&amp;keyword=202" target="_blank">shell</a>&nbsp; 
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<table width='100%'><tr><td width='50%' valign='top'><ul class='nl'><li><a href="../../Linux/2015-04/116165.htm"  target="_blank" >使用shell进行数学运算</a>&nbsp; <span class="gray">(<span class="time">今 06:14</span>)</span></li>
+<li><a href="../../Linux/2014-07/104471.htm"  target="_blank"  title="Shell在大数据时代的魅力:从一道百度大数据面试题想到的点滴">Shell在大数据时代的魅力:从一道百</a>&nbsp; <span class="gray">(07/21/2014 07:26:42)</span></li>
+<li><a href="../../Linux/2013-10/92126.htm"  target="_blank" >shell用户个人配置文件</a>&nbsp; <span class="gray">(10/30/2013 20:10:00)</span></li>
+</ul></td><td width='50%' valign='top'><ul class='nl'><li><a href="../../Linux/2014-07/104510.htm"  target="_blank" >SHELL中创建临时文件的方法</a>&nbsp; <span class="gray">(07/22/2014 10:45:00)</span></li>
+<li><a href="../../Linux/2014-03/97867.htm"  target="_blank" >shell技巧分享</a>&nbsp; <span class="gray">(03/08/2014 07:15:33)</span></li>
+<li><a href="../../Linux/2013-10/91927.htm"  target="_blank"  title="如何向shell scripts中的交互过程推送文本信息">如何向shell scripts中的交互过程</a>&nbsp; <span class="gray">(10/26/2013 07:37:41)</span></li>
+</ul></td></tr></table>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">图片资讯</span> &nbsp; &nbsp; &nbsp;
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+<div class="imgList"><ul><li style="width:25%"><a href="../../Linux/2012-08/68559.htm"  target="_blank" ><img src="../../upload/2012_08/120818083066141t.jpg" alt="Shell和C输出黑白棋盘" width="120" height="90"/>Shell和C输出黑白棋盘</a></li><li style="width:25%"><a href="../../Linux/2012-08/67051.htm"  target="_blank"  title="Linux下Shell编程简介 PPT"><img src="../../upload/2012_08/12080119458359t.jpg" alt="Linux下Shell编程简介 PPT" width="120" height="90"/>Linux下Shell编程简介</a></li><li style="width:25%"><a href="../../Linux/2011-10/45999.htm"  target="_blank"  title="感受一下完美的Shell脚本编写规范"><img src="../../upload/2011_10/111026193025801t.jpg" alt="感受一下完美的Shell脚本编写规范" width="120" height="90"/>感受一下完美的Shell</a></li><li style="width:25%"><a href="../../Linux/2011-06/37912.htm"  target="_blank"  title="对话UNIX：使用Shell脚本创建好的图形应用程序"><img src="../../upload/2011_06/110629085573241t.jpg" alt="对话UNIX：使用Shell脚本创建好的图形应用程序" width="120" height="90"/>对话UNIX：使用Shell</a></li><li style="width:25%"><a href="../../Linux/2011-05/36091.htm"  target="_blank"  title="Shell脚本实现系统监视统计与数据备份"><img src="../../upload/2011_05/110517082170011t.jpg" alt="Shell脚本实现系统监视统计与数据备份" width="120" height="90"/>Shell脚本实现系统监</a></li><li style="width:25%"><a href="../../Linux/2010-12/30207.htm"  target="_blank"  title="持续改进中, Gnome Shell 2.91.3 发布"><img src="../../upload/2010_12/101201185033481t.jpg" alt="持续改进中, Gnome Shell 2.91.3 发布" width="120" height="90"/>持续改进中, Gnome </a></li><li style="width:25%"><a href="../../Linux/2010-08/28242.htm"  target="_blank"  title="GNOME Shell现状与新概念的对比"><img src="../../upload/2010_08/100829070192373t.jpg" alt="GNOME Shell现状与新概念的对比" width="120" height="90"/>GNOME Shell现状与新</a></li><li style="width:25%"><a href="../../Linux/2010-02/24486.htm"  target="_blank"  title="Ubuntu下编写SHELL实现右键用VIM打开指定文件"><img src="../../upload/2010_02/10021313365774t.jpg" alt="Ubuntu下编写SHELL实现右键用VIM打开指定文件" width="120" height="90"/>Ubuntu下编写SHELL实</a></li></ul></div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	
+	
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">本文评论</span>
+		 	　　<a href="../../remark.aspx?id=53030" target="_blank">查看全部评论</a> <span class="gray">(0)</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<table width="100%" style="margin:6px">		
+		<tr><td width="100%">
+			<form action="" name="fmRemarkSt" onsubmit="return remark.post(this);">
+			<input type="hidden" value="1" name="face"/>
+			表情： <img src="../../pic/b.gif" alt="表情" class="face1" style="cursor:pointer;vertical-align:middle" onclick="remark.dispFace(this)" onmouseout="remark.hideFace()"/>
+			姓名： <input type="text" name="username" value="" maxlength="15" style="width:60px" class="inputbg"/>
+			<input type="checkbox" id="rmAnonymitySt" onclick="remark.anony(this)"/><label for="rmAnonymitySt">匿名</label>
+			字数 <input type="text" id="bodyLen" size="3" readonly="readonly" style="border-width:0;background:transparent;vertical-align:middle" value="0"/>
+			<br/>
+			<textarea name="body" cols="40" rows="4" onkeydown="remark.dispLen(this)" onkeyup="remark.handle(event,this);remark.dispLen(this)" style="width:40em;height:100px;margin:3px 0;overflow-y:auto"></textarea>
+				<br/>
+		　　　<input type="checkbox" checked="checked" id="rmAgreeSt"/><label for="rmAgreeSt">同意评论声明</label>
+		　　　<button type="submit" style="width:50px">发表</button>
+			</form>
+		</td></tr>
+		<tr><td width="100%">
+			评论声明
+			<ul style="list-style-type:square;margin:5px 0 0 1em;padding:0">
+			<li>尊重网上道德，遵守中华人民共和国的各项有关法律法规</li>
+			<li>承担一切因您的行为而直接或间接导致的民事或刑事法律责任</li>
+			<li>本站管理人员有权保留或删除其管辖留言中的任意内容</li>
+			<li>本站有权在网站内转载或引用您的评论</li>
+			<li>参与本评论即表明您已经阅读并接受上述条款</li>
+			</ul>
+		</td></tr>
+		</table>
+		<script type="text/javascript" src="../../inc/remark.js"></script>
+		<script type="text/javascript">
+			remark.maxSize=500;
+			remark.minSize=2;
+			remark.sourceEle=$(document.fmRemarkSt).find("button").get(0);
+			iwms.vCode="D2BDA41E";
+			iwms.user.name.length==0 ? $i("rmAnonymitySt").click() : $i("rmAnonymitySt").form.username.value=iwms.user.name;
+		</script>
+		
+		<div class="reCont" id="reContainer"></div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	
+</td><td width="300" valign="top">
+<div class="linux901"><script type="text/javascript" language="javaScript" src="/linuxfile/linux901.js"></script></div>
+<div class="linux902"><script type="text/javascript" language="javaScript" src="/linuxfile/linux902.js"></script></div>
+<div class="linux903"><script type="text/javascript" language="javaScript" src="/linuxfile/linux903.js"></script></div>
+<div class="linux905"><script type="text/javascript" language="javaScript" src="/linuxfile/linux905.js"></script></div>
+	
+	<div class="lframe">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">最新资讯</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<ul class="nl">
+<li><a href="../../Linux/2015-04/116165.htm" target="_blank">使用shell进行数学运算</a></li>
+<li><a href="../../Linux/2015-04/116164.htm" target="_blank">Elementary OS 0.3 Freya 截图赏析</a></li>
+<li><a href="../../Linux/2015-04/116163.htm" target="_blank">有一款工具叫 Elementary-Tweaks</a></li>
+<li><a href="../../Linux/2015-04/116162.htm" target="_blank" title="YouTube统一PC端与移动端用户界面风格，采用Material Design设计语言">YouTube统一PC端与移动端用户界面风格，采用</a></li>
+<li><a href="../../Linux/2015-04/116161.htm" target="_blank">Mini计算时代来临，计算设备会消失？</a></li>
+<li><a href="../../Linux/2015-04/116160.htm" target="_blank">Apache Web Server：20年发展历程</a></li>
+<li><a href="../../Linux/2015-04/116159.htm" target="_blank">Linux 4.0全新发布！一个特性气死Windows</a></li>
+<li><a href="../../Linux/2015-04/116158.htm" target="_blank">Android应用安全之数据传输安全</a></li>
+<li><a href="../../Linux/2015-04/116157.htm" target="_blank">还记得Flash吗？这些人在努力保存那份记忆</a></li>
+<li><a href="../../Linux/2015-04/116156.htm" target="_blank">三星要与IBM联合开发比特币技术</a></li>
+</ul>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+
+	<div class="lframe">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">本周热门</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<ul class="nl">
+<li><a href="../../Linux/2012-06/63652.htm" target="_blank">PyQt4 精彩实例分析</a></li>
+<li><a href="../../Linux/2012-02/53030.htm" target="_blank">Shell for&amp;while 循环详细总结</a></li>
+<li><a href="../../Linux/2011-02/32603.htm" target="_blank">Android SD卡路径问题以及如何获取SDCard 内存</a></li>
+<li><a href="../../Linux/2013-03/81455.htm" target="_blank">Linux的sleep()和usleep()的使用和区别</a></li>
+<li><a href="../../Linux/2013-06/85499.htm" target="_blank">Android searchView和listview实现搜索</a></li>
+<li><a href="../../Linux/2011-02/32211.htm" target="_blank">./configure,make,make install的作用</a></li>
+<li><a href="../../Linux/2012-02/53764.htm" target="_blank">Python 获得命令行参数的方法</a></li>
+<li><a href="../../Linux/2011-09/42468.htm" target="_blank">Android ArrayAdapter 详解</a></li>
+<li><a href="../../Linux/2011-04/33966.htm" target="_blank">Android核心分析</a></li>
+<li><a href="../../Linux/2011-11/47030.htm" target="_blank">Linux Shell 脚本中字符串的连接方法</a></li>
+</ul>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	<div class="linuxy9"><script type="text/javascript" language="javaScript" src="/linuxfile/y9.js"></script></div>	
+</td></tr>
+</table>
+<div class="linux906"><script type="text/javascript" language="javaScript" src="/linuxfile/linux906.js"></script></div>
+<div id="footer">
+<a href="http://www.linuxidc.com/aboutus.htm">Linux公社简介</a> - <a href="http://www.linuxidc.com/adsense.htm">广告服务</a> - <a href="http://www.linuxidc.com/sitemap.aspx">网站地图</a> - <a href="http://www.linuxidc.com/help.htm">帮助信息</a> - <a href="http://www.linuxidc.com/contactus.htm">联系我们</a><br />本站（LinuxIDC）所刊载文章不代表同意其说法或描述，仅为提供更多信息，也不构成任何建议。<br /><script type="text/javascript" language="javaScript" src="/linuxfile/qq.js"></script><br />
+<script type="text/javascript" language="javaScript" src="/linuxfile/foot.js"></script><br />Copyright &copy; 2006-2015　<a href="http://www.linuxidc.com/">Linux公社</a>　All rights reserved 沪ICP备15008072号-1号
+	<script type="text/javascript">iwms.aId=53030;$(function(){iwms.imgCont=$i('content');iwms.imgResize();InitContStyle();iwms.getVars();})</script>
+	
+</div>
+</div>
+<script type="text/javascript" language="javaScript" src="/linuxren/linuxren1.js"></script>
+<script type="text/javascript" language="javaScript" src="/linuxren/linuxren2.js"></script>
+<script type="text/javascript" language="javaScript" src="/linuxren/linuxren3.js"></script>
+</body>
+</html>

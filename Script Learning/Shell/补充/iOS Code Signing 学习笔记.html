@@ -1,0 +1,770 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <title>iOS Code Signing 学习笔记 - CocoaChina_让移动开发更简单</title>
+    <meta name="keywords" content="代码签名,Code Signing,iOS开发iPhone开发,iOS开发,iPad开发,Mac开发,苹果开发中文站,iPhone开发中文站,CocoaChina首页, Mac OS开发, Cocoa介绍,移动互联网,触控科技,Cocoa,Apple,developer,iOS,iPhone,iPad,iMac,iPod Touch,iPhone5,iPhone4S,iPad3,招聘,iPhone程序员,Objective-c,iPhone应用外包,ios6,ios面试,Cocos2d-x,cocos2d,iTunes,App Store,苹果开发" />
+    <meta name="description" content="CocoaChina前身是全球成立最早规模最大的苹果开发中文站，现致力为所有移动开发者提供资讯服务、问答服务、代码下载、工具库及人才招聘服务" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baidu-tc-cerfication" content="3300a939a1098c27e94457b75a0bb8c1" />
+    <script type='text/javascript'>
+        function gotoMobilePage() {
+            var sUserAgent = navigator.userAgent.toLowerCase();
+            var agent_iphone = /iphone/i;
+            var agent_android = /android/i;
+            //var agent_ipad = /ipad/i;
+            var agent_ipod = /ipod/i;
+            var agent_wphone = /windows phone/i;
+            if(agent_iphone.test(sUserAgent) || agent_android.test(sUserAgent) || agent_ipod.test(sUserAgent) || agent_wphone.test(sUserAgent)){
+                var re = /\/\w+\/\d+\/(\d+)\.html/, 
+                    result = re.exec(window.location.pathname);
+                if ( result )
+                {
+                    window.location.href = "http://www.cocoachina.com/cms/wap.php?action=article&id=" + result[1];
+                } else {
+                    window.location.href = "http://m.cocoachina.com/";
+                }
+            }
+        }
+        gotoMobilePage(); 
+    </script>
+    <link rel="stylesheet" href="http://cdn.cocimg.com/assets/css/global.css?v=20150818" media="all">
+    <link rel="stylesheet" href="http://cdn.cocimg.com/assets/css/index.css?v=20151015" media="all">
+    <link href="http://cdn.cocimg.com/assets/css/module.css?v=20150906" rel="stylesheet">
+    <link href="http://cdn.cocimg.com/assets/css/style.css?v=20150818" rel="stylesheet">
+    <link href="http://cdn.cocimg.com/assets/css/navheader.css?v=20160301" rel="stylesheet" />
+    <script src="http://cdn.cocimg.com/assets/js/jquery.min.js?v=20150818" type="text/javascript"></script>
+    <script type="text/javascript" src="http://cdn.cocimg.com/assets/js/navbar.js?v=20151013"></script>
+    <script type='text/javascript' src='http://js.adm.cnzz.net/js/abase.js'></script>
+    <script type="text/javascript" src="http://s.csbew.com/k.js"></script>
+    
+</head>
+<body>
+
+    <div class="nav-header">
+            <div class="nav-header-top">
+                <div class="nav-logo nav-fl"><a href="/"><img src="http://cdn.cocimg.com/assets/images/logo.png?v=201510272" /></a></div>
+                <div class="nav-list nav-fl">
+                    <ul>
+                        <li><a href="/news/">资讯</a></li>
+                        <li><a href="/bbs/">论坛</a></li>
+                        <li><a target="_blank" href="http://code.cocoachina.com/" title="CODE">代码</a></li>
+                        <li><a href="http://tools.cocoachina.com" title="工具" target='_blank'>工具</a></li>
+                        <li><a target="_blank" href="http://job.cocoachina.com/" title="JOB">招聘</a></li>
+                        <li><a target="_blank" href="http://cvp.cocos.com/" title="CVP">CVP</a></li>
+                        <li><a target="_blank" href="http://waikuai.cocoachina.com/" title="waikuai">外快</a></li>
+                        <li><a target="_blank" href="http://blog.cocoachina.com/" title="blog">博客</a><span class="new-item-flag">new</span></li>
+                    </ul>
+                </div>
+                <div class="nav-search nav-fl">
+                    <div class="nav-search-flag" style="display:block"><img src="http://cdn.cocimg.com/assets/img/search-icon.png?v=20150825" /></div>
+                    <div class="nav-search-form" style="display:none">
+                        <form action="/cms/plus/search.php" name="formsearch" method="post" target="_blank">
+                            <input type="hidden" name="kwtype" value="0" />
+                            <input type="hidden" name="searchtype" value="titlekeyword" />
+                            <input name="keyword" type="text" placeholder="站内搜索" />
+                            <input type="button" />
+                        </form>
+                    </div>
+                </div>
+                <div class="nav-user nav-fr">
+                    <!-- #region 未登录时显示此区域 -->
+                    <div class="nav-user-login" style="display:block">
+                        <a href="/bbs/login.php">登录</a>|
+                        <a href="/bbs/register.php">注册</a>
+                    </div>
+                    <!-- #endregion -->
+                    <!-- #region 已登录时显示此区域 -->
+                    <div class="nav-user-name" style="display:none">
+                        <div><alert></alert><img src="/assets/img/user.png" />Guest</div>
+                        <ul>
+                            <li><a href="#"><img src="/assets/img/i-man.png" />我的主页</a></li>
+                            <li><alert></alert><a href="#"><img src="/assets/img/i-mail.png" />我的消息</a></li>
+                            <li><a href="#"><img src="/assets/img/i-setting.png" />账户设置</a></li>
+                            <li><a href="index-offline.html"><img src="/assets/img/i-logout.png" />退出</a></li>
+                        </ul>
+                    </div>
+                    <!-- #endregion -->
+                </div>
+                <div class="nav-clear"></div>
+            </div>
+        <div class="nav-header-bottom">
+            <ul>
+                <li><a id="ios" href="/ios/" title="ios">iOS开发</a></li>
+                <li><a id="swift" href="/swift/" title="swift">Swift</a></li>
+                <li><a id="app_store" href="/appstore/" title="appstore">App Store研究</a></li>
+                <li><a id="design" href="/design/" title="design">产品设计</a></li>
+                <li><a id="review" href="/review/" title="review">应用</a></li>
+                <li><a id="review" href="/vr/" title="review">VR</a></li>
+                <li><a id="game" href="/game/" title="game">游戏开发</a></li>
+                <li><a id="apple" href="/apple/" title="apple">苹果相关</a></li>
+                <!-- <li><a id="cocos" href="/cocos/" title="cocos">Cocos引擎</a></li>-->
+                <!--<li><a id="webapp" href="/webapp/" title="HTML5">HTML5</a></li>-->
+                <li><a id="android" href="/android/" title="android">安卓相关</a></li>
+                <li><a id="market" href="/market/" title="market">营销推广</a></li>
+                <li><a id="industry" href="/industry/" title="industry">业界动态</a></li>
+                <li><a id="programmer" href="/programmer/" title="programmer">程序人生</a></li>
+            </ul>
+        </div>
+    </div>
+<script language="javascript">
+    function IsPC() {
+        var userAgentInfo = navigator.userAgent;
+        var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPod");
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+        }
+        return flag;
+    }
+    if (!IsPC()){
+           window.location.href = "http://www.cocoachina.com/cms/wap.php?action=article&id=9949";
+    }
+
+</script>
+<!--middle-->
+<div class="middle clearfix">
+    <div class="m-wrap">
+        <div class="m-ad2" style="margin-top:12px;">
+            <div class="ad2-l">
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- CC首页底部左侧72890 -->
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:728px;height:90px"
+                     data-ad-client="ca-pub-1180518835303646"
+                     data-ad-slot="8012423965"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+            <div class="ad2-r">
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- CC资讯页25090 -->
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:250px;height:90px"
+                     data-ad-client="ca-pub-1180518835303646"
+                     data-ad-slot="9489157162"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+        <!--left-->
+        <div class="detail-left float-l">
+            <p class="crumbs"><a href="/" title="首页">首页</a> &gt;</span><a href="/ios" title="iOS开发"><span id="type_name">iOS开发</span></a></p>
+            <div class="detail-main">
+                <h2>iOS Code Signing 学习笔记</h2>
+                <div class="p-ico clearfix">
+                    <div>
+                        <span class="ml0">2014-10-17 10:47</span>
+                        <span>编辑：
+                        <a href="" id="field_author" target="_blank">pockry</a></span>
+                        <span>分类：<a href="/ios/" target="_blank">iOS开发</a></span>
+                        <span id="source">来源：<a href="http://wangzz.github.io/blog/2014/10/16/ios-code-signing-xue-xi-bi-ji/" target="_blank">王中周的技术博客</a></span>
+
+                        <div class="float-r">
+                            <span id="artical_comment_cnt"><i></i></span>
+                            <span><i class="view"></i><script src="/cms/plus/count.php?view=yes&aid=9949&mid=4199" language="javascript"></script></span>
+                    </div>
+                    </div>
+                </div>
+                <div class="p-ico clearfix">
+                    <p class="related float-l"><a href="/cms/tags.php?/iOS%E5%BC%80%E5%8F%91/" target="_blank">iOS开发</a><a href="/cms/tags.php?/%E4%BB%A3%E7%A0%81%E7%AD%BE%E5%90%8D/" target="_blank">代码签名</a><a href="/cms/tags.php?/Code+Signing/" target="_blank">Code Signing</a></p>
+                    <input type="hidden" id="article_id"  value="9949"/>
+                </div>
+                <div class="adsbox clearfix">
+                    <div class="float-l">
+                        <div class="float-l"><b>招聘信息：</b></div>
+                        <ul class="float-l" id="invitelist" style="margin-top: 0px;">
+                            <li><a href='http://job.cocoachina.com/job/show?id=67768' target='_blank'>高级iOS手机应用软件开发工程师（培训讲师）</a></li><li><a href='http://job.cocoachina.com/job/show?id=67770' target='_blank'>高级Cocos2d-x游戏开发工程师（培训讲师）</a></li><li><a href='http://job.cocoachina.com/job/show?id=67573' target='_blank'>高级PHP开发工程师</a></li><li><a href='http://job.cocoachina.com/job/show?id=67356' target='_blank'>iOS工程师</a></li><li><a href='http://job.cocoachina.com/job/show?id=67462' target='_blank'>iOS手机软件开发工程师</a></li><li><a href='http://job.cocoachina.com/job/show?id=67159' target='_blank'>资深iOS开发工程师</a></li><li><a href='http://job.cocoachina.com/job/show?id=67120' target='_blank'>iOS 开发工程师</a></li><li><a href='http://job.cocoachina.com/job/show?id=67767' target='_blank'>iOS高级工程师</a></li><li><a href='http://job.cocoachina.com/job/show?id=67498' target='_blank'>java高级软件工程师</a></li><li><a href='http://job.cocoachina.com/job/show?id=67499' target='_blank'>iOS软件工程师</a></li><li><a href='http://job.cocoachina.com/job/show?id=67500' target='_blank'>Web后端高级开发工程师</a></li>
+                            <!--<script src="http://www.cocoachina.com/bbs/new.php?action=article&fidin=26&digest=0&postdate=0&author=0&fname=0&hits=0&replies=0&pre=1&num=3&length=120&order=2" charset="gbk"></script>-->
+                        </ul>
+                    </div>
+                    <div class="float-r">
+                        <a href="javascript:void(0)" class="prev"></a>
+                        <a href="javascript:void(0)" class="next"></a>
+                    </div>
+                </div>
+                <div id="detailbody" class="field_body">
+                    <p>&nbsp;最近看了objc.io上第17期中的文章 《<a href="http://www.objc.io/issue-17/inside-code-signing.html" target="_blank">Inside Code Signing</a>》 对应的中文翻译版 《<a href="http://objccn.io/issue-17-2/" target="_blank">代码签名探析</a>》 ，受益颇深，对iOS代码签名机制有了进一步的认识。想了解详细内容建议大家还是去看原文好了。</p><p>下面是对此文章的理解再结合自己之前对该部分的认识写出的学习笔记。本文的前提是已经对非对称加密有了一定的了解。</p><p><span style="color: rgb(0, 176, 80);"><strong>一、数字签名（digital signature）</strong></span></p><p>对指定信息使用哈希算法，得到一个固定长度的信息摘要，然后再使用 私钥 （注意必须是私钥）对该摘要加密，就得到了数字签名。所谓的代码签名就是这个意思。</p><p><span style="color: rgb(0, 176, 80);"><strong>二、数字证书（digital certificate）</strong></span></p><p><strong>证书生成</strong></p><p>开发者在申请iOS开发证书时，需要通过keychain生成一个CSR文件（Certificate Signing Request），提交给苹果的&nbsp;Apple Worldwide Developer Relations Certification Authority(WWDR)证书认证中心进行签名，最后从苹果官网下载并安装使用。这个过程中还会产生一个私钥，证书和私钥在keychain中得位置如图：</p><p style="text-align:center"><img style="width:550px" src="http://cn.cocos2d-x.org/uploads/20141017/1413513231172688.png" title="1413513231172688.png" alt="iphone-developer-keychain.png"/></p><p><strong>证书组成</strong></p><p>经过WWDR数字签名后的数字证书长这个样子：</p><p style="text-align:center"><img src="http://cn.cocos2d-x.org/uploads/20141017/1413513506741857.png" title="1413513506741857.png" alt="20130603170838968.png"/></p><p>其中包含两大部分：</p><p>· 证书本身</p><p>包含用户的公钥、用户个人信息、证书颁发机构信息、证书有效期等信息。</p><p>· 证书签名</p><p>WWDR将上述证书本身内容的使用哈希算法得到一个固定长度的信息摘要，然后使用自己的私钥对该信息摘要加密生成数字签名，整个过程如图所示：</p><p style="text-align:center"><img src="http://cn.cocos2d-x.org/uploads/20141017/1413513561110690.png" title="1413513561110690.png" alt="20130603170752859.png"/></p><p><strong>证书使用</strong></p><p>iOS系统原本就持有WWDR的公钥，系统首先会对证书内容通过指定的哈希算法计算得到一个信息摘要；然后使用WWDR的公钥对证书中包含的数字签名解密，从而得到经过WWDR的私钥加密过的信息摘要；最后对比两个信息摘要，如果内容相同就说明该证书可信。整个过程如图所示：</p><p style="text-align:center"><img style="width:550px" src="http://cn.cocos2d-x.org/uploads/20141017/1413513607977213.png" title="1413513607977213.png" alt="20130603170924312.png"/></p><p>在验证了证书是可信的以后，iOS系统就可以获取到证书中包含的开发者的公钥，并使用该公钥来判断代码签名的可用性了。</p><p><strong>证书存在的意义</strong></p><p>通过证书使用过程可以看出，证书本身只是一个中间媒介，iOS系统对证书并不关心，它其实只想要证书中包含的开发者的公钥！！</p><p>但是开发者怎么才能证明公钥是自己的呢？iOS安全系统怎么才能相信这个公钥就是这个开发者的呢？</p><p>不管是哪一个开发者对iOS的安全系统说，这个公钥就是我的，系统是都不相信的，即系统对开发者有着百分之百的不信任感。但是iOS安全系统对自家的WWDR是可信任的，苹果将WWDR的公钥内置在了iOS系统中。有了证书，iOS安全系统只需要通过WWDR的公钥就可以获取到任何一个开发者的可信任的公钥了，这就是证书存在的意义！！</p><p><span style="color: rgb(0, 176, 80);"><strong>三、公钥（public key）</strong></span></p><p>公钥被包含在数字证书里，数字证书又被包含在描述文件(Provisioning File)中，描述文件在应用被安装的时候会被拷贝到iOS设备中。</p><p>iOS安全系统通过证书就能够确定开发者身份，就能够通过从证书中获取到的公钥来验证开发者用该公钥对应的私钥签名后的代码、资源文件等有没有被更改破坏，最终确定应用能否合法的在iOS设备上合法运行。</p><p><span style="color: rgb(0, 176, 80);"><strong>四、私钥（private key）</strong></span></p><p>每个证书（其实是公钥）都对应有一个私钥，</p><p>私钥会被用来对代码、资源文件等签名。只有开发证书和描述文件是没办法正常调试的，因为没有私钥根本无法签名。</p><p>此后的内容基本都是从《代码签名探析》摘抄过来的笔记，建议大家看原文好了。</p><p><span style="color: rgb(0, 176, 80);"><strong>五、签名相关命令</strong></span></p><p>快捷查看系统中能用来对代码进行签名的证书</p><p>可以使用如下命令：</p><pre class="brush:js;toolbar:false">$security&nbsp;find-identity&nbsp;-v&nbsp;-p&nbsp;codesigning&nbsp;&nbsp;
+&nbsp;&nbsp;1)&nbsp;F10B42FFDE18DF28BA21190121439F2E04BEE4B8&nbsp;"iPhone&nbsp;Developer:&nbsp;weizheng&nbsp;li&nbsp;(P7QJ74LFSA)"
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;valid&nbsp;identities&nbsp;found</pre><p>这就说明当前有一个同时有公钥和私钥的可用证书。</p><p><strong>对未签名app手动签名</strong></p><p>使用如下命令：</p><pre class="brush:js;toolbar:false">$&nbsp;codesign&nbsp;-s&nbsp;&#39;iPhone&nbsp;Developer:&nbsp;Thomas&nbsp;Kollbach&nbsp;(7TPNXN7G6K)&#39;&nbsp;Example.app</pre><p><strong>对已签名app重新签名</strong></p><p>为了重新设置签名，你必须带上 -f 参数，有了这个参数，codesign 会用你选择的签名替换掉已经存在的那一个：</p><pre class="brush:js;toolbar:false">$&nbsp;codesign&nbsp;-f&nbsp;-s&nbsp;&#39;iPhone&nbsp;Developer:&nbsp;Thomas&nbsp;Kollbach&nbsp;(7TPNXN7G6K)&#39;&nbsp;Example.app</pre><p><strong>查看指定app的签名信息</strong></p><p>codesign 还可以为你提供有关一个可执行文件签名状态的信息，这些信息在出现不明错误时会提供巨大的帮助：</p><pre class="brush:js;toolbar:false">$&nbsp;codesign&nbsp;-vv&nbsp;-d&nbsp;Example.app</pre><p>会列出以下有关 Example.app 的签名信息：</p><pre class="brush:js;toolbar:false">Executable=/Users/toto/Library/Developer/Xcode/DerivedData/Example-cfsbhbvmswdivqhekxfykvkpngkg/Build/Products/Debug-iphoneos/Example.app/Example&nbsp;&nbsp;
+Identifier=ch.kollba.example&nbsp;&nbsp;
+Format=bundle&nbsp;with&nbsp;Mach-O&nbsp;thin&nbsp;(arm64)&nbsp;&nbsp;
+CodeDirectory&nbsp;v=20200&nbsp;size=26663&nbsp;flags=0x0(none)&nbsp;hashes=1324+5&nbsp;location=embedded&nbsp;&nbsp;
+Signature&nbsp;size=4336&nbsp;&nbsp;
+Authority=iPhone&nbsp;Developer:&nbsp;Thomas&nbsp;Kollbach&nbsp;(7TPNXN7G6K)&nbsp;&nbsp;
+Authority=Apple&nbsp;Worldwide&nbsp;Developer&nbsp;Relations&nbsp;Certification&nbsp;Authority&nbsp;&nbsp;
+Authority=Apple&nbsp;Root&nbsp;CA&nbsp;&nbsp;
+Signed&nbsp;Time=29.09.2014&nbsp;22:29:07&nbsp;&nbsp;
+Info.plist&nbsp;entries=33&nbsp;&nbsp;
+TeamIdentifier=DZM8538E3E&nbsp;&nbsp;
+Sealed&nbsp;Resources&nbsp;version=2&nbsp;rules=4&nbsp;files=120&nbsp;&nbsp;
+Internal&nbsp;requirements&nbsp;count=1&nbsp;size=184</pre><p><strong>验证签名文件的完整性</strong></p><p>检查已签名的文件是否完整可以使用如下命令：</p><pre class="brush:js;toolbar:false">$&nbsp;codesign&nbsp;--verify&nbsp;Example.app</pre><p>就像大多数 UNIX 工具一样，没有任何输出代表签名是完好的。如果修改一下这个二进制文件：</p><pre class="brush:js;toolbar:false">$&nbsp;echo&nbsp;&#39;lol&#39;&nbsp;>>&nbsp;Example.app/Example
+$&nbsp;codesign&nbsp;--verify&nbsp;Example.app
+Example.app:&nbsp;main&nbsp;executable&nbsp;failed&nbsp;strict&nbsp;validation</pre><p>和预料中的一样，修改已经签名的应用会导致数字签名验证不通过。</p><p><span style="color: rgb(0, 176, 80);"><strong>六、资源文件签名</strong></span></p><p>iOS 和 OS X 
+的应用和框架则是包含了它们所需要的资源在其中的。这些资源包括图片和不同的语言文件，资源中也包括很重要的应用组成部分例如 XIB/NIB 
+文件，存档文件(archives)，甚至是证书文件。所以为一个程序包设置签名时，这个包中的所有资源文件也都会被设置签名。</p><p>为了达到为所有文件设置签名的目的，签名的过程中会在程序包（即Example.app）中新建一个叫做 _CodeSignatue/CodeResources 的文件，这个文件中存储了被签名的程序包中所有文件的签名。你可以自己去查看这个签名列表文件，它仅仅是一个 plist 格式文件。</p><p>这个列表文件中不光包含了文件和它们的签名的列表，还包含了一系列规则，这些规则决定了哪些资源文件应当被设置签名。伴随 OS X 10.10 
+DP 5 和 10.9.5 版本的发布，苹果改变了代码签名的格式，也改变了有关资源的规则。如果你使用10.9.5或者更高版本的 codesign
+ 工具，在 CodeResources 文件中会有4个不同区域，其中的 rules 和 files 是为老版本准备的，而 files2 和 rules2 是为新的第二版的代码签名准备的。最主要的区别是在新版本中你无法再将某些资源文件排除在代码签名之外，在过去你是可以的，只要在被设置签名的程序包中添加一个名为 ResourceRules.plist
+ 的文件，这个文件会规定哪些资源文件在检查代码签名是否完好时应该被忽略。但是在新版本的代码签名中，这种做法不再有效。所有的代码文件和资源文件都必须
+设置签名，不再可以有例外。在新版本的代码签名规定中，一个程序包中的可执行程序包，例如扩展 
+(extension)，是一个独立的需要设置签名的个体，在检查签名是否完整时应当被单独对待。</p><p><span style="color: rgb(0, 176, 80);"><strong>七、授权文件（entitlements）</strong></span></p><p>在 iOS 上你的应用能做什么依然是沙盒限制的，这些限制大多情况下都由授权文件（entitlements）来决定。授权机制决定了哪些系统资源在什么情况下允许被一个应用使用，简单的说它就是一个沙盒的配置列表。</p><p>运行如下命令：</p><pre class="brush:js;toolbar:false">$&nbsp;codesign&nbsp;-d&nbsp;--entitlements&nbsp;-&nbsp;Example.app</pre><p>会得到类似的结果：</p><pre class="brush:js;toolbar:false"><?xml&nbsp;version="1.0"&nbsp;encoding="UTF-8"?>&nbsp;&nbsp;
+<!DOCTYPE&nbsp;plist&nbsp;PUBLIC&nbsp;"-//Apple//DTD&nbsp;PLIST&nbsp;1.0//EN"&nbsp;"http://www.apple.com/DTDs/PropertyList-1.0.dtd">&nbsp;&nbsp;
+<plist&nbsp;version="1.0">&nbsp;&nbsp;
+<dict>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<key>application-identifier</key>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<string>7TPNXN7G6K.ch.kollba.example</string>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<key>aps-environment</key>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<string>development</string>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<key>com.apple.developer.team-identifier</key>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<string>7TPNXN7G6K</string>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<key>com.apple.developer.ubiquity-container-identifiers</key>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<array>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<string>7TPNXN7G6K.ch.kollba.example</string>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</array>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<key>com.apple.developer.ubiquity-kvstore-identifier</key>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<string>7TPNXN7G6K.ch.kollba.example</string>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<key>com.apple.security.application-groups</key>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<array>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<string>group.ch.kollba.example</string>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</array>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<key>get-task-allow</key>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<true/>
+</dict>&nbsp;&nbsp;
+</plist></pre><p>在 Xcode 的 Capabilities 选项卡下选择一些选项之后，Xcode 就会生成这样一段 XML。 Xcode 会自动生成一个 .entitlements
+ 文件，然后在需要的时候往里面添加条目。当构建整个应用时，这个文件也会提交给 codesign 
+作为应用所需要拥有哪些授权的参考。这些授权信息必须都在开发者中心的 App ID 
+中启用，并且包含在后文介绍的描述文件中。在构建应用时需要使用的授权文件可以在 Xcode build setting 中的 code signing entitlements中设置。</p><p>在新版本的 Xcode 6 之后，授权信息列表会以 Example.app.xcent 这样的名字的文件形式包含在应用包中。这么做或许是为了在出现配置错误时提供更加有用的错误信息。</p><p><span style="color: rgb(0, 176, 80);"><strong>八、描述文件（provisioning file）</strong></span></p><p>在整个代码签名和沙盒机制中有一个组成部分将签名，授权和沙盒联系了起来，那就是描述文件 (provisioning profiles)。</p><p><strong>OS X中保存目录</strong></p><p>Xcode 将从开发者中心下载的全部配置文件都放在了这里：</p><pre class="brush:js;toolbar:false">~/Library/MobileDevice/Provisioning&nbsp;Profiles</pre><p><strong>文件格式</strong></p><p>描述文件并不是一个普通的plist文件，它是一个根据密码讯息语法 (Cryptographic Message Syntax) 加密的文件。</p><p>以XML格式查看该文件的命令：</p><pre class="brush:js;toolbar:false">$&nbsp;security&nbsp;cms&nbsp;-D&nbsp;-i&nbsp;example.mobileprovision</pre><p><strong>文件内容</strong></p><p>描述文件主要包含以下内容：</p><p>· UUID</p><p>每一个配置文件都有它自己的 UUID 。Xcode 会用这个 UUID 来作为标识，记录你在 build settings 中选择了哪一个配置文件。</p><p>· ProvisionedDevices</p><p>记录所有可用于调试的设备ID。</p><p>· DeveloperCertificates</p><p>包含了可以为使用这个配置文件的应用签名的所有证书。所有的证书都是基于 Base64 编码符合 PEM (Privacy Enhanced Mail, RFC 1848) 格式的。</p><p>· Entitlements</p><p>有关前面讲到的配置文件的所有内容都会被保存在这里。</p>
+                </div>
+                <div id="page" style="padding:0"></div>
+
+                <div class="wx_article">
+                    <div class="article_weixin">
+                        <img src="http://cdn.cocimg.com/cms/templets/images/article_weixin.jpg" width="131" height="131" alt="搜索CocoaChina微信公众号：CocoaChina"/>
+                        <div class="article_scan">微信扫一扫</div>
+                        <div class="article_txt" ><span style="color:#999999">订阅每日移动开发及APP推广热点资讯<br/>公众号：</span>CocoaChina</div>
+                    </div>
+                </div>
+
+               <div class="clearfix tgbox">
+                    <a href="http://www.cocoachina.com/deliver.php" class="tg float-l" target="_blank">我要投稿</a>&nbsp;&nbsp;
+                    <a style="margin-left:10px"  href="javascript:void(0)" onClick="add_favors(9949,'iOS Code Signing 学习笔记')" class="tg float-l" >收藏文章</a>
+                    <div class="share float-r">分享到：
+                        <div class="bdsharebuttonbox" id="sharediv"><a href="#" class="bds_more" data-cmd="more"></a> <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+                    </div>
+                </div>
+
+
+                <a class="zanbox" href="javascript:void(0)" id="zanbox" onClick="postDigg('good',9949)" title="哎呦，不错噢，赞一个" >
+                    <strong id="newdigg">
+                     <script src="/cms/plus/count.php?view=yes&digg_id=9949&mid=4199" language="javascript"></script>
+                    </strong>
+                </a>
+            </div>
+
+            <div class="article-prev">上一篇：<a href='/ios/20141016/9932.html'>详解iOS 8和OS X Yosemite的Handoff</a> </div>
+            <div class="article-next">下一篇：<a href='/ios/20141017/9955.html'>再看知名应用背后的第三方开源项目</a> </div>
+
+            <!--相关资讯-->
+            <div class="part-wrap clearfix">
+                <h3>相关资讯</h3>
+                <ul class="info-list clearfix">
+                    <li>
+                        <a href="/ios/20160316/15674.html" target="_blank" title="前不久在微博上看到一篇文章，《UNRECOGNIZED SELECTOR SENT TO INSTANCE 问题快速定位的方法》 其中讲了iOS unrecognized selector sent to instance问题的快速定位方法，方法是不错的，但是实际测试发现文中的方法并非">Unrecognized Selector Sent to Instance问题</a>
+                     </li>
+<li>
+                        <a href="/ios/20160307/15585.html" target="_blank" title=" 本篇主要回顾一下－－iOS函数式编程 && 响应式编程概念 ,如何一步步实现函数式编程的过程，对阅读Masonry && SnapKit源码有一定的帮助。">深入浅出－iOS函数式编程的实现 && 响应式编程概念</a>
+                     </li>
+<li>
+                        <a href="/ios/20160301/15486.html" target="_blank" title="圆角（RounderCorner）是一种很常见的视图效果，相比于直角，它更加柔和优美，易于接受。但很多人并不清楚如何设置圆角的正确方式和原理。设置圆角会带来一定的性能损耗，如何提高性能是另一个需">iOS 高效添加圆角效果实战讲解</a>
+                     </li>
+<li>
+                        <a href="/ios/20160308/15476.html" target="_blank" title="我们平时也使用了很多的Xcode插件,虽然官方对于插件制作没有提供任何支持,但是加载三方的插件,默认还是被允许的">Xcode7 插件制作入门</a>
+                     </li>
+<li>
+                        <a href="/ios/20160301/15459.html" target="_blank" title="在开发过程中，经常会使用到第三框架，我们通过一个pod install命令，很方便的就将第三方框架加到我们自己的项目中。
+如果我们也想将自己写的组件或库开源出去，让别人也可以通过pod install命令安">如何发布自己的开源框架到CocoaPods</a>
+                     </li>
+<li>
+                        <a href="/ios/20160229/15455.html" target="_blank" title="在Auto Layout的使用中，有两个很重要的布局概念：‘Content Compression Resistance’和‘Content Hugging，从字面的翻译我们大概可以分别翻译为‘压缩阻力‘以及’内容吸附’。但是光从字面意思来理解很难知">Auto Layout压缩阻力及内容吸附讲解</a>
+                     </li>
+<li>
+                        <a href="/ios/20160226/15440.html" target="_blank" title="招聘高峰期来了，大家都非常积极地准备着跳槽，那么去一家公司面试就会有一堆新鲜的问题，可能不会，也可能会，但是了解不够深。本篇文章为群里的小伙伴们去宝库公司的笔试题，由笔者整理并">宝库iOS开发笔试题</a>
+                     </li>
+<li>
+                        <a href="/ios/20160308/15390.html" target="_blank" title="今天有个小需求，在点击导航条上的返回按钮之前要调用某个API，并弹出UIAlertView来显示，根据用户的选项判断是否是返回还是继续留在当前控制器。举个简单的例子，当点击导航条上的左上角返回按">如何让leftBarButtonItem与右滑手势兼得</a>
+                     </li>
+<li>
+                        <a href="/ios/20160224/15369.html" target="_blank" title="在iOS 9中，我们有不同的方法来渲染web内容，并且根据具体的需求，开发者可以评估不同的方法，然后选择一个更适合他们的方法。让我们看看开发者可以采用的不同的解决方案。">iOS开发：WebKit、Safari以及SafariViewController</a>
+                     </li>
+<li>
+                        <a href="/ios/20160226/15366.html" target="_blank" title="最近公司要求把维护期的项目都集成极光推送，集成期间遇到一些小坑，特此在这总结！">iOS集成极光推送，绕过一些坑</a>
+                     </li>
+
+                </ul>
+            </div>
+            <div class="clearfix" style="margin-top:20px;" >
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- CC评论框 -->
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:750px;height:90px"
+                     data-ad-client="ca-pub-1180518835303646"
+                     data-ad-slot="8242010366"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+            <!-- 评论模块start -->
+            
+            <div class="clearfix" id="commnet_list_holder" style="margin-bottom:50px;">
+                <div class="glab-comment-form">
+                    <div class="dcbt">我来说两句</div>
+                    <div class="user-head">
+                        <img id="user_face_url" src="http://cdn.cocimg.com/bbs/images/face/none.gif" height="43" width="43" alt="">
+                    </div>
+                    <div class="form-region">
+                        <textarea name="comment" id="main_comment_content" cols="30" rows="10" placeholder="你怎么看？快来评论一下吧！"></textarea>
+                        <a class="submitform" id="main_comment_bt">发表评论</a>
+                        <div class="unlogin-mask">
+                            <div>您还没有登录！请<a href="/bbs/login.php">登录</a>或<a href="/bbs/register.php">注册</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="glab-comment-callback-msg" class="glab-comment-info"></div>
+                <div class="glab-comment-title">所有评论（<span>0</span>）</div>
+                <div class="glab-commentlist" id="commentlist">
+                    <a id="refresh_comment_btn" href="javascript:;" onclick="$('#morecomment').trigger('click')">刷新评论</a>
+                </div>
+                <div class="glab-comment-more" id="morecomment" style="display:none">
+                    更多评论
+                </div>
+            </div>
+            
+            <!-- 评论模块end -->
+
+
+        </div>
+        <!--./left-->
+        <!--侧边栏-->
+        <div class="clearfix newslist">
+            <div class="rightSide detail-right float-r"  >
+                <!--两周热门资讯推荐-->
+                <div>
+                    <div class="part-wrap clearfix">
+                        <h3>热门资讯</h3>
+                        <ul class="related-hot">
+                            <li class="clearfix"><a href="http://www.cocoachina.com/ios/20160307/15501.html" class="float-l pic" target="_blank" title="源码：自己用Python写的iOS项目自动打包脚本"><img src="http://cc.cocimg.com/api/uploads/160304/8841db4c0962509cc3dfcbe5662be025.jpg"  style="max-height:60px" alt="源码：自己用Python写的iOS项目自动打包脚本"/></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20160307/15501.html" target="_blank" title="源码：自己用Python写的iOS项目自动打包脚本">源码：自己用Python写的iOS项目自动打包脚本</a></p><p class="hits">点击量<span>41160</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20160311/15660.html" class="float-l pic" target="_blank" title="iOS动画浅汇"><img src="http://cc.cocimg.com/api/uploads/160311/c2d1474639bcde2b46518572affc5e8b.jpg"  style="max-height:60px" alt="iOS动画浅汇"/></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20160311/15660.html" target="_blank" title="iOS动画浅汇">iOS动画浅汇</a></p><p class="hits">点击量<span>17901</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20160304/15558.html" class="float-l pic" target="_blank" title="每个Xcode开发者应该知道的七个使用技巧"><img src="http://cc.cocimg.com/api/uploads/160303/68bb01bd231037d36661ace4b412b1e7.jpg"  style="max-height:60px" alt="每个Xcode开发者应该知道的七个使用技巧"/></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20160304/15558.html" target="_blank" title="每个Xcode开发者应该知道的七个使用技巧">每个Xcode开发者应该知道的七个使用技巧</a></p><p class="hits">点击量<span>14395</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/programmer/20160311/15649.html" class="float-l pic" target="_blank" title="2015年iOS开发者收入调查报告--企业开发者"><img src="http://cc.cocimg.com/api/uploads/160310/6f535e71dbd647f1dd90502c5a859bed.jpg"  style="max-height:60px" alt="2015年iOS开发者收入调查报告--企业开发者"/></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/programmer/20160311/15649.html" target="_blank" title="2015年iOS开发者收入调查报告--企业开发者">2015年iOS开发者收入调查报告--企业开发者</a></p><p class="hits">点击量<span>9506</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/programmer/20160314/15670.html" class="float-l pic" target="_blank" title="程序员如何优雅的挣零花钱？"><img src="http://cc.cocimg.com/api/uploads/160314/7c11b4976504c568002636bca4941cc8.jpg"  style="max-height:60px" alt="程序员如何优雅的挣零花钱？"/></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/programmer/20160314/15670.html" target="_blank" title="程序员如何优雅的挣零花钱？">程序员如何优雅的挣零花钱？</a></p><p class="hits">点击量<span>7916</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20160307/15586.html" class="float-l pic" target="_blank" title="动画篇-layout动画初体验"><img src="http://cc.cocimg.com/api/uploads/160307/2bf66ec638f783f332c57312e0a0a31b.gif"  style="max-height:60px" alt="动画篇-layout动画初体验"/></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20160307/15586.html" target="_blank" title="动画篇-layout动画初体验">动画篇-layout动画初体验</a></p><p class="hits">点击量<span>7747</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/swift/20160311/15644.html" class="float-l pic" target="_blank" title="无需改写已有代码，4步从Objective-C过渡到Swift！"><img src="http://cc.cocimg.com/api/uploads/160310/d2bf46af4900edcaa764c0590daad34f.jpg"  style="max-height:60px" alt="无需改写已有代码，4步从Objective-C过渡到Swift！"/></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/swift/20160311/15644.html" target="_blank" title="无需改写已有代码，4步从Objective-C过渡到Swift！">无需改写已有代码，4步从Objective-C过渡到Swift！</a></p><p class="hits">点击量<span>7641</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/apple/20160311/15652.html" class="float-l pic" target="_blank" title="苹果发布邀请函 3月22日又有新iPhone要来了"><img src="http://cc.cocimg.com/api/uploads/160311/595e1c24fcf9cc047a53b292dec2ffef.jpg"  style="max-height:60px" alt="苹果发布邀请函 3月22日又有新iPhone要来了"/></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/apple/20160311/15652.html" target="_blank" title="苹果发布邀请函 3月22日又有新iPhone要来了">苹果发布邀请函 3月22日又有新iPhone要来了</a></p><p class="hits">点击量<span>6675</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20160309/15605.html" class="float-l pic" target="_blank" title="iOS 视图控制器转场详解"><img src="http://cc.cocimg.com/api/uploads/160308/ed7a5bebd36d29599868a4ab0900ad81.jpg"  style="max-height:60px" alt="iOS 视图控制器转场详解"/></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20160309/15605.html" target="_blank" title="iOS 视图控制器转场详解">iOS 视图控制器转场详解</a></p><p class="hits">点击量<span>6067</span></p></div></li><li class="clearfix noborder-b"><a href="http://www.cocoachina.com/appstore/20160309/15593.html" class="float-l pic" target="_blank" title="一个减少App Store审核被拒的小技巧--善用iTunes Connect中被遗忘的字段"><img src="http://cc.cocimg.com/api/uploads/160308/7ddb26935fe8515b9e0134140ff0687e.jpg"  style="max-height:60px" alt="一个减少App Store审核被拒的小技巧--善用iTunes Connect中被遗忘的字段"/></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/appstore/20160309/15593.html" target="_blank" title="一个减少App Store审核被拒的小技巧--善用iTunes Connect中被遗忘的字段">一个减少App Store审核被拒的小技巧--善用iTunes Connect中被遗忘的字段</a></p><p class="hits">点击量<span>5314</span></p></div></li>
+                        </ul>
+                    </div>
+               </div>
+               <!--./两周热门资讯推荐-->
+               <!--综合评论-->
+                <div class="part-wrap clearfix" style="margin-top: 15px;">
+                    <h3>综合评论</h3>
+                    <ul class="related-comment clearfix" id="all_comments_holder">
+                        <li><span class="hide_comment">先来抢沙发~</span><br/><p><span>doublek</span><span>评论了</span><a href="http://www.cocoachina.com/ios/20160317/15696.html" title="你真的了解iOS代理设计模式吗？" target="_blank" ><span>你真的了解iOS代理设计模式吗？</span></a></p></li><li><span class="hide_comment">我测试了oc&nbsp;swift&nbsp;，swift&nbsp;直接报错，oc修改Label内容不起作用，修改Button的事件，就可以，缺陷还太多了。</span><br/><p><span>cooliean</span><span>评论了</span><a href="http://www.cocoachina.com/ios/20160316/15651.html" title="Injection for Xcode：成吨的提高..." target="_blank" ><span>Injection for Xcode：成吨的提高...</span></a></p></li><li><span class="hide_comment">mark</span><br/><p><span>李云新</span><span>评论了</span><a href="http://www.cocoachina.com/ios/20160316/15685.html" title="在写一个iOS应用之前必须做的7件事(附相关资源)" target="_blank" ><span>在写一个iOS应用之前必须做的7件事(附相关资源)</span></a></p></li><li><span class="hide_comment">诺基亚之前就有这样的功能</span><br/><p><span>MathisonZ</span><span>评论了</span><a href="http://www.cocoachina.com/apple/20160316/15692.html" title="苹果新专利允许iPhone一步拍摄全景照片" target="_blank" ><span>苹果新专利允许iPhone一步拍摄全景照片</span></a></p></li><li><span class="hide_comment">j&nbsp;j</span><br/><p><span>聪明的猩猩</span><span>评论了</span><a href="http://www.cocoachina.com/ios/20160317/15696.html" title="你真的了解iOS代理设计模式吗？" target="_blank" ><span>你真的了解iOS代理设计模式吗？</span></a></p></li><li><span class="hide_comment">听听就行了，不能往心里去</span><br/><p><span>TonyShng</span><span>评论了</span><a href="http://www.cocoachina.com/programmer/20160314/15669.html" title="马云：最讨厌天天说公司不好 还不走的人" target="_blank" ><span>马云：最讨厌天天说公司不好 还不走的人</span></a></p></li><li><span class="hide_comment">交了岂不是苹果销售量大幅下降？</span><br/><p><span>hbxfnsm</span><span>评论了</span><a href="http://www.cocoachina.com/apple/20160316/15694.html" title="FBI威胁强迫苹果交出iOS源代码" target="_blank" ><span>FBI威胁强迫苹果交出iOS源代码</span></a></p></li><li><span class="hide_comment">mark~</span><br/><p><span>寂寞的夏天</span><span>评论了</span><a href="http://www.cocoachina.com/ios/20160317/15696.html" title="你真的了解iOS代理设计模式吗？" target="_blank" ><span>你真的了解iOS代理设计模式吗？</span></a></p></li><li><span class="hide_comment">mark</span><br/><p><span>TonyShng</span><span>评论了</span><a href="http://www.cocoachina.com/ios/20160316/15665.html" title="iOS 玩转推送通知" target="_blank" ><span>iOS 玩转推送通知</span></a></p></li><li class="noborder-b"><span class="hide_comment">非常棒的文章！！！！</span><br/><p><span>balinghousheng</span><span>评论了</span><a href="http://www.cocoachina.com/ios/20140904/9523.html" title="AFNetworking2.0源码解析&lt;二&..." target="_blank" ><span>AFNetworking2.0源码解析&lt;二&...</span></a></p></li>
+                    </ul>
+                </div>
+                <!--./综合评论-->
+                <!--相关帖子-->
+                <div class="part-wrap clearfix" style="margin:15px 0 15px 0;">
+                    <h3>相关帖子</h3>
+                    <ul class="related-comment clearfix">
+                        <script charset="gb2312" src="http://www.cocoachina.com/bbs/new.php?action=article&fidin=21_18_2_8_19_41_59_48_56_14_36_5&digest=0&postdate=0&author=0&fname=0&hits=0&replies=0&pre=0&num=10&length=100&order=2&like=ios#iOS开发"></script>
+                    </ul>
+                </div>
+                <!--./相关帖子-->
+                <iframe width="230" height="550" class="share_self" frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=230&height=550&fansRow=2&ptype=1&speed=0&skin=5&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=1659808677&verifier=6043be56&dpc=1"></iframe>
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- CC列表页面230x230 -->
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:230px;height:230px"
+                     data-ad-client="ca-pub-1180518835303646"
+                     data-ad-slot="6765277166"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+        <!--./侧边栏-->
+    </div>
+
+    <div id="coco-store" style="display:none">
+        <div class="storebox">
+            <h5>提示</h5>
+            <h3>已经收藏该篇文章</h3>
+            <p class="p1"><a href="/bbs/u.php?action=favor&tag=1" target="_blank">去我的收藏夹</a></p>
+            <p class="p2"><a href="/bbs/login.php">请登录</a></p>
+        </div>
+    </div> <!--收藏提示-->
+</div>
+
+<script type="text/javascript">
+
+function postDigg(ftype,aid)
+{
+    var taget_obj = document.getElementById('newdigg');
+    var saveid = GetCookie('diggid');
+    if(saveid != null)
+    {
+        var saveids = saveid.split(',');
+        var hasid = false;
+        saveid = '';
+        j = 1;
+        for(i=saveids.length-1;i>=0;i--)
+        {
+            if(saveids[i]==aid && hasid) continue;
+            else {
+                if(saveids[i]==aid && !hasid) hasid = true;
+                saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+                j++;
+                if(j==20 && hasid) break;
+                if(j==19 && !hasid) break;
+            }
+        }
+        if(hasid) { alert("您已经顶过该帖，请不要重复顶帖 ！"); return; }
+        else saveid += ','+aid;
+        SetCookie('diggid',saveid,1);
+    }
+    else
+    {
+        SetCookie('diggid',aid,1);
+    }
+    myajax = new DedeAjax(taget_obj,false,false,'','','');
+    var url = "/cms/plus/digg_ajax.php?action="+ftype+"&id="+aid;
+    myajax.SendGet2(url);
+    DedeXHTTP = null;
+    $('#zanbox').addClass('zanbox-selected');
+}
+function getDigg(aid)
+{
+    var taget_obj = document.getElementById('newdigg');
+    myajax = new DedeAjax(taget_obj,false,false,'','','');
+    myajax.SendGet2("/cms/plus/digg_ajax.php?id="+aid);
+    DedeXHTTP = null;
+}
+
+
+//显示对应的导航：
+$(function(){
+    var article_id = $('#article_id').val();
+    var saveid = GetCookie('diggid');
+
+    if(saveid != null)
+    {
+        var saveids = saveid.split(',');
+        var hasid = false;
+        saveid = '';
+        j = 1;
+        for(i=saveids.length-1;i>=0;i--)
+        {
+            if(saveids[i]==article_id && hasid) continue;
+            else {
+                if(saveids[i]==article_id && !hasid) hasid = true;
+                saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+                j++;
+                if(j==20 && hasid) break;
+                if(j==19 && !hasid) break;
+            }
+        }
+
+        if(hasid)
+        {
+            $('#zanbox').addClass('zanbox-selected');
+        }
+
+    }
+
+});
+
+window.onload = function() {
+
+    $('#sharediv').removeClass('bdshare-button-style1-32');
+    $('#sharediv').attr('class','bdsharebuttonbox');
+};
+</script>
+<script type="text/javascript" src="http://cdn.cocimg.com/cms/templets/js/shCore.js"></script>
+    <script type="text/javascript" src="http://cdn.cocimg.com/cms/templets/js/brush.js"></script>
+    <link type="text/css" rel="stylesheet" href="http://cdn.cocimg.com/cms/templets/style/shCoreDefault.css"/>
+    <script type="text/javascript">
+    //SyntaxHighlighter.config.clipboardSwf = '/js/scripts/clipboard.swf';
+
+    SyntaxHighlighter.all();</script>
+
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"iOS Code Signing 学习笔记 - 来自CocoaChina苹果开发中文站@CocoaChina","bdMini":"2","bdMiniList":false,"bdPic":"http://cn.cocos2d-x.org/uploads/ee9cb25cfee434f33bf6ef413e4bd2c4.jpg","bdStyle":"1","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api//js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+<!--./cont-->
+
+<!-- 回复评论框模板 -->
+<script type="text/javascript" src="http://cdn.cocimg.com/cms/templets/js/comment.js?v=20151019"></script>
+<script type="text/javascript" src="http://cdn.cocimg.com/cms/templets/js/mustache.min.js"></script>
+<!-- 回复评论框模板 -->
+<script id="reply_comment_template" type="x-tmpl-mustache">
+    <div id="sub-reply-comment" class="reply-comment">
+        <textarea name="subcomment" id="sub-reply-txt" cols="30" rows="10" placeholder="你怎么看？快来评论一下吧！"></textarea>
+        <input type="hidden" id="sub-reply-id" value="{{commentid}}" />
+        <input type="hidden" id="sub-reply-userid" value="{{parentuserid}}" />
+        <input type="hidden" id="sub-reply-username" value="{{parentusername}}" />
+        <a type="button" id="sub_comment_bt" class="submitbt">提交</a>
+        <div class="clearfloat"></div>
+        <div class="unlogin-mask">
+            <div>您还没有登录！请<a href="/bbs/login.php">登录</a>或<a href="/bbs/register.php">注册</a></div>
+        </div>
+    </div>
+</script>
+
+<!-- 评论模板 -->
+<script id="main_comment_template" type="x-tmpl-mustache">
+    <div class="glab-comment" rel-data-id="{{comment_id}}" rel-user-id="{{user_id}}" rel-user-name="{{user_name}}" rel-layer="1">
+        <div class="comment-left">
+            <a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank"><img src="{{user_icon_url}}" height="43" width="43" alt=""></a>
+        </div>
+        <div class="comment-right">
+            <div class="comment-author"><a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank">{{user_name}}</a><span class="puptime">{{create_time}}</span></div>
+            <div class="comment-content">{{&content}}</div>
+            <div class="comment-buttons">
+                <span class="ding">                    
+                    <img src="http://cdn.cocimg.com/cms/templets/images/zan-default.png" height="14" width="14" alt="" class="default" style="{{#has_supported}} display:none; {{/has_supported}}">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/zan-active.png" height="14" width="14" alt="" class="actived" style="{{^has_supported}} display:none; {{/has_supported}}">
+                    <span class="zancnt">{{support}}</span>
+                </span>
+                <span class="cai">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/cai-default.png" height="14" width="14" alt="" class="default" style="{{#has_reported}} display:none; {{/has_reported}}">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/cai-active.png" height="14" width="14" alt="" class="actived" style="{{^has_reported}} display:none; {{/has_reported}}">
+                    <span class="zancnt">{{report}}</span>
+                </span>
+                <span class="replybt">回复</span>
+            </div>
+        </div>
+            {{#sub}}
+                <div class="glab-comment glab-sub-comment" rel-data-id="{{comment_id}}" rel-user-id="{{user_id}}" rel-user-name="{{user_name}}" rel-layer="2">
+                    <div class="comment-left">
+                        <a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank"><img src="{{user_icon_url}}" height="43" width="43" alt=""></a>
+                    </div>
+                    <div class="comment-right">
+                        <div class="comment-author"><a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank">{{user_name}}</a><span class="puptime">{{create_time}}</span></div>
+                        <div class="comment-content"><a href="/bbs/u.php?action=feed&uid={{parent_user_id}}" target="_blank">回复：{{parent}}</a>{{&content}}</div>
+                        <div class="comment-buttons">
+                            <span class="ding">
+                                <img src="http://cdn.cocimg.com/cms/templets/images/zan-default.png" height="14" width="14" alt="" class="default" style="{{#has_supported}} display:none; {{/has_supported}}">
+                                <img src="http://cdn.cocimg.com/cms/templets/images/zan-active.png" height="14" width="14" alt="" class="actived" style="{{^has_supported}} display:none; {{/has_supported}}">
+                                <span class="zancnt">{{support}}</span>
+                            </span>
+                            <span class="cai">
+                                <img src="http://cdn.cocimg.com/cms/templets/images/cai-default.png" height="14" width="14" alt="" class="default" style="{{#has_reported}} display:none; {{/has_reported}}">
+                                <img src="http://cdn.cocimg.com/cms/templets/images/cai-active.png" height="14" width="14" alt="" class="actived" style="{{^has_reported}} display:none; {{/has_reported}}">
+                                <span class="zancnt">{{report}}</span>
+                            </span>
+                            <span class="replybt">回复</span>
+                        </div>          
+                    </div>
+                </div>
+            {{/sub}}         
+    </div>  
+</script>
+
+
+<script id="sub_comment_template" type="x-tmpl-mustache">
+    <div class="glab-comment glab-sub-comment" rel-data-id="{{comment_id}}" rel-user-id="{{user_id}}" rel-user-name="{{user_name}}" rel-layer="2">
+        <div class="comment-left">
+            <a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank"><img src="{{user_icon_url}}" height="43" width="43" alt=""></a>
+        </div>
+        <div class="comment-right">
+            <div class="comment-author"><a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank">{{user_name}}</a><span class="puptime">{{create_time}}</span></div>
+            <div class="comment-content"><a href="/bbs/u.php?action=feed&uid={{parent_user_id}}" target="_blank">回复：{{parent}}</a>{{&content}}</div>
+            <div class="comment-buttons">
+                <span class="ding">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/zan-default.png" height="14" width="14" alt="" class="default" style="{{#has_supported}} display:none; {{/has_supported}}">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/zan-active.png" height="14" width="14" alt="" class="actived" style="{{^has_supported}} display:none; {{/has_supported}}">
+                    <span class="zancnt">{{support}}</span>
+                </span>
+                <span class="cai">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/cai-default.png" height="14" width="14" alt="" class="default" style="{{#has_reported}} display:none; {{/has_reported}}">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/cai-active.png" height="14" width="14" alt="" class="actived" style="{{^has_reported}} display:none; {{/has_reported}}">
+                    <span class="zancnt">{{report}}</span>
+                </span>
+                <span class="replybt">回复</span>
+            </div>          
+        </div>
+    </div>
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68948817-1', 'auto', {'name': 'newTracker'});
+  ga('newTracker.send', 'pageview');
+
+</script>
+</div>    
+<!--右侧浮动-->
+    <div class="r-bar">
+        <img src="http://cdn.cocimg.com/cms/templets/images/coco_weixin.png" class="weixin">
+    	<a href="http://weibo.com/cocoachina" target="_blank" title="" class="weibo">sina</a>
+        <a href="javascript:void(0);" target="_blank" title="" class="feedback">weixin</a>
+        <a href="mailto:support@cocoachina.com" title="" class="kefu">mail</a>
+        <a href="javascript:;" title="回到顶部" class="returntop">回到顶部</a>
+    </div>
+
+<script language="javascript" src="/cms/bbsauth_plus2015.php" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+    if (typeof(_user_info_html) != 'undefined' && _user_info_html)
+    {
+        $('.nav-user-login').hide();
+        $('.nav-user-name').html(_user_info_html).show();
+    }
+
+	var type = $('#type_name').html();
+	if(type)
+	{	
+		switch( type )
+		{
+			case 'iOS开发':
+				$('#ios').addClass('light');
+				break;
+			case 'AppStore研究':
+				$('#app_store').addClass('light');
+				break;
+			case 'Mac开发':
+				$('#mac').addClass('light');
+				break;
+			case '产品设计':
+				$('#design').addClass('light');
+				break;
+			case 'Cocos引擎':
+				$('#cocos').addClass('light');
+				break;
+			case 'WebApp':
+				$('#webapp').addClass('light');
+				break;
+			case 'Swift':
+				$('#swift').addClass('light');
+				break;
+			case '游戏开发':
+				$('#game').addClass('light');
+				break;
+			case '苹果相关':
+				$('#apple').addClass('light');
+				break;
+			case '营销推广':
+				$('#market').addClass('light');
+				break;		
+			case '业界动态':
+				$('#industry').addClass('light');
+				break;	
+			case '程序人生':
+				$('#programmer').addClass('light');
+				break;																																
+				
+		}
+	}
+});
+</script>
+<!--./cont-->
+<script type="text/javascript" src="/cms/templets/js/index.js?20111546514"></script>
+<script src="http://cdn.cocimg.com/cms/templets/js/jquery.colorbox-min.js" type="text/javascript"></script>
+<script language="javascript" src="/cms/bbsauth_new2015.php"  type="text/javascript"></script>
+<script src="/cms/templets/js/script.js?t=2045479411" type="text/javascript"></script>
+<script type="text/javascript">
+			jQuery(function()
+			{
+				//更改文章来源
+				var source = $('#source a').html();								
+				if( source == '未知' )
+					jQuery('#source a').html('CocoaChina');
+				if( jQuery('#source a').attr('href')=='')
+					jQuery('#source').html('来源：'+source);
+				
+				//获取用户登录的id
+//                var content = jQuery('.t-lid').attr("href");
+//                var uid = 0;
+//                if( content )
+//                {
+//                    content = content.split('=');
+//                    uid = content[1];
+//                }
+//                var timestamp = new Date().getTime();	
+//                var uid2 = parseInt(uid);
+//                if(uid2==uid && uid2!=0){
+//                    uid = uid<<2;			
+//                    uid = uid+''+timestamp;
+//                }else{
+//                    uid = "";
+//                }
+//                var oIframe=document.getElementById("comiframe");
+//                if(oIframe){
+//                    var oUrl=window.location.href;
+//                    oUrl = encodeURIComponent(oUrl);
+//
+//                    oIframe.src="/comment.php?url="+oUrl+"&uid="+uid;
+//                }
+
+				
+			});
+		</script>
+<!--footer-->
+<div class="footer clearfix">
+    <div class="footer-b">
+        <div>
+            <a href="/aboutus/index.html" target="_blank">关于我们</a>
+            <a href="/contactus/index.html" target="_blank">商务合作</a>
+            <a href="mailto:support@cocoachina.com" target="_blank">联系我们</a>
+            <a href="/corps" target="_blank">合作伙伴</a>
+        </div>
+        <p class="footer-b-p">北京触控科技有限公司版权所有</p>
+        <p>
+            &copy;2016 Chukong Technologies,Inc.
+            <i>
+                <a href="http://www.miibeian.gov.cn/" target="_blank">京ICP备 11006519号 　京ICP证 100954号</a> 京公网安备11010502020289 
+                <a href="http://182.131.21.137/ccnt-apply/admin/business/preview/business-preview!lookUrlRFID.action?main_id=A580B24B1AE846CE9DA949026D63939F" target="_blank">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/jingwen.png" style="margin: -10px auto -14px -10px;" />
+                    京网文[2012]0426-138号
+                </a>
+            </i>
+        </p>
+    </div>
+</div>
+<!--./footer-->
+<script language="javascript" type="text/javascript" src="/cms/include/dedeajax2-min.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-16940817-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+  
+ 
+function search_check()
+{
+	var search_keyword = $('#search_keyword').val();
+
+	if( search_keyword.length < 2 )
+	{
+		alert("搜索关键字不能少于2个字节，请重新输入。");
+	}
+	else
+	{
+		$('#searchform').submit();
+	}
+}
+
+</script>
+<script type="text/javascript">
+_acK({aid:116313,format:0,mode:1,gid:1,serverbaseurl:"afp.csbew.com/"});
+</script>
+
+</body>
+</html>

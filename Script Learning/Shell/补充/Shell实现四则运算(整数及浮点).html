@@ -1,0 +1,273 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>linux shell 实现 四则运算（整数及浮点） 简单方法 - 程默 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=8F6jO9aWZhOryqKsIFGUkSbXpyPVKDwgWwvpie3eJis1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/Cogitation/bundle-Cogitation.css?v=KxzCsGje7vptXKdp2HZBpXmgRp_h-PvgHFxMy8F9r3o1"/>
+<link type="text/css" rel="stylesheet" href="/blog/customcss/71819.css?v=e2E%2fy%2bxcHUfVqipP3l8dm1gBggQ%3d"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/chengmo/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/chengmo/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/chengmo/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'chengmo', cb_enable_mathjax=false;</script>
+<script src="/bundles/blog-common.js?v=ceHMEpeJXcR_f7TCJnXeZQRG1UsC0_cpwDJRs_oVInY1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<div id="top">
+	
+<div>
+	<table>
+		<tr>
+			<td class="HeaderTitles">
+				<h1 class="HeaderTitle"><a id="Header1_HeaderTitle" class="HeaderMainTitle" href="http://www.cnblogs.com/chengmo/">沉于思考，默默学习！</a></h1>
+				<p id="tagline">你不能预知明天，但你可以利用今天。你不能样样顺利，但你可以事事尽力!</p>
+			</td>
+		</tr>
+	</table>
+</div>
+<div class="HeaderBar">
+	<table id="HeaderBar" class="HeaderBar" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="HeaderBarTab" nowrap>
+&nbsp;
+<a id="Header1_MyLinks1_HomeLink" href="http://www.cnblogs.com/">博客园</a> ::
+<a id="Header1_MyLinks1_MyHomeLink" href="http://www.cnblogs.com/chengmo/">首页</a> ::
+<a href="http://q.cnblogs.com" class="menu">博问</a> ::
+<a href="http://home.cnblogs.com/ing/" class="menu">闪存</a> ::
+<a id="Header1_MyLinks1_NewPostLink" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a> ::
+<a id="Header1_MyLinks1_ContactLink" accesskey="9" rel="nofollow" href="http://msg.cnblogs.com/send/%E7%A8%8B%E9%BB%98">联系</a> ::
+<a id="Header1_MyLinks1_Syndication" href="http://www.cnblogs.com/chengmo/rss">订阅</a>
+<a id="Header1_MyLinks1_XMLLink" class="XMLLink" href="http://www.cnblogs.com/chengmo/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a> ::
+<a id="Header1_MyLinks1_Admin" rel="nofollow" href="http://i.cnblogs.com/">管理</a> ::
+
+</td>
+			<td><img id="Header1_BlueTab" src="/skins/Cogitation/Images/BlueTabRight.gif" align="absmiddle" /></td>
+			<td class="HeaderBarTabBack" nowrap width="100%">
+				
+<div class="BlogStatsBar">
+	<table class="BlogStatsBar">
+		<tr>
+			<td width="100%">
+			</td>
+			<td class="BlogStatsBar" nowrap>
+				&nbsp;
+				63 
+				随笔&nbsp;::
+				0 文章
+				::
+				644 评论
+				::
+				0 引用
+			</td>
+		</tr>
+	</table>
+</div>
+
+			</td>
+		</tr>
+	</table>
+</div>
+
+</div>
+<div id="leftmenu">	
+
+	    <div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+		
+<h3>公告</h3>
+<div class="News">
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+		<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+	
+</div>
+<div id="main">
+	
+<div id="post_detail">
+<div class="post">
+	<div class="postTitle">
+		<a id="cb_post_title_url" href="http://www.cnblogs.com/chengmo/archive/2010/09/30/1839556.html">linux shell 实现 四则运算（整数及浮点） 简单方法</a>
+	</div>
+	
+	<div class="postText">
+		<div id="cnblogs_post_body"><p>在刚刚学习写shell 批处理时候，进行逻辑运算中，少不了需要进行基础的：四则运算，这里说说在linux shell 里面简单的实现方法。</p>
+<p>&nbsp;</p>
+<p><strong>1.简单方法</strong></p>
+<p>[chengmo@centos5 ~]$ b=$((5*5+5-3/2))&nbsp; <br />[chengmo@centos5 ~]$ echo $b<br />29</p>
+<p>&nbsp;</p>
+<p>在linux shell中，我们可以使用 <strong><tt class="userinput">$(())</tt></strong> 将表达式放在括号中，即可达到运算的功能。</p>
+<p>&nbsp;</p>
+<p><strong>2.其它方法：</strong></p>
+<p>用：expr 实现运算</p>
+<p>&nbsp;</p>
+<p>[chengmo@centos5 ~]$ expr 5 - 4<br />1</p>
+<p>&nbsp;</p>
+<p><span style="color: #ff00ff;">注意：将需要运算的表达式写入在expr 后面即可，保证 参数与运算符号中间有空格隔开。</span></p>
+<p><span style="color: #ff00ff;">&nbsp;</span></p>
+<table id="table31" style="border-collapse: collapse;" border="1" cellspacing="0" cellpadding="0" width="600" bordercolor="#111111">
+<tbody>
+<tr>
+<td width="99"><strong>类别</strong></td>
+<td width="128"><strong>语法</strong></td>
+<td width="345"><strong>说明</strong></td>
+</tr>
+<tr>
+<td rowspan="2" width="99" valign="top">条件判断</td>
+<td width="128" valign="top">expr1 \| expr2</td>
+<td width="345">如果 expr1 不是零或 null 则传回 expr1，否则传回 expr2。</td>
+</tr>
+<tr>
+<td width="128" valign="top">expr1 \&amp; expr2</td>
+<td width="345">如果 expr1 及 expr2 都不为零或 null，则传回 expr1，否则传回 0。</td>
+</tr>
+<tr>
+<td rowspan="5" width="99" valign="top">四则运算</td>
+<td width="128" valign="top">expr1 + expr2</td>
+<td width="345">传回 expr1 加 expr2 后的值。</td>
+</tr>
+<tr>
+<td width="128" valign="top">expr1 - expr2</td>
+<td width="345">传回 expr1 减 expr2 后的值。</td>
+</tr>
+<tr>
+<td width="128" valign="top">expr1\* expr2</td>
+<td width="345">传回 expr1 乘 expr2 后的值。</td>
+</tr>
+<tr>
+<td width="128" valign="top">expr1 / expr2</td>
+<td width="345">传回 expr1 除 expr2 后的值。</td>
+</tr>
+<tr>
+<td width="128" valign="top">expr1 % expr2</td>
+<td width="345">传回 expr1 除 expr2 的余数。</td>
+</tr>
+<tr>
+<td rowspan="6" width="99" valign="top">大小判断</td>
+<td width="128" valign="top">expr1 \&gt; expr2</td>
+<td width="345">如果 expr1 大于 expr2 则传回 1，否则传回 0。如果 expr1 及 expr2 都是数字，则是以数字大小判断，否则是以文字判断。以下皆同。</td>
+</tr>
+<tr>
+<td width="128" valign="top">expr1 \&lt; expr2</td>
+<td width="345">如果 expr1 小于 expr2 则传回 1，否则传回 0。</td>
+</tr>
+<tr>
+<td width="128" valign="top">expr1 = expr2</td>
+<td width="345">如果 expr1 等于 expr2 则传回 1，否则传回 0。</td>
+</tr>
+<tr>
+<td width="128" valign="top">expr1 != expr2</td>
+<td width="345">如果 expr1 不等于 expr2 则传回 1，否则传回 0。</td>
+</tr>
+<tr>
+<td width="128" valign="top">expr1 \&gt;= expr2</td>
+<td width="345">如果 expr1 大于或等于 expr2 则传回 1，否则传回 0。</td>
+</tr>
+<tr>
+<td width="128" valign="top">expr1 \&lt;= expr2</td>
+<td width="345">如果 expr1 小于或等于 expr2 则传回 1，否则传回 0。</td>
+</tr>
+<tr>
+<td width="99" valign="top">文字处理</td>
+<td width="128" valign="top">expr1 : expr2</td>
+<td width="345">比较一固定字符串，即 regular expression。可以使用下列字符来辅助：
+<p>. 匹配一个字符。</p>
+<p>$ 找字符串的结尾。</p>
+<p>[list] 找符合 list 中的任何字符串。</p>
+<p>* 找寻 0 个或一个以上在 * 之前的字。</p>
+<p>\( \) 传回括号中所匹配的字符串。</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>3.浮点运算：</strong></p>
+<p>[chengmo@centos5 ~]$ expr 5.0 - 4 <br />expr: 非法参数</p>
+<p>&nbsp;</p>
+<p>[chengmo@centos5 ~]$ echo $((5.0-4))<br />-bash: 5.0-4: syntax error in expression (error token is ".0-4")</p>
+<p>&nbsp;</p>
+<p>从上面运算结果，看来上面表达式，不足以支持浮点运算了。<span style="color: #ff6600;">查阅资料才发现：bash 不支持浮点运算，如果需要进行浮点运算，需要借助bc,awk 处理。</span></p>
+<p><span style="color: #ff6600;">&nbsp;</span></p>
+<p><span style="color: #ff00ff;">方法一：</span></p>
+<p><span style="color: #000000;">[chengmo@centos5 ~]$ c=$(echo "5.01-4*2.0"|bc)<br />[chengmo@centos5 ~]$ echo $c<br />-2.99</span></p>
+<p><span style="color: #ff00ff;">方法二：</span></p>
+<p><span style="color: #000000;">[chengmo@centos5 ~]$ c=$(awk 'BEGIN{print 7.01*5-4.01 }')<br />[chengmo@centos5 ~]$ echo $c<br />31.04</span></p>
+<p><span style="color: #000000;">&nbsp;</span></p>
+<p><span style="color: #000000;">注：在shell 中$() 与 ``等效。 中间包含命令语句执行，返回执行结果。</span></p>
+<p><span style="color: #000000;">&nbsp;</span></p>
+<p>&nbsp;</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+	</div>
+	
+	<div class="postfoot">
+		posted on <span id="post-date">2010-09-30 15:47</span> <a href='http://www.cnblogs.com/chengmo/'>程默</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=1839556" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(1839556);return false;">收藏</a>
+	</div>
+</div>
+<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=71819,cb_entryId=1839556,cb_blogApp=currentBlogApp,cb_blogUserGuid='eee985f0-5b74-df11-ba8f-001cf0cd104b',cb_entryCreatedDate='2010/9/30 15:47:00';loadViewCount(cb_entryId);</script>
+
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='ad_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='ad_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+</div>
+<div class="footer">
+
+<p id="footer">
+	Powered by: 
+	<br />
+	
+	<a id="Footer1_Hyperlink3" NAME="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>
+	<br />
+	Copyright &copy; 程默
+</p>
+</div>
+<!--PageEndHtml Block Begin-->
+<!-- Baidu Button BEGIN -->
+
+
+
+<noscript><a href="http://www.linezing.com"><img src="http://img.tongji.linezing.com/3462101/tongji.gif"/></a></noscript>
+<!-- Baidu Button END -->
+<!--PageEndHtml Block End-->
+</body>
+</html>

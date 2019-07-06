@@ -1,0 +1,1127 @@
+
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" lang="zh">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=7" />
+    <meta http-equiv="content-type" content="text/html;charset=gbk"/>
+    <meta http-equiv="content-style-type" content="text/css"/>
+    <meta http-equiv="content-script-type" content="text/javascript"/>
+    <meta name="version" content="neblog-1.0"/>
+    <script type="text/javascript">
+      
+      
+      document.uniqueID!=document.uniqueID&&!!location.hash&&(location.hash=location.hash); 
+      document.domain = location.hostname.replace(/^.*\.([\w]+\.[\w]+)$/,'$1');
+      window.focus();
+      window.getMusicTimeStamp=function(){return 'a97cd2455060ad0561911219a6ff7a83';};
+    
+      //BLOG-647:博客OS服务不稳定，导致页面加载很慢
+      (function(){
+        window.setTimeout(function(){
+          var _loginUserIcon = document.getElementById('loginUserIcon');
+          var _rsavatarimg = document.getElementById('rsavatarimg');
+          if(!!_loginUserIcon){
+            var _loaded1 = false;
+            var _img1 = new Image();
+            _img1.onload = function(){
+                _loaded1 = true;
+                _img1.onload = null;
+            };
+            _img1.src = _loginUserIcon.src;
+            window.setTimeout(function(){
+              if(!_loaded1){
+                _img1.src = '';
+                _loginUserIcon.src = location.f60 || 'http://b.bst.126.net/common/face60.png';
+              }
+            },1000);
+          }
+          
+          if(!!_rsavatarimg){
+           var _loaded2 = false;
+           var _img2 = new Image();
+            _img2.onload = function(){
+                _loaded2 = true;
+                _img2.onload = null;
+            };
+            _img2.src = _rsavatarimg.src;
+            window.setTimeout(function(){
+              if(!_loaded2){
+                _img2.src = '';
+                _rsavatarimg.src = location.f140 || 'http://b.bst.126.net/common/face140.png';
+              }
+            },1000);
+          }
+          
+        },1000);
+      })()
+      
+    </script>
+<title>【每天一shell】Linux中find常见用法示例 - 小峰GRain的日志 - 网易博客</title>
+<meta name="author" content="lin305_gf,小峰GRain"/>
+<meta name="keywords" content="【每天一shell】Linux中find常见用法示例,日志,小峰GRain,小峰的博客,网易博客,网易,blog"/>
+<meta name="description" content="【每天一shell】Linux中find常见用法示例,小峰GRain的网易博客,做梦的人 醒了 然后将何去何从呢,不曾心恨~~~"/>
+  <script type="text/javascript">
+    (function(){
+     var R=24,C=11,a=[];
+     for(var i=0;i<C;i++)for(var j=0;j<R;a.push('.icn0-'+i+j+'{background-position:'+(i>0?('-'+i*40+'px'):'0')+' '+(j>0?('-'+j*20+'px'):'0')+';}'),j++);
+          document.write('<style type="text/css">'+a.join('')+'</st'+'yle>');
+    })();
+  </script>
+    <link type="text/css" rel="stylesheet" href="http://b2.bst.126.net/newpage/r/c/c.css?v=1455591214178"/>
+    <link type="text/css" rel="stylesheet" href="http://os.blog.163.com/style/css/diy/81914443/96952440/-1332741163751/b.css?v=1" id="blog-163-com-theme"/>
+  <!--[if lte IE 6]>
+  <style type="text/css">
+    html,body,#blog-163-com-ie6body{height:100%;width:100%;overflow:hidden;}
+    #blog-163-com-ie6body{overflow:auto;overflow-y:scroll;}
+    #blog-163-com{background:none;}
+  </style>
+  <![endif]-->
+  
+  
+  <style type="text/css">.m-3 .nbw-ryt .left .mcnt{padding-left:10px;}.m-3 .nbw-ryt .right .acts{position:relative;margin:0 0 12px 0;line-height:20px;}.m-3 .nbw-ryt .right .more{margin-top:-15px;height:24px;line-height:24px;}#blog-163-com .m-3 .phide{display:none;}.m-3 .nbw-ryt .left .nbw-bitm{margin:0;padding:0 10px 0 10px;position:relative;}.m-3 .nbw-ryt .left .nbw-bitm .title{margin:30px 0 20px;line-height:32px;}.m-3 .nbw-ryt .left .nbw-bitm .title .tcnt{font-size:26px;font-weight:bold;font-family:"Hiragino Sans GB W3","Hiragino Sans GB","Microsoft YaHei","\5FAE\8F6F\96C5\9ED1",Arial,Helvetica,simsun,"\5B8B\4F53";}.m-3 .nbw-ryt .left .nbw-bitm .tdep{margin-bottom:20px;}.m-3 .nbw-ryt .left .nbw-bitm .tbar{margin:5px 0;padding:10px 0 10px 0;line-height:20px;text-align:right;}.m-3 .nbw-ryt .left .nbw-bitm .bct{font-size:16px;padding-left:0}.m-3 .nbw-ryt .left .nbw-bitm .muava{float:left;margin:5px 7px 0 0;border-width:0 1px 0 0;height:40px;}.m-3 .nbw-ryt .left .snl .pnb div{line-height:20px;text-align:left;}.m-3 .nbw-ryt .cite{margin:20px 0 0 50px;line-height:24px;text-align:left;}.m-3 .nbw-ryt .cite .close{float:right;margin:0;text-align:right;}.m-3 .nbw-ryt .cite span{cursor:pointer;}.m-3 .nbw-ryt .cite .nbw-act{text-align:center;}.m-3 .nbw-ryt .cite .ads{margin-left:20px;width:400px;}.m-3 .nbw-ryt .cite .tbac{margin-left:60px;padding:0;border:0;list-style:none;line-height:24px;}.m-3 .nbw-ryt .cite .tbl{width:150px;overflow:hidden;}.m-3 .nbw-ryt .cite .tbr{margin-left:20px;overflow:hidden;}.m-3 .nbw-act-share{position:relative;}.m-3 .nbw-act-share .nas-wrap{visibility:hidden;}.m-3 .nbw-act-share:hover .nas-wrap,.m-3 .js-share-hover .nas-wrap{visibility:visible;}.m-3 .nas-wrap,.nas-itm,.nas-wb{background:url(/newpage/images/blog/icn-share.png?0011) no-repeat 9999px 9999px;}.m-3 .nas-wrap{margin-top:5px;}.nas-itm,.nas-wb{text-decoration:none;}.nas-itm,.nas-wb:hover{text-decoration:underline;}.m-3 .nas-itm{float:left;width:16px;height:16px;margin:0 1px 0 6px;overflow:hidden;cursor:pointer;}.m-3 .nas-itm0{background-position:0 -173px;}.m-3 .nas-itm1{background-position:0 -56px;}.m-3 .nas-itm2{background-position:0 -85px;}.m-3 .nas-itm3{background-position:0 -227px;}.m-3 .nas-itm4{background-position:0 -143px;}.m-3 .nas-itm5{background-position:0 -201px;}.m-3 .nas-itm6{background-position:0 -249px;}.m-3 .nas-itm7{background-position:0 -283px;}.m-3 .nas-itm8{background-position:0 -313px;}.m-3 .nas-itm9{background-position:0 -342px;}.nas-wb{padding-left:20px;cursor:pointer;line-height:normal;background-position:0 -173px;}.nas-icn0fix{margin-top:4px;}.nas-tofix{margin-top:0;*margin-top:2px;line-height:25px;}.m-3 .ptc{position:absolute;cursor:pointer;}.m-3 .ptc .ptcp .bcmimg{float:left;background-image:url("http://b.bst.126.net/newpage/images/blogcmtimg.png");background-position:0 0;background-repeat:no-repeat;height:22px;line-height:22px;width:22px;padding:0 6px 0 0;}.m-3 .ptc .ptcp{cursor:pointer;position:absolute;left:5px;bottom:5px;clear:both;width:94px;}.m-3 .ptc .ptcp .ptcmi{float:left;width:16px;height:16px;padding:3px 6px 3px 5px;_padding:2px 6px 0 3px;margin:0;}.m-3 .ptc .ptcp .ptcmt{background-position:-418px -50px;float:left;width:67px;height:22px;overflow:hidden;margin:0px 0 0 -3px;line-height:22px;*line-height:23px;text-align:left;color:#444444;}.m-3 .ptc .ptcp .ptcmt-2{width:61px;padding-left:6px;background-position:-424px -50px;}.m-3 .relateblog{text-align:left;}.m-3 .relateblog h4{margin:0;padding:0 0 0 10px;line-height:30px;}.m-3 .relateblog .cnt{padding-left:8px;margin:10px 0 10px 0px;}.m-3 .relateblog .cnt ul{margin:0;padding:0;list-style:none;}.m-3 .relateblog .cnt ul li{height:24px;margin-right:20px;line-height:24px;}.m-3 .relateblog .cnt ul li span{margin:0 8px;}.m-3 .author, .m-3 .comment{text-align:left;}.m-3 .author .nlogif{width:150px;line-height:20px;margin-left:5px;_margin-left:3px;}.m-3 .author .nlogif .nbw-fce{margin:0 3px 0 10px;_margin-left:5px}.m-3 .author .nlogif .pright{width:85px;margin:0;padding:5px 0;_padding-top:10px}.m-3 .nbw-ryt .right h4{margin:0;padding:0;line-height:30px;}.m-3 .author h4, .m-3 .comment h4{margin:0;padding:0 0 0 10px;line-height:30px;}.m-3 .author .cwd{border:0;text-align:left;}.m-3 .author .vname{width:50px;text-align:center;}.m-3 .author .cnt{margin:10px 0 10px -5px;}.m-3 .author .nbw-fce{margin:0 11px;}.m-3 .author .nbw-f50{width:50px}.m-3 .nbw-ryt .left .top{position:relative;padding-bottom:5px;line-height:20px;}.m-3 .nbw-ryt .left .top .ilft{position:absolute;left:0;top:0;}.m-3 .nbw-ryt .left .top .irgt{position:absolute;right:-10px;top:0;}.m-3 .nbw-ryt .left .top .pleft{margin-left:20px;_margin-left:10px;overflow:hidden;width:40%;height:20px;text-align:left}.m-3 .nbw-ryt .left .top .pright{margin-right:10px;_margin-right:5px;overflow:hidden;width:40%;height:20px;text-align:right}.m-3 .nbw-ryt .left .snl .top{position:relative;padding:5px 0 15px 0;line-height:20px;}.m-3 .nbw-ryt .left .snl .top .ilft{position:absolute;left:-10px;top:5px;}.m-3 .nbw-ryt .left .snl .top .irgt{position:absolute;right:-10px;top:5px;}.m-3 .nbw-ryt .left .snl .top .pleft{margin-left:10px;_margin-left:5px;overflow:hidden;width:40%;height:20px;text-align:left}.m-3 .nbw-ryt .left .snl .top .pright{margin-right:10px;_margin-left:5px;overflow:hidden;width:40%;height:20px;text-align:right}.m-3 .nbw-ryt .left .snl .pnb{padding:5px 0 10px 10px;overflow:hidden;_width:100%}.m-3 .comment h4{padding:0 0 0 10px}.m-3 .comment .publish{margin:10px 0;padding:0 0 10px 5px;text-align:left;}.m-3 .comment .publish .nbw-fce{padding-top:0;}.m-3 .comment .publish .nbw-fce .cwd{border:0;}.m-3 .comment .publish .redt{margin-left:65px;}.m-3 .comment .nolog{border:1px solid #000;background-color:#FFFFE1;height:40px;line-height:40px;text-align:center;padding:0;_padding:10px 0;_height:20px;}.m-3 .comment .case{padding-left:5px;padding-bottom:10px;}.m-3 .comment .vgl{margin:8px;width:75%;text-align:center;}#blog-163-com .m-3 .comment .nbw-cmt .cnt{width:488px;}#blog-163-com .m-3 .comment .nbw-cmt .nbw-cmt .cnt{width:444px;}.m-3 .edt-cmt{width:444px;}.m-3 .comment .publish .edt-cmt{width:488px;}.m-3 .comment .publish .edt-cmt .zbcc{display:none;}.m-3 .nbw-ryt .left .nbw-bitm .js-fs0{font-size:150%;}.m-3 .nbw-ryt .left .nbw-bitm .js-fs1, .m-3 .nbw-ryt .left .nbw-bitm .js-fs1 *{font-size:20px;}.m-3 .nbw-ryt .left .nbw-bitm .js-fs2{}.m-3 .nbw-ryt .left .nbw-bitm .js-fs3, .m-3 .nbw-ryt .left .nbw-bitm .js-fs3 *{font-size:12px;}.m-3 .js-fcurrent{font-color:#000;font-weight:bold;text-decoration:none;}.m-3 .nbw-bitm .dream{margin-top:-10px;clear:both}.m-3 .nbw-bitm .cited{margin-top:-15px;}.m-3 .nbw-bitm .rdif{line-height:24px;height:24px;}.m-3 .nbw-bitm .rdif .pnt{line-height:24px;height:24px;margin-right:10px;}.m-3 .nbw-bitm .rdif .pclass{vertical-align:middle;width:57px;height:22px;}.m-3 .nbw-bitm .rdif .rdct{display:inline-block;}.m-3 .snl .rdcnt{padding:5px;text-align:left}.m-3 .snl .rdcnt .nbw-fce{margin:0 5px}.m-3 .snl .rdcnt p{margin:10px 0}.m-3 .snl .rdcnt .rrb{list-style:none;height:22px;line-height:22px;}.m-3 .acts .iblock{width:18px;}.m-3 .ns{margin:0 0 0 2px;}.m-3 .cancel{display:none;}.m-3 .js-hover .cancel, .m-3 .follow:hover .cancel, .m-3 .frd:hover .cancel{display:inline;}.m-3 .follow{*margin-left:2px;}.m-3 .flw{padding:7px 8px;color:#000;background:#fefce4;border:1px solid #b7b7b7;}.m-3 .acts .flw .iblock{width:20px;}.m-3 .sntesctf{width:15px;margin-left:3px;}.dr-warm{width:420px;padding:12px 18px;margin:18px 0;line-height:20px;border:1px solid #aaa;color:#666;background:#ffffdc;}.dr-warm a,.dr-warm a:hover{text-decoration:underline;color:#02a;}.dr-warm .codeinput{width:70px;text-align:center;}.dr-warm .codediv{margin:10px 0 0;}.dr-warm .ml{margin:0px 10px;vertical-align:middle;}.dr-warm .button{background-color:#77716F;width:42px;height:20px;border:0 none;color:#fff;cursor:pointer;}.m-3 .commentcntwrap{position:relative;zoom:1;}.m-3 .cmtMultiUserRole{position:absolute;left:62px;bottom:5px;width:300px;overflow-x;hidden;}.m-3 .cmtMultiUserRole .selectRole{float:right;padding:1px 1px 0 1px;border:none;}.m-3 .cmtMultiUserRole .selectRole .ztxt{float:left;width:auto;overflow:hidden;}.m-3 .cmtMultiUserRole .selectRole .zdwn{float:left;background:url("/newpage/images/icon.png") -240px -420px no-repeat;text-indent:-9999px;}.m-3 .cmtMultiUserRole .selectRole .zlst .zitm{}.m-3 .cmtMultiUserRole .selectRole .zlst .zitm:hover, .m-3 .cmtMultiUserRole .selectRole .slst .item.js-zhvr-910{color:#333;background-color:#ececec;}.m-3 .nbw-cmt{position:static;}.m-3 .nbw-cmt .thde{position:relative;zoom:1;}.m-3 .publish .redt{position:relative;zoom:1;}.m-3 .publish .redt .cmtMultiUserRole{left:135px;_left:132px;}.m-3 .cmtMultiUserRole .js-showlist{padding:0;margin:0;border-style:solid;border-width:1px 1px 0 1px;border-color:#aaa;}.m-3 .cmtMultiUserRole .js-showlist .zlst{border-style:solid;border-width:0 1px 1px 1px;border-color:#aaa;}.m-3 .multiuserItem{}.m-3 .multiuserItem .author{margin-right:-50px;}.m-3 .multiuserItem .multicntwrap{padding:30px 0 20px 0;}.m-3 .multiuserItem .multicnt{_padding-top:2px;margin-left:50px;}.m-3 .nbw-ryt .left .multiuserItem .multicnt .title{width:95%;margin-top:0;margin-bottom:0;}.m-3 .nbw-ryt .left .multiuserItem .multicnt .tdep{margin-bottom:0;}.m-3 .attachment{margin-bottom:20px;}.m-3 .awidth{width:40px;}.m-3 .view{margin-right:10px;}.m-3 .nbw-cmt .op{height:18px;line-height:18px;}.m-3 .suggestedreading{overflow:hidden;position:relative;zoom:1;}.m-3 .suggestedreading .m-list{margin-left:0;padding-left:15px;overflow:hidden;font-size:14px;}.m-3 .suggestedreading .m-list .gap{margin-left:8px;color:#ADADAD;}.m-3 .suggestedreading .m-list li{height:20px;padding:3px 0 2px;vertical-align:middle;}.m-3 .suggestedreading .wrap li{float:left;width:118px;height:146px;}.m-3 .suggestedreading .suggesteditem1{line-height:24px;margin:5px 0;font-size:12px;margin-right:10px;}.m-3 .suggestedreading .suggesteditem2{margin:5px 0;font-size:12px;}.m-3 .suggestedreading .suggesteditem2 .imgwrap1{position:relative;overflow:hidden;width:90px;height:90px;zoom:1;}.m-3 .suggestedreading .suggesteditem2 .imgwrap2{z-index:2;position:absolute;left:0;top:0;}.m-3 .suggestedreading .suggesteditem2 .btitle{width:96px;height:148px;overflow:hidden;text-decoration:none;}.m-3 .suggestedreading .suggesteditem2 .sep{padding:5px 10px 0 10px;}.m-3 .suggestedreading .suggesteditem2 a{cursor:pointer;}.m-3 .suggestedreading .suggesteditem2 a:hover{text-decoration:none;}.m-3 .suggestedreading .suggesteditem2 img{border-width:0;}.m-3 .suggestedreading .color1{background-color:#B3786B;}.m-3 .suggestedreading .color2{background-color:#D2C1A8;}.m-3 .suggestedreading .color3{background-color:#D46646;}.m-3 .suggestedreading .color4{background-color:#D28FA8;}.m-3 .suggestedreading .color5{background-color:#C84F54;}.m-3 .suggestedreading .white{color:white;}.m-3 .suggestedreading .imgtip{margin:2px;font-weight:bold;color:white;font-size:13px;}.m-3 .suggestedreading .borderwrap{padding:2px;background-color:#fff;}.m-3 .suggestedreading .time{position:absolute;bottom:0;right:0;}.m-3 .suggestedreading .hidsep{margin-left:-1px;}.m-3 .suggestedreading .srtitle{font-size:14px;font-weight:bold;margin-bottom:10px;}.m-3 #yodaoad{padding-left:5px;}.m-3 #yodaoad_3{padding:20px 0 25px 0;}.m-3 .relategroup{width:45%}.m-3 .blogvote{padding-left:35px;position:relative;zoom:1;}.m-3 .blogvote .sep{margin:0 5px;}.m-3 .blogvote .vtitle{margin:15px 0 15px -30px;}.m-3 .blogvote .vtitle span{padding-right:8px;}.m-3 .blogvote .vtitle .close{width:60px;height:24px;vertical-align:middle;}.m-3 .blogvote .roleview{padding-right:10px}.m-3 .blogvote .roleview .iblock{width:10px}.m-3 .blogvote .options{clear:both;margin-right:10px}.m-3 .blogvote .options ul{margin:0;padding:0;list-style:none;}.m-3 .blogvote .options ul li{padding:10px 0;line-height:16px;}.m-3 .blogvote .options .role{margin-bottom:15px;}.m-3 .blogvote .options .acts{margin-bottom:15px;height:24px;line-height:26px;}.m-3 .blogvote .options .acts .leftpt{height:24px;line-height:26px;}.m-3 .blogvote .options .acts .leftpt button{height:24px;line-height:18px;}.m-3 .blogvote .options .acts .leftpt span{}.m-3 .blogvote .options .acts .view{margin-left:5px;}.m-3 .blogvote .fvote{padding-top:10px;}.m-3 .blogvote .fvote ul{list-style:none;margin:10px 0;padding:0;}.m-3 .blogvote .fvote ul li{line-height:20px;margin:5px 0;}.m-3 .blogvote .options ul .col0{width:230px;margin-right:10px;margin-top:-3px;_margin-top:-5px;line-height:20px}.m-3 .blogvote .options ul .col0 input{_position:relative;_top:3px}.m-3 .blogvote .options ul .col0 label{width:200px;_position:relative;_top:4px}.m-3 .blogvote .options ul .col1{width:190px;height:14px;line-height:14px;;background:none repeat scroll 0 0 #EAEAEA;}.m-3 .blogvote .options ul .col1 .iblock{width:100%;height:16px;vertical-align:middle;}.qing001{margin:0;border:none;}.qing001 .nb-mc{background:none;}.qing001 .nb-mc .cc{width:942px;padding:0;margin:0 auto;}.qing001 .nb-mc .cl{display:none;}.qing001 .nb-mc .cr{display:none;}.qing001 .bh{display:none;}.qing001 .nbw-ryt{background:url(/newpage/images/qingtheme/qing001/blogdetail_cntbg.png) 0 0 repeat-y;}.qing001 .nbw-ryt .left{background:url(/newpage/images/qingtheme/qing001/blogdetail_ftbg.png) bottom left no-repeat;}.qing001 .nbw-ryt .left .lcnt{width:100%;padding:0;margin:0;background:url(/newpage/images/qingtheme/qing001/blogdetail_ttlbg.png) 0 0 no-repeat;}.qing001 .nbw-ryt .left .mcnt{padding:0 30px;}.qing001 .nbw-ryt .left .nbw-bitm{padding:0;}.qing001 .nb-mt{display:none;}.qing001 .nbw-ryt .left .top{display:none;}.qing001 .nbw-ryt .left .nbw-bitm .title{height:31px;padding:30px 0 46px 3px;margin:0;}.qing001 .nbw-ryt .left .nbw-bitm .title .tcnt{color:#fffadc;font-size:24px;}.qing001 .nbw-ryt .left .nbw-bitm .tdep{padding-top:6px;}.qing001 .comment .case{padding-bottom:40px;}.m-3 .article .douban{float:left;width:200px;margin:0 10px 10px 0;font-size:12px;}.m-3 .article .douban .field{padding-top:5px;}.m-3 .article .douban .field .dbyinyue{width:10px;height:8px;border-width:0;}.m-3 .article .douban img{max-width:100%;width:100%;border-color:#e9e9e9;display:inline-block;border-width:1px;border-style:solid;}.m-3 .article-1 .douban{float:right;width:200px;margin:0 3px 10px 10px;}.m-3 .article-2 .douban{float:left;width:250px;margin:0 -250px 0 0;}.m-3 .article-2 .blog{margin-left:270px;}.m-3 .article-2 .blogc{width:99%;overflow:hidden;}.m-3 .article-3 .douban{float:right;width:250px;margin:0 3px 0 -250px;}.m-3 .article-3 .blog{margin-right:270px;}.m-3 .article-3 .blogc{width:99%;overflow:hidden;}.m-3 .vote_star{overflow:visible;}.m-3 .rateword{display:none;left:88px;width:37px;top:-2px;position:absolute;line-height:23px;}.m-3 .star_d0 .rateword0{display:inline;}.m-3 .star_d1 .rateword1{display:inline;}.m-3 .star_d2 .rateword2{display:inline;}.m-3 .star_d3 .rateword3{display:inline;}.m-3 .star_d4 .rateword4{display:inline;}.m-3 .star_d5 .rateword5{display:inline;}.m-3 .nbw-act .blogsep{margin:0 2px}.m-3 .zihao{position:relative;cursor:default;}.m-3 .zihaoshow{position:absolute;width:26px;top:-57px;left:-3px;padding:0 0 3px;line-height:18px;}.m-3 .zihaoshow span{display:block;text-align:center;cursor:pointer;}.m-3 .zihaoc{border-style:solid;border-width:1px;}.m-3 .mbga{margin-bottom:12px;position:relative;}.m-3 .mbga a{margin-left:20px;}.m-3 .mbgai{position:absolute;top:-1px;width:17px;background:url(/newpage/images/microblog.png?1) no-repeat;_background:none transparent;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://b2.bst.126.net/newpage/images/microblog.png');_zoom:1;}.m-3 .mingxing{width:18px;background-position:-43px -80px;}.m-3 .xinxing{width:18px;background-position:-81px -80px;}.m-3 .darendesc{padding:7px 15px;margin-top:10px;line-height:18px;background:#efeae7;vertical-align:middle;}.m-3 .js-cmt-noavatar .nbw-cmt .nbw-fce{display:none;}.m-3 .js-cmt-noavatar .nbw-cmt .thde{padding-left:8px;margin-left:0;}.m-3 .js-cmt-noavatar .nbw-cmt .reps .thde{margin-left:55px;}.m-3 .toLofter{cursor:pointer;position:absolute;bottom:5px;width:112px;height:22px;background:url(/newpage/images/publishtolofter/tolofter.png?v=20130909) 0 0 no-repeat;text-indent:-9999px;}.m-3 .nbw-ryt .left .lcnt{padding-right:20px;}.m-3 .edt-cmt{width:auto;}.m-3 .comment .publish .edt-cmt{width:auto;}#blog-163-com .m-3 .comment .nbw-cmt .cnt{width:auto;}#blog-163-com .m-3 .comment .nbw-cmt .nbw-cmt .cnt{width:auto;}.m-3 .nbw-cmt .nbw-cmt{padding:20px 5px 1px 0;}.m-3 .nbw-cmt .op{height:18px;line-height:18px;margin-bottom:18px;}.m-3 .nbw-ryt .left .nbw-bitm .title{margin:34px 0 10px;line-height:normal;}.m-3 .nbw-ryt .left .nbw-bitm .title .tcnt{line-height:38px;}.m-3 .nbw-ryt .left .nbw-bitm .tdep{margin-bottom:25px;}.m-3 .comment .publish{padding:0 5px 10px 0;margin:20px 0 0 0;}.m-3 .nbw-sdt .miniBlogArea{bottom:12px;}.m-3 .nbw-sdt .edt .zbtn{height:40px;line-height:40px;}.m-3 .nbw-sdt .edt .zbtn .zfce{top:10px;}.m-3 .nas-tofix{line-height:24px;}.m-3 .nas-wrap{margin-top:4px;}.m-3 .leftoperatebar{height:24px;line-height:24px;padding:8px 0;}.m-3 .nbw-bitm .rdif{padding:8px 0;}.m-3 .leftoperatebar .sep-last{margin-right:8px;}.m-3 .rightoperatebar{height:40px;line-height:40px;margin-left:0px;}.m-3 .reblogbtn, .m-3 .recommendbtn, .m-3 .likebtn{width:48px;height:38px;line-height:38px;padding-left:44px;margin:0 0 0 5px;font-size:14px;color:#fff;text-align:left;}.m-3 .reblogbtn{background-position:1px -431px;}.m-3 .recommendbtn{background-position:1px -271px;}.m-3 .js-recommended{background-position:1px -351px;}.m-3 .likebtn{background-position:1px -111px;}.m-3 .js-liked{background-position:1px -191px;}.m-3 .hotarea{}.m-3 .hotarea .hotItem{position:relative;zoom:1;display:block;float:left;}.m-3 .hotarea .hotItem .hottype{position:absolute;right:-5px;top:29px;width:20px;height:20px;text-decoration:none;}.m-3 .hotarea .hotItem .js-liketype{background-position:-4px -536px;}.m-3 .hotarea .hotItem .js-reblogtype{background-position:-4px -648px;}.m-3 .hotarea .hotItem .js-sharetype{background-position:-4px -592px;}.m-3 .hotarea .expandHotItem{}.m-3 .hotarea .expeadbg{width:40px;height:40px;margin:0 auto;background-position:-2px -728px;cursor:pointer;}.js-openlikewin .showhint .zcvr{background:#000;opacity:0.5;filter:alpha(opacity=50);}.f-openlikeicon{background:url(/newpage/images/liketolofter/openlike24.png) -9999px -9999px no-repeat;_background:url(/newpage/images/liketolofter/openlike8.png) -9999px -9999px no-repeat;}#blog-163-com #blog-163-com-layer div.openlikewin{border:none;}.openlikewin .nbwinwrap .ztbr, .openlikewin .nbwinwrap .zcls, .openlikewin .nbwinwrap .zext, .openlikewin .nbwinwrap .zbtnbar{display:none;}.openlikewin .nbwinwrap .zcnt{padding:0;}.openlikewin .hdarea{position:relative;zoom:1;width:500px;height:145px;padding-top:30px;background:#d6e6f1;}.openlikewin .hdarea .tticon{width:86px;height:73px;margin:0 auto;background-position:-8px -111px;}.openlikewin .hdarea .ttcnt{height:60px;line-height:60px;color:#333;font-size:25px;}.openlikewin .hdarea .close{position:absolute;right:10px;top:10px;width:21px;height:21px;background-position:-6px -720px;cursor:pointer;}.openlikewin .bdarea{padding-bottom:40px;}.openlikewin .step{padding-top:30px;}.openlikewin .step .stepicon{width:60px;height:64px;margin:0 auto;}.openlikewin .step .stepcnt{width:500px;height:32px;line-height:32px;padding-top:16px;color:#333;font-size:20px;}.openlikewin .stepone{}.openlikewin .stepone .stepicon{background-position:-6px -247px;}.openlikewin .stepone .stepcnt{}.openlikewin .steptwo{}.openlikewin .steptwo .stepicon{background-position:-6px -359px;}.openlikewin .steptwo .stepcnt{}.openlikewin .stepthree{margin-bottom:40px;}.openlikewin .stepthree .stepicon{background-position:-6px -470px;}.openlikewin .stepthree .stepcnt{margin-bottom:5px;}.openlikewin .likeaddr{width:304px;height:40px;line-height:40px;padding:6px;margin:0 auto;background-position:-1px -600px;}.openlikewin .likeaddr .blogname{font-family:"Hiragino Sans GB W3","Hiragino Sans GB",Arial,Helvetica,simsun,u5b8bu4f53;}.openlikewin .likeaddr .blogname{text-align:right;float:left;width:150px;height:40px;line-height:40px;padding:0;margin:0;color:#666;font-size:20px;border:none;outline:none;background:none;}.openlikewin .likeaddr .urlsuffix{text-align:left;float:left;width:120px;height:40px;line-height:40px;color:#666;font-size:20px;}.openlikewin .openmylike{width:316px;height:54px;margin:0 auto;background-position:1px 1px;cursor:pointer;}.outlinklayer{position:absolute;width:398px;background:#fff;border:1px solid #cdcdcd;text-align:left;}.outlinklayer .hdarea{height:25px;}.outlinklayer .hdarea .close{position:absolute;right:0;top:0;width:30px;height:30px;background:url(/newpage/images/outlink/close.png) 10px 8px no-repeat;cursor:pointer;}.outlinklayer .bdarea{height:108px;padding:0 0 25px 30px;}.outlinklayer .bdarea .ttl{height:26px;line-height:26px;color:#333;font-size:16px;font-weight:bold;}.outlinklayer .bdarea .url{width:340px;height:22px;line-height:22px;color:#666;font-size:14px;font-weight:bold;}.outlinklayer .bdarea .prompt{height:22px;line-height:22px;padding-top:12px;color:#999;font-size:14px;}.outlinklayer .bdarea .goon{height:26px;line-height:26px;color:#536c86;font-size:16px;text-decoration:underline;}.outlinklayer .adarea{padding:10px;border-top:1px solid #e6e6e6;}.outlinklayer .adarea .adlink{}.outlinklayer .adarea .adpic{display:block;width:378px;height:50px;border:none;}.blogPublicAccount{width:95px;height:340px;padding:25px 10px 25px 25px;background:#fff;}.blogPublicAccount h3{height:26px;line-height:26px;padding:1px 0 0 0;margin:0;font-weight:normal;font-size:18px;color:#444;background:url(/newpage/images/publicaccount/sinav.png) 72px 8px no-repeat;}.blogPublicAccount h3{_background-position:72px 6px;}.blogPublicAccount .wbttl, .blogPublicAccount .yxttl, .blogPublicAccount .wxttl{height:18px;line-height:18px;padding:0;margin:0;font-weight:normal;font-size:12px;color:#444;}.blogPublicAccount .wbttl{margin-bottom:7px;color:#999;}.blogPublicAccount .yxttl{margin-bottom:4px;}.blogPublicAccount .wxttl{margin-bottom:4px;}.blogPublicAccount .wbiframe{height:24px;margin-bottom:27px;}.blogPublicAccount .yx2d{width:80px;height:80px;margin-bottom:27px;background:url(/newpage/images/publicaccount/yx2d.png) 0 0 no-repeat;}.blogPublicAccount .wx2d{width:80px;height:80px;background:url(/newpage/images/publicaccount/wx2d.jpg) 0 0 no-repeat;}.f-trans{transition:all 0.3s linear;-webkit-transition:all 0.3s linear;-moz-transition:all 0.3s linear;-o-transition:all 0.3s linear;}.nbw-ryt .right{width:260px;}.nbw-ryt .left{margin-right:-262px;}.nbw-ryt .left .lcnt{margin-right:260px;}.js-auto-098 .left, .js-fix-098 .left{margin:0 auto;}.js-auto-098 .left .lcnt, .js-fix-098 .left .lcnt{margin-right:0;}.m-3 .m-aboutme .nick .mingxing{background-position:-43px -76px;}.m-3 .m-aboutme .nick .xinxing{background-position:-81px -76px;}.m-3 .m-aboutme .flw{position:relative;z-index:10;margin:0 15px;}.m-3 .f-bkicons, .m-3 .rightoperatebar-new .f-myLikeIcons{background:url(/newpage/images/redesign2014/bkicons24.png) -9999px -9999px no-repeat;_background:url(/newpage/images/redesign2014/bkicons8.png) -9999px -9999px no-repeat;}.m-3 .share-wrap .shareitm{float:left;width:24px;height:24px;padding:0 0 0 6px;cursor:pointer;}.m-3 .share-wrap .lofter{background-position:0 -144px;}.m-3 .share-wrap .sinawb{background-position:0 -192px;}.m-3 .share-wrap .qqzone{background-position:0 -240px;}.m-3 .share-wrap .qqweibo{background-position:0 -288px;}.m-3 .share-wrap .weixin{background-position:0 -336px;}.m-3 .share-wrap .yixin{background-position:0 -384px;}.m-3 .share-wrap .weixin, .m-3 .share-wrap .yixin{position:relative;zoom:1;}.m-3 .share-wrap .code2dimlayer{visibility:hidden;position:absolute;left:-22px;bottom:28px;width:242px;height:113px;text-align:left;cursor:default;}.m-3 .share-wrap .code2dimlayer{background:url(/newpage/images/redesign2014/code2dbg24.png) 0 0 no-repeat;_background:url(/newpage/images/redesign2014/code2dbg8.png) 0 0 no-repeat;}.m-3 .share-wrap .code2dimlayer img{float:left;width:84px;height:84px;margin:11px -108px 0 11px;}.m-3 .share-wrap .code2dimlayer .tips{margin:30px 0 0 108px;color:#777;font-size:12px;}.m-3 .share-wrap .code2dimlayer .tips p{padding:0;margin:0;line-height:24px;}.m-3 .share-wrap .js-show2dimlayer{}.m-3 .share-wrap .js-show2dimlayer .code2dimlayer{visibility:visible;}.m-3 .rightoperatebar-new{height:25px;line-height:25px;padding-top:6px;}.m-3 .rightoperatebar-new .likebtn, .m-3 .rightoperatebar-new .reblogbtn, .m-3 .rightoperatebar-new .recommendbtn{width:34px;height:25px;line-height:25px;padding-left:29px;margin-left:6px;color:#fff;font-size:12px;}.m-3 .rightoperatebar-new .likebtn{background-position:0 -96px;}.m-3 .rightoperatebar-new .reblogbtn{background-position:0 0;}.m-3 .rightoperatebar-new .recommendbtn{background-position:0 -48px;}.m-3 .rightoperatebar-new .js-liked{background-position:-137px -96px;}.m-3 .rightoperatebar-new .js-recommended{background-position:-137px -48px;}.m-3 .editopbar{margin-bottom:10px;}.m-3 .author img.cwd, .m-3 .hotarea .expeadbg, .m-3 .comment .nbw-f40 img.cwd{border-radius:20px;-webkit-border-radius:20px;-moz-border-radius:20px;-o-border-radius:20px;}.m-3 .comment .nbw-f50 img.cwd, .m-3 .comment .publish .nbw-fce img.cwd{border-radius:25px;-webkit-border-radius:25px;-moz-border-radius:25px;-o-border-radius:25px;}.m-3 .comment .nbw-f40 img.cwd, .m-3 .comment .nbw-f50 img.cwd{transition:all 0.35s linear;-webkit-transition:all 0.35s linear;-moz-transition:all 0.35s linear;-o-transition:all 0.35s linear;}.m-3 .comment img.js-rotate, .m-3 .comment .nbw-f40 a:hover img.cwd, .m-3 .comment .nbw-f50 a:hover img.cwd{transform:rotate(360deg);-ms-transform:rotate(360deg);-moz-transform:rotate(360deg);-webkit-transform:rotate(360deg);-o-transform:rotate(360deg);}.m-3 .nbw-blog img{height:auto;}.newtmpl_common .m-3 .nbw-ryt .left .nbw-bitm .bct embed{max-height:336px;}.newtmpl_common .wsy{min-width:990px;}.newtmpl_common .nb-cnt{background:none;}.newtmpl_common .nb-cnt .wc{margin:0;}.newtmpl_common .m-3{width:990px;padding-top:10px;margin:0 auto;border:none;}.newtmpl_common .m-3 .nbw-ryt .left .top{height:20px;}.newtmpl_common .m-3 .nb-mc .cc{padding:0;margin:0;background:none;}.newtmpl_common .m-3 .nb-mt{display:none;}.newtmpl_common .nb-mdl .l, .newtmpl_common .nb-mdl .r{display:none;}.newtmpl_common .nb-mdl .bh{display:none;}.newtmpl_common .nbw-ryt .right{border:none;}.newtmpl_common .m-3 .nbw-ryt .left{width:688px;padding-right:31px;margin-right:0;}.newtmpl_common .m-3 .nbw-ryt .left .lcnt{padding:26px 30px;margin-right:0;border:none;}.newtmpl_common .m-3 .nbw-ryt .left .lcnt{-webkit-border-radius:8px;-moz-border-radius:8px;border-radius:8px;}.newtmpl_common .m-3 .left{position:relative;zoom:1;overflow:visible;}.newtmpl_common .m-3 .left .uperbox, .newtmpl_common .m-3 .left .downbox{position:absolute;right:-3px;width:5px;height:5px;overflow:hidden;}.newtmpl_common .m-3 .left .uperbox{top:0px;}.newtmpl_common .m-3 .left .downbox{bottom:0px;}.newtmpl_13664000 .m-3 .nbw-ryt .left{border-right:1px solid #c1c1c1;}.newtmpl_13664000 .m-3 .nbw-ryt .left .lcnt{background:#fff;border:1px solid #d6cdc1;}.newtmpl_13664000 .m-3 .left .uperbox, .newtmpl_13664000 .m-3 .left .downbox{background:#c1c1c1;}.newtmpl_13664000 .m-aboutme .ttlbar, .newtmpl_13664000 .m-blogclasses .ttlbar, .newtmpl_13664000 .m-lofteriframe .ttlbar, .newtmpl_13664000 .m-163news .ttlbar{color:#333;border-bottom:4px solid #333;}.newtmpl_13664000 .m-aboutme .nick a{color:#666;}.newtmpl_13664000 .m-aboutme .desc{border-color:#666;}.newtmpl_13664000 .m-aboutme .desc p{color:#666;}.newtmpl_13664000 .m-blogclasses li a, .newtmpl_13664000 .m-163news .newscnt li a{color:#666;}.newtmpl_13664000 .m-aboutme .statusNode .findfrd .fc03, .newtmpl_13664000 .m-aboutme .statusNode .dofollow .fc03, .newtmpl_13664000 .m-163news .newscnt .download163news .fc03{color:#c14f4f;}.newtmpl_13664000 .m-163news .newscnt li .fc05:hover{color:#c14f4f;}.newtmpl_13664001 .m-3 .nbw-ryt .left{border-right:1px solid #9ababa;}.newtmpl_13664001 .m-3 .nbw-ryt .left .lcnt{background:#fff;border:1px solid #d6cdc1;}.newtmpl_13664001 .m-3 .left .uperbox, .newtmpl_13664001 .m-3 .left .downbox{background:#9ababa;}.newtmpl_13664001 .m-aboutme .ttlbar, .newtmpl_13664001 .m-blogclasses .ttlbar, .newtmpl_13664001 .m-lofteriframe .ttlbar, .newtmpl_13664001 .m-163news .ttlbar{color:#303a3a;border-bottom:4px solid #303a3a;}.newtmpl_13664001 .m-aboutme .nick a{color:#455353;}.newtmpl_13664001 .m-aboutme .desc{border-color:#455353;}.newtmpl_13664001 .m-aboutme .desc p{color:#455353;}.newtmpl_13664001 .m-blogclasses li a, .newtmpl_13664001 .m-163news .newscnt li a{color:#455353;}.newtmpl_13664001 .m-aboutme .statusNode .findfrd .fc03, .newtmpl_13664001 .m-aboutme .statusNode .dofollow .fc03, .newtmpl_13664001 .m-163news .newscnt .download163news .fc03{color:#c14f4f;}.newtmpl_13664001 .m-163news .newscnt li .fc05:hover{color:#c14f4f;}.newtmpl_13664002 .m-3 .nbw-ryt .left{border-right:1px solid #666;}.newtmpl_13664002 .m-3 .nbw-ryt .left .lcnt{background:#eee;border:1px solid #eee;}.newtmpl_13664002 .m-3 .left .uperbox, .newtmpl_13664002 .m-3 .left .downbox{background:#666;}.newtmpl_13664002 .m-aboutme .ttlbar, .newtmpl_13664002 .m-blogclasses .ttlbar, .newtmpl_13664002 .m-lofteriframe .ttlbar, .newtmpl_13664002 .m-163news .ttlbar{color:#999;border-bottom:4px solid #666;}.newtmpl_13664002 .m-aboutme .nick a{color:#999;}.newtmpl_13664002 .m-aboutme .desc{border-color:#666;}.newtmpl_13664002 .m-aboutme .desc p{color:#999;}.newtmpl_13664002 .m-blogclasses li a, .newtmpl_13664002 .m-163news .newscnt li a{color:#999;}.newtmpl_13664002 .m-aboutme .statusNode .findfrd .fc03, .newtmpl_13664002 .m-aboutme .statusNode .dofollow .fc03, .newtmpl_13664002 .m-163news .newscnt .download163news .fc03{color:#c38c81;}.newtmpl_13664002 .m-163news .newscnt li .fc05:hover{color:#c38c81;}.newtmpl_13665001 .m-3 .nbw-ryt .left{border-right:1px solid #b8b3a8;}.newtmpl_13665001 .m-3 .nbw-ryt .left .lcnt{background:#f9f7f1;border:1px solid #d6cdc1;}.newtmpl_13665001 .m-3 .left .uperbox, .newtmpl_13665001 .m-3 .left .downbox{background:#b8b3a8;}.newtmpl_13665001 .m-aboutme .ttlbar, .newtmpl_13665001 .m-blogclasses .ttlbar, .newtmpl_13665001 .m-lofteriframe .ttlbar, .newtmpl_13665001 .m-163news .ttlbar{color:#443e39;border-bottom:4px solid #443e3a;}.newtmpl_13665001 .m-aboutme .nick a{color:#443e3a;}.newtmpl_13665001 .m-aboutme .desc{border-color:#666159;}.newtmpl_13665001 .m-aboutme .desc p{color:#443e3a;}.newtmpl_13665001 .m-blogclasses li a, .newtmpl_13665001 .m-163news .newscnt li a{color:#443e3a;}.newtmpl_13665001 .m-aboutme .statusNode .findfrd .fc03, .newtmpl_13665001 .m-aboutme .statusNode .dofollow .fc03, .newtmpl_13665001 .m-163news .newscnt .download163news .fc03{color:#cc6666;}.newtmpl_13665001 .m-163news .newscnt li .fc05:hover{color:#cc6666;}.newtmpl_13664003 .m-3 .nbw-ryt .left{border-right:1px solid #9e939c;}.newtmpl_13664003 .m-3 .nbw-ryt .left .lcnt{background:#fbf9fd;border:1px solid #d6cdc1;}.newtmpl_13664003 .m-3 .left .uperbox, .newtmpl_13664003 .m-3 .left .downbox{background:#9e939c;}.newtmpl_13664003 .m-aboutme .ttlbar, .newtmpl_13664003 .m-blogclasses .ttlbar, .newtmpl_13664003 .m-lofteriframe .ttlbar, .newtmpl_13664003 .m-163news .ttlbar{color:#301d28;border-bottom:4px solid #301d28;}.newtmpl_13664003 .m-aboutme .nick a{color:#61535c;}.newtmpl_13664003 .m-aboutme .desc{border-color:#61535c;}.newtmpl_13664003 .m-aboutme .desc p{color:#61535c;}.newtmpl_13664003 .m-blogclasses li a, .newtmpl_13664003 .m-163news .newscnt li a{color:#61535c;}.newtmpl_13664003 .m-aboutme .statusNode .findfrd .fc03, .newtmpl_13664003 .m-aboutme .statusNode .dofollow .fc03, .newtmpl_13664003 .m-163news .newscnt .download163news .fc03{color:#93466e;}.newtmpl_13664003 .m-163news .newscnt li .fc05:hover{color:#93466e;}#blog-163-com-main{z-index:2;}.m-fixedPCAd{_display:none;visibility:hidden;opacity:0;}.m-fixedPCAd .hoverbar, .m-fixedPCAd .fixedbar a{background:url(/newpage/images/lofterad/bg24.png?003) -9999px -9999px no-repeat;}.m-fixedPCAd .fixedbar em, .m-fixedPCAd .hoverbar .ios, .m-fixedPCAd .hoverbar .andriod{background:url(/newpage/images/lofterad/icons24.png?003) -9999px -9999px no-repeat;}.m-fixedPCAd .fixedbar{position:fixed;right:0;bottom:0;z-index:99;width:325px;height:49px;}.m-fixedPCAd .fixedbar a{position:fixed;right:0;bottom:0;z-index:99;width:325px;height:49px;background-position:0 -193px;text-decoration:none;}.m-fixedPCAd .fixedbar em{position:absolute;right:12px;bottom:20px;z-index:100;width:10px;height:10px;background-position:-82px -136px;}.m-fixedPCAd .hoverbar{visibility:hidden;}.m-fixedPCAd .hoverbar{position:fixed;right:0;bottom:-193px;z-index:98;width:325px;height:193px;background-position:0 0;}.m-fixedPCAd .hoverbar .ios, .m-fixedPCAd .hoverbar .andriod{position:absolute;width:127px;height:40px;text-indent:-9999px;}.m-fixedPCAd .hoverbar a:hover{opacity:0.8;filter:alpha(opacity=80) \9;}.m-fixedPCAd .hoverbar .ios{left:160px;top:72px;background-position:0 0;}.m-fixedPCAd .hoverbar .andriod{left:160px;top:122px;background-position:0 -64px;}.js-fixedPCAd-hover .hoverbar{visibility:visible;bottom:49px;}.js-fixedPCAd-hover .fixedbar{border-top:1px solid #fff;}.js-fixedPCAd-hover .fixedbar em{background-position:-8px -136px;}.m-3 .nbw-bitm .cited{margin-top:20px;}.m-shareAndDownLoad{height:24px;line-height:24px;margin-top:-8px;}.m-lmiddlead{position:relative;width:100%;overflow:hidden;}.m-lmiddlead img, .m-lmiddlead embed, .m-lmiddlead object{display:block;width:100%;border:none;cursor:pointer;}.m-lmiddlead .adlink{display:block;position:relative;z-index:10;_width:590px;max-width:590px;background:url(http://b.bst.126.net/common/empty.png) 0 0 repeat;}.m-lmiddlead .flashadwrap{}.m-lmiddlead-flash .adlink img{display:none;}.m-lmiddlead-flash .flashadwrap{display:block;position:absolute;left:0;top:0;z-index:5;}.voteValCodeArea{}.m-valcode{height:24px;line-height:24px;padding:8px 0;margin-bottom:20px;}.m-valcode .txtcode{float:left;width:50px;height:24px;padding:0 5px;margin-right:10px;border-width:1px;border-style:solid;border-color:#c2c2c2 #d7d7d7 #d7d7d7 #c2c2c2;}.m-valcode .codeimg{float:left;width:60px;height:24px;margin-right:10px;}.m-valcode .changeimg{float:left;cursor:pointer;text-decoration:underline;} </style>
+  
+  <link href="/newpage/prettycode/prettify.css" type="text/css" rel="stylesheet" />
+  </head>
+<body onload="prettyPrint()" id="blog-163-com" class="nb-body nb-inr nb-prv ">
+  <!--[if lte IE 6]><div id="blog-163-com-ie6bodywrap" class=""><![endif]-->
+    <!--[if lte IE 6]><div id="blog-163-com-ie6body" class="nb-body"><![endif]-->
+
+<div class="nb-nbar clearfix" id="blog-163-com-topbar">
+  <div class="pl fl clearfix">
+  <div id="" class="nbw-im fl im im0">
+    <a  rel="nofollow"  class="lbl bd ia noul " href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://www.163.com/" target="_blank" hidefocus="true"><span class="tx">网易</span><span class="iblock icn0 icn0-421">&nbsp;</span></a><div class="nbw-tcd box-shadow bd">
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://news.163.com/" >
+            新闻
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://www.lofter.com/&amp;act=qbbkdl_20141211_01" >
+            LOFTER
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://email.163.com/" >
+            邮箱
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://photo.163.com/" >
+            相册
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://yuedu.163.com/" >
+            阅读
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://yuedu.163.com/book" >
+            图书
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://www.youdao.com/" >
+            有道
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://photo.163.com/pp/square/" >
+            摄影
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://qiye.163.com/" >
+            企业邮箱
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://quan.163.com/?from=blogdh" >
+            优惠券
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://note.youdao.com/?vendor=163blog" >
+            云笔记
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://fm.163.com/?fmblogzx0628" >
+            闪电邮
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://mail.163.com/client/dl.html?from=mail27" >
+            邮箱大师
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://yxp.163.com/" >
+            印像派
+          </a>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://www.kaola.com/" >
+            考拉海购
+          </a>
+        <div class="sep bd space">&nbsp;</div>
+          <a  rel="nofollow"   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://sitemap.163.com/" >
+            更多
+          </a>
+        
+    </div>
+  </div>
+
+    <span style="display:none;margin-left:0;" class="fl iblock space icn1 icn1-4">&nbsp;</span>
+
+  <div id="" class="nbw-im fl im im10">
+    <a  class="lbl bd ia noul " href="http://blog.163.com/?frompersonalbloghome" target="_blank" hidefocus="true"><span class="tx">博客</span><span class="iblock icn0 icn0-421">&nbsp;</span></a><div class="nbw-tcd box-shadow bd">
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/services/wapblog.html?frompersonalbloghome" >
+            手机博客
+          </a>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/clone/clone.html?frompersonalbloghome" >
+            博客搬家
+          </a>
+          <a   target="_blank"  class="itm noul youcai " hidefocus="true" href="http://blog.163.com/vip.do?frompersonalbloghome" >
+            博客VIP服务
+          </a>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/public/explore/?frompersonalbloghome" >
+            发现
+          </a>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/g/?frompersonalbloghome" >
+            小组
+          </a>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/public/theme/?frompersonalbloghome" >
+            风格
+          </a>
+        <div class="sep bd space">&nbsp;</div>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/blog_admin/blog/static/721279201082863728829/?frompersonalbloghome" >
+            LiveWriter写博
+          </a>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/blog_admin/blog/static/721279201092713253500/?frompersonalbloghome" >
+            word写博
+          </a>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/services/mailblog.html?frompersonalbloghome" >
+            邮件写博
+          </a>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/services/emsblog.html?frompersonalbloghome" >
+            短信写博
+          </a>
+        <div class="sep bd space">&nbsp;</div>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/showMultiUser.do?frompersonalbloghome" >
+            群博客
+          </a>
+          <a   target="_blank"  class="itm noul youcai " hidefocus="true" href="http://blog.163.com/BLOG_YOUCAI/" >
+            博客油菜地
+          </a>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/ht/?frompersonalbloghome" >
+            博客话题
+          </a>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/hot/history/?frompersonalbloghome" >
+            博客热点
+          </a>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://q.163.com/#home?frompersonalbloghome" >
+            博客圈子
+          </a>
+          <a   target="_blank"  class="itm noul  " hidefocus="true" href="http://blog.163.com/findFriend.do?type=5?frompersonalbloghome" >
+            找朋友
+          </a>
+        
+    </div>
+  </div>
+                               
+    <span style="display:none;margin-left:0;" class="fl iblock space icn1 icn1-4">&nbsp;</span>
+    
+    <div id="topbar_gachaArea" class="fl topbar_gachaArea">
+        <a class="dlditm" rel="nofollow" target="_blank" hidefocus="true" href="http://gacha.163.com/detail/favorite/49685?tab=0&utm_source=%E7%BD%91%E6%98%93%E5%8D%9A%E5%AE%A2%E5%B7%A6%E4%B8%8A%E8%A7%92%E6%96%87%E5%AD%97%E9%93%BE&utm_campaign=%E6%8E%A8%E5%B9%BF">GACHA－动漫萌妹汇集地<em></em></a>
+        <div class="m-gachaWrap">
+            <a class="logo">gacha</a>
+            <p class="intro">二次元同好交流新大陆</span></p>
+            <div class="item">
+                <div class="iteml">
+                    <img width="80" height="80" src="http://img.ph.126.net/QDyA9c-PEbjuS1zGJkE12A==/6630133180817252049.jpg" />
+                    <p class="txt">扫码下载App</p>
+                </div>
+                <div class="itemr">
+                    <a href="https://itunes.apple.com/cn/app/gacha-wang-yi-er-ci-yuan-she-qu/id1028933441?mt=8" target="_blank" class="btn ios">App Store下载</a>
+                    <a href="http://gacha.nos.netease.com/gacha.apk" target="_blank" class="btn btn-1">Android下载</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div id="topbar_lofterDldArea" class="fl topbar_lofterDldArea">
+        <a class="dlditm" rel="nofollow" target="_blank" hidefocus="true" href="http://www.lofter.com/app?act=qbbkdlxz_20150313_01">LOFTER-最美图片社交<em></em></a>
+        <div class="m-lofterWrap">
+            <a class="logo">LOFTER-记录生活，发现同好</a>
+            <p class="intro"><strong>汇聚2000万达人的兴趣社区</strong><br /><span>下载即送20张免费照片冲印</span></p>
+            <div class="item">
+                <div class="iteml">
+                    <img width="80" height="80" src="http://b.bst.126.net/newpage/images/lofterad/topbar/xcode.png" />
+                    <p class="txt">扫码下载App</p>
+                </div>
+                <div class="itemr">
+                    <a href="http://itunes.apple.com/cn/app/id494514224?mt=8" target="_blank" class="btn ios">App Store下载</a>
+                    <a href="http://www.lofter.com/app/QRCodedownload?act=qbbkdlxz_20150313_03" target="_blank" class="btn btn-1">Android下载</a>
+                    <p class="txt txt-1"><a href="http://www.lofter.com/?act=qbbkdlxz_20150313_04" target="_blank">或进入网页版&gt;</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="topbar_yxpArea" class="fl topbar_yxpArea">
+        <a class="dlditm" rel="nofollow" target="_blank" hidefocus="true" href="http://yxp.163.com" onclick="statistic4Lofter('qbbkyxp_20151027_01')">印像派-我的照片书<em></em></a>
+    </div>
+
+
+    <div class="nbw-im fl im1 im seebyway"><a rel="nofollow" title="随便看看" class="lbl bd ima spy" href="http://blog.163.com/randomUser.do"><span>&nbsp;</span></a></div>
+
+    <span style="display:none;" class="fl iblock space icn1 icn1-4">&nbsp;</span>
+    <div id="topbar_randShowArea" class="fl" style="display:none;">
+      <div class="nbw-im fl im1 im randtag phide"><a target="_blank" class="bd ima moveblog randshow" href="http://www.lofter.com/app/QRCodedownload?act=qbbkdlxz_20150313_13">颜值最高的图片社交APP ></a></div>
+<div class="nbw-im fl im1 im randtag phide"><a target="_blank" class="bd ima moveblog randshow" href="http://study.163.com/topics/specialActivity/?utm_source=blog.163.com&utm_medium=web_ArticleTopbar&utm_campaign=business">3个月成为年薪20W+的设计师 </a></div>
+    </div>
+  </div>
+  <div class="fr pr clearfix">
+    <div id="topbar_loginAndReg" class="fr">
+      <a rel="nofollow" style="margin-left:10px;color:#ff7700;" class="iblock fr ima" href="http://reg.163.com/reg/reg.jsp?product=blog&url=http://blog.163.com/ntesRegBlank.html&loginurl=http://blog.163.com/" target="_blank" onclick="statistic4Lofter('qbbkdbmc_20150513_03')">注册</a>
+      <a rel="nofollow" class="iblock fr ima ztag" href="#">登录</a>
+      <span class="fr iblock space icn1 icn1-4 spx">&nbsp;</span>
+      <div id="topbar_followArea" class="nbw-im fr"><span class="lbl bd ima followit fl ztag"><span class="fl addicon">&nbsp;</span><span class="fl">加关注</span></span></div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  (function(){
+      var e = document.getElementById('blog-163-com-main');
+      if(!!e) e.parentNode.insertBefore(document.getElementById('blog-163-com-topbar'),e);
+      e = document.getElementById('blog-notice-email');
+      if(!!e) window.setTimeout(function(){e.style.display='';},50);
+  })()
+</script>
+
+<script src="http://shared.ydstatic.com/js/yadk/1.0.0.js"></script>
+<div class="blogtoptips phide" id="blog-163-com-toptips">
+ <div class="blogtoptipswrap">
+    <div id="newbulletinstip" class="newbulletinstip phide">
+    <a class="lnknews fc03 m2a tiptag phide" href="" target="_blank"></a><span class="txtnews tiptag phide"></span>&nbsp;&nbsp;&nbsp;<a class="fc03 ul nextorprevnews tiptag phide" href="" hidefocus="true">显示下一条</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="fc03 ul close tiptag" href="" hidefocus="true">关闭</a>
+  </div>
+ </div>
+ 	<div id="sinaoauthtip" class="sinaoauthtip phide">
+    	<span style="">温馨提示！由于新浪微博认证机制调整，您的新浪微博帐号绑定已过期，请重新绑定！</span><a rel="nofollow" class="fc03 noul iblock" href="http://blog.163.com/lin305_gf/settings/?fromnewcenter#m=6">立即重新绑定新浪微博》</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="fc03 iblock close" href="">关闭</a>
+  	</div>
+    <div id="$_faxiantip" class="faxiantip phide">
+      <div>
+	    <a class="m2a iblock" href="http://blog.163.com/public/explore/?fromblogbanner" target="_blank"></a>
+	    <span class="faxiantag m2a"></span>
+      </div>
+    </div>
+    <div id="$_guanggaotip" class="guanggaotip phide">
+      <div>
+	    
+	    <span class="guanggaotag m2a"></span>
+      </div>
+    </div>
+    <div id="$_lofterInviteTip" class="lofterInviteTip phide">
+      <div>
+	    <a class="m2a iblock" href="http://www.lofter.com/invite/163blog/?email=" target="_blank"></a>
+	    <span class="lofterInviteTag m2a"></span>
+      </div>
+    </div>
+</div>  <div class="nb-wrap wsy" id="blog-163-com-main"><div class="nb-are nb-top">
+  <div class="wkg h" id="blog-163-com-banner">
+    
+    <div class="t">
+      <h1 class="n c"><span class="ztag pre">小峰的博客</span></h1>
+      <p class="d c"><span class="ztag pre">做梦的人 醒了 然后将何去何从呢</span></p>
+    </div>
+    <div class="f h ztag"></div>
+    <a class="x" hidefocus="true" target="_blank" href="#"><span class="xx ztag"></span></a>
+  </div>
+</div><div class="nb-are nb-nav">
+  <div class="wkg">
+    <div class="c h">
+      <h2>导航</h2>
+      <ul class="noul clearfix">
+                
+	        <li class="w w0">
+	          <a class="i i0 fc01 h" hidefocus="true" href="http://blog.163.com/lin305_gf/">首页</a>
+	        </li>
+	        <li class="w w1 selected">
+	          <a class="i i1 fc01 h" hidefocus="true" href="http://blog.163.com/lin305_gf/blog/">日志</a>
+	        </li>
+	        <li class="w w9">
+	          <a class="i i9 fc01 h" hidefocus="true" href="http://blog.163.com/lin305_gf/loftarchive/">LOFTER</a>
+	        </li>
+	        <li class="w w2">
+	          <a class="i i2 fc01 h" hidefocus="true" href="http://blog.163.com/lin305_gf/album/">相册</a>
+	        </li>
+	        <li class="w w3">
+	          <a class="i i3 fc01 h" hidefocus="true" href="http://blog.163.com/lin305_gf/music/">音乐</a>
+	        </li>
+	        <li class="w w4">
+	          <a class="i i4 fc01 h" hidefocus="true" href="http://blog.163.com/lin305_gf/collection/">收藏</a>
+	        </li>
+	        <li class="w w5">
+	          <a class="i i5 fc01 h" hidefocus="true" href="http://blog.163.com/lin305_gf/friends/">博友</a>
+	        </li>
+	        <li class="w w6">
+	          <a class="i i6 fc01 h" hidefocus="true" href="http://blog.163.com/lin305_gf/profile/">关于我</a>
+	        </li>
+      </ul><!--
+ --></div>
+    <div class="l h">&nbsp;</div>
+    <div class="r h">&nbsp;</div>
+  </div>
+</div>  <div class="nb-are nb-smt"><div class="wkg h space"><div class="l h">&nbsp;</div><div class="r h">&nbsp;</div><div class="c h">&nbsp;</div></div></div>
+  <div class="nb-are nb-cnt">
+    <div class="wkg">
+      <div class="c wc h clearfix " id="blog-163-com-container">
+
+  <div class="nb-mdl lcr m-3 " id="-3">
+  <div class="nb-mt lcr th fc02">
+    <div class="c tc th lcr"><h2 class="thide nb-jsc mdl_t_t">日志</h2></div>
+    <div class="r tm th nb-jsc"></div>
+    <div class="l tl th">&nbsp;</div>
+    <div class="r tr th">&nbsp;</div>
+  </div>
+    <div class="nb-mc lcr">
+      <div class="c cc lcr nb-jsc">
+<script>
+function g_onSuggestedReadingImgLoad(_img){
+    var image = new Image();
+    image.src = _img.src;
+    var _width = 90;
+    var _height = 90;
+    if(image.width > image.height){
+    	_img.style.marginLeft = -Math.floor((image.width*(_height/image.height)-_width)/2)+'px';
+    	_img.style.height = _height+'px';
+    }else {
+    	_img.style.width = _width+'px';
+    	_img.style.marginTop = -Math.floor((image.height*(_width/image.width)-_height)/2)+'px';
+    }
+    _img.style.display = 'block';
+}
+</script>
+<div class="nbw-ryt ztag clearfix ">
+  <div class="right bdwl bds0 bdc0">
+    <div class="cnt ztag">
+    <div class="g-rsidebar">
+        <div class="m-aboutme">
+            <div class="ttlbar fc06 bdwb bdc0 bds0">关于我</div>
+            <a class="avatar" href="http://blog.163.com/lin305_gf/" target="_blank" hidefocus="true" >
+                <img id="rsavatarimg" src="http://os.blog.163.com/common/ava.s?b=1&host=lin305_gf">
+            </a>
+            <div class="nick fc03">
+                 <a href="http://blog.163.com/lin305_gf/" target="_blank" hidefocus="true" >小峰GRain</a>
+                 
+            </div>
+            <div class="desc fc05 bdwv bdc0 bds2">
+                <p>不曾心恨~~~</p>
+            </div>
+            <div id="r_statusNode" class="statusNode"></div>
+        </div>
+        
+        <div class="m-rtopad">
+            <a href="#" target="_blank" hidefocus="true"><img style="border:none;" id="righttopadimg" /></a>
+            <iframe marginwidth="0" marginheight="0" id="rtop_iframe" style="display:none;" width="240" height="240" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+        </div>
+        
+        <div class="m-blogclasses">
+            <div class="ttlbar fc06 bdwb bdc0 bds0">文章分类</div>
+            <ul>
+                    <li><a class="fc05" href="http://blog.163.com/lin305_gf/blog/#m=0&t=1&c=fks_084071080084082069086080087095093080088070086082082067" target="_blank" hidefocus="true"><span class="iblock dot">·</span>linux-心得（201（1）</a></li>
+                    <li><a class="fc05" href="http://blog.163.com/lin305_gf/blog/#m=0&t=1&c=fks_084064080081084069084082082095093080088070086082082067" target="_blank" hidefocus="true"><span class="iblock dot">·</span>JSP（16）</a></li>
+                    <li><a class="fc05" href="http://blog.163.com/lin305_gf/blog/#m=0&t=1&c=fks_084066092085088069080085084095093080088070086082082067" target="_blank" hidefocus="true"><span class="iblock dot">·</span>design（1）</a></li>
+                    <li><a class="fc05" href="http://blog.163.com/lin305_gf/blog/#m=0&t=1&c=fks_087068083085086066084084087095093080088070086082082067" target="_blank" hidefocus="true"><span class="iblock dot">·</span>RHCE（10）</a></li>
+                    <li><a class="fc05" href="http://blog.163.com/lin305_gf/blog/#m=0&t=1&c=fks_087068086087081075081083095095093080088070086082082067" target="_blank" hidefocus="true"><span class="iblock dot">·</span>CCNP（25）</a></li>
+                    <li><a class="fc05" href="http://blog.163.com/lin305_gf/blog/#m=0&t=1&c=fks_087069083087082065092085081095093080088070086082082067" target="_blank" hidefocus="true"><span class="iblock dot">·</span>CCNA笔记（3）</a></li>
+                    <li><a class="fc05" href="http://blog.163.com/lin305_gf/blog/#m=0&t=1&c=fks_087065092085085069085083084095093080088070086082082067" target="_blank" hidefocus="true"><span class="iblock dot">·</span>收藏（35）</a></li>
+                    <li><a class="fc05" href="http://blog.163.com/lin305_gf/blog/#m=0&t=1&c=fks_087065086084083075080082086095093080088070086082082067" target="_blank" hidefocus="true"><span class="iblock dot">·</span>心说的事（25）</a></li>
+                        <li><a class="fc05" href="http://blog.163.com/lin305_gf/blog/#m=0" target="_blank" hidefocus="true"><span class="iblock dot">·</span>更多 &gt;</a></li>
+            </ul>
+        </div>
+        <div id="r_mlofteriframe" class="m-lofteriframe">
+            <div class="ttlbar fc06 bdwb bdc0 bds0"><a hidefocus="true" style="display:none;float:left;margin-left:12px;color:#ff0000;font-size:12px;text-decoration:none;" target="_blank" href="http://www.lofter.com/?act=qbbokejingxuan_20150109_03&newloginentry=1">注册免费冲印20张照片</a><span>LOFTER精选</span></div>
+            <iframe id="r_lofteriframe" width="240" height="745" frameborder="0" border="0" scrolling="no" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+            
+            <div class="btlink" style="height:20px;line-height:20px;padding:10px 0 0 12px;"><a target="_blank" href="http://www.lofter.com/?act=qbbokejingxuan_20150109_03&newloginentry=1" hidefocus="true" class="fc03" style="font-size:14px;text-decoration:none;">注册免费冲印20张照片 &gt;</a></div>
+            
+        </div>
+        <div id="r_mkaolaadv" class="m-kaolaadv">
+            <div class="ttlbar fc06 bdwb bdc0 bds0">网易考拉推荐</div>
+            <iframe width="240" height="275" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" border="0" allowtransparency="true" src="http://g.163.com/r?site=netease&affiliate=blog&cat=detail&type=kl_240x275&location=1"></iframe>
+            
+        </div>
+        
+        <div id="r_m163news" class="m-163news"></div>
+        
+        <div class="m-rbottomad">
+            <a href="#" target="_blank" hidefocus="true"><img style="border:none;" id="rightbottomadimg" /></a>
+            <iframe marginwidth="0" marginheight="0" id="rbottom_iframe" style="display:none;" width="240" height="240" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+        </div>
+        
+        <div id="r_fixedNodesWrap" class="fixedNodesWrap"><div id="r_fixedNodesCnt" class="fixedNodesCnt f-trans"></div></div>
+    </div>
+    </div>
+  </div>
+  <div class="left">
+     <div class="lcnt bdwr bds0 bdc0 ">
+      <div id="$_newOldBlogLinkTopDiv" class='top fc03 bdwb bdc0 bds2 clearfix'>
+     </div>
+     <div class="mcnt ztag">
+      <div class="nbw-bitm bdwb bds2 bdc0 ">
+        <div class="multicntwrap">
+	      <div class="multicnt">
+	      	<div>
+		      <h3 class="title pre fs1"><span class="tcnt">【每天一shell】Linux中find常见用法示例</span>&nbsp;&nbsp;<span class="bgc0 fc07 fw0 fs0"></span></h3>
+		      <p class="tdep clearfix nbw-act fc06" style="line-height:20px;">
+		        <span class="pleft">
+		          
+		          <span class="blogsep">2012-01-17 00:47:15</span><span class="blogsep">|&nbsp;&nbsp;分类：</span>
+		          <a class="fc03 m2a" href="http://blog.163.com/lin305_gf/blog/#m=0&t=1&c=fks_087068083085086066084084087095093080088070086082082067" title="RHCE">RHCE</a>
+		          <span class="blogsep phide" id="$_blogTagTitle">|&nbsp;&nbsp;标签：</span><span class="fc03 phide" id="$_blogTagInfo"></span>
+		        </span>
+		        <span class="pright fc07 ztag"><span class="blogsep">|</span><span id="$_spanReport" class="fc03 m2a">举报</span></span>
+		        <span class="pright fc07 ztag"><span class="blogsep">|</span><span class="zihao fc03" id="$_fontswitch">字号<span class="zihaoshow  phide" id="$_fontsTypes"><span class="zihaoc bdc0"><span class="stag"></span><span class="fc04 stag">大</span><span  class="fc04 stag" >中</span><span  class="fc04 stag">小</span></span></span></span></span><span class="pright pnt fc03" id="$_blog_subscribe"><span class="iblock icn0 icn0-919">&nbsp;</span><a class="m2a">订阅</a></span>
+		      </p>
+		    </div>
+	      </div>
+	      
+	      <div class="m-shareAndDownLoad">
+              <div class="share-wrap pleft">
+                <span id="$_shareBtn_lofter2" title="分享到LOFTER" class="shareitm lofter f-bkicons">&nbsp;</span>
+                <span id="$_shareBtn_sinaweibo2" title="分享到新浪微博" class="shareitm sinawb f-bkicons">&nbsp;</span>
+                <span id="$_shareBtn_qq2" title="分享到QQ空间" class="shareitm qqzone f-bkicons">&nbsp;</span>
+                <span id="$_shareBtn_qqweibo2" title="分享到腾讯微博" class="shareitm qqweibo f-bkicons">&nbsp;</span>
+                <div id="$_shareBtn_weixin2" title="分享到微信" class="shareitm weixin f-bkicons">
+<div class="code2dimlayer fc06">
+    <img src="http://blog.163.com/bitMaxImageGen.do?url=http://blog.163.com/lin305_gf/blog/static/9695244020120625516619&w=100&h=100&act=qbbkfxtj_20150420_05">
+    <div class="tips">
+        <p>用微信&nbsp;&nbsp;“扫一扫”</p>
+        <p>将文章分享到朋友圈。</p>
+    </div>
+    <a class="close">&nbsp;</a>
+</div>
+                </div>
+                <div id="$_shareBtn_yixin2" title="分享到易信" class="shareitm yixin f-bkicons">
+<div class="code2dimlayer fc06">
+    <img src="http://blog.163.com/bitMaxImageGen.do?url=http://blog.163.com/lin305_gf/blog/static/9695244020120625516619&w=100&h=100&act=qbbkfxtj_20150420_06">
+    <div class="tips">
+        <p>用易信&nbsp;&nbsp;“扫一扫”</p>
+        <p>将文章分享到朋友圈。</p>
+    </div>
+    <a class="close">&nbsp;</a>
+</div>
+                </div>
+              </div>
+              <a class="pright fc03 noul" target="_blank" href="http://www.lofter.com/app?act=qbbkrzydb_20150408_01">&nbsp;&nbsp;下载LOFTER</a>
+              <a class="pright fc03 noul" target="_blank" href="http://yxp.163.com">我的照片书&nbsp;&nbsp;|</a>
+          </div>
+          
+        </div>
+
+        <div>
+        
+        </div>
+
+        <div class="nbw-blog-start"></div>
+        <div class="bct fc05 fc11 nbw-blog ztag">  <DIV>  <P>原文：<BR></P>  <P>·find&nbsp;&nbsp; path&nbsp;&nbsp; -option&nbsp;&nbsp; [&nbsp;&nbsp; -print ]&nbsp;&nbsp; [ -exec&nbsp;&nbsp; -ok&nbsp;&nbsp; command ]&nbsp;&nbsp; {} \;<BR>#-print 将查找到的文件输出到标准输出<BR>#-exec&nbsp;&nbsp; command&nbsp;&nbsp; {} \;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -----将查到的文件执行command操作,{} 和 \;之间有空格<BR>#-ok 和-exec相同，只不过在操作前要询用户</P>  <P>====================================================</P>  <P>-name&nbsp;&nbsp; filename&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查找名为filename的文件<BR>-perm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按执行权限来查找<BR>-user&nbsp;&nbsp;&nbsp; username&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件属主来查找<BR>-group groupname&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按组来查找<BR>-mtime&nbsp;&nbsp; -n +n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件更改时间来查找文件，-n指n天以内，+n指n天以前<BR>-atime&nbsp;&nbsp;&nbsp; -n +n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件访问时间来查GIN: 0px"&gt;-perm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按执行权限来查找<BR>-user&nbsp;&nbsp;&nbsp; username&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件属主来查找<BR>-group groupname&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按组来查找<BR>-mtime&nbsp;&nbsp; -n +n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件更改时间来查找文件，-n指n天以内，+n指n天以前<BR>-atime&nbsp;&nbsp;&nbsp; -n +n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件访问时间来查找文件，-n指n天以内，+n指n天以前 <BR>-ctime&nbsp;&nbsp;&nbsp; -n +n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件创建时间来查找文件，-n指n天以内，+n指n天以前 <BR>-nogroup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查无有效属组的文件，即文件的属组在/etc/groups中不存在<BR>-nouser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查无有效属主的文件，即文件的属主在/etc/passwd中不存<BR>-newer&nbsp;&nbsp; f1 !f2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 找文件，-n指n天以内，+n指n天以前 <BR>-ctime&nbsp;&nbsp;&nbsp; -n +n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件创建时间来查找文件，-n指n天以内，+n指n天以前 <BR>-nogroup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查无有效属组的文件，即文件的属组在/etc/groups中不存在<BR>-nouser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查无有效属主的文件，即文件的属主在/etc/passwd中不存<BR>-newer&nbsp;&nbsp; f1 !f2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查更改时间比f1新但比f2旧的文件<BR>-type&nbsp;&nbsp;&nbsp;&nbsp; b/d/c/p/l/f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查是块设备、目录、字符设备、管道、符号链接、普通文件<BR>-size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n[c]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查长度为n块[或n字节]的文件<BR>-depth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #使查找在进入子目录前先行查找完本目录<BR>-fstype&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查更改时间比f1新但比f2旧的文件<BR>-type&nbsp;&nbsp;&nbsp;&nbsp; b/d/c/p/l/f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查是块设备、目录、字符设备、管道、符号链接、普通文件<BR>-size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n[c]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查长度为n块[或n字节]的文件<BR>-depth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #使查找在进入子目录前先行查找完本目录<BR>-fstype&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查位于某一类型文件系统中的文件，这些文件系统类型通常可 在/etc/fstab中找到<BR>-mount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查文件时不跨越文件系统mount点<BR>-follow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #如果遇到符号链接文件，就跟踪链接所指的文件<BR>-cpio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; %;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查位于某一类型文件系统中的文件，这些文件系统类型通常可 在/etc/fstab中找到<BR>-mount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查文件时不跨越文件系统mount点<BR>-follow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #如果遇到符号链接文件，就跟踪链接所指的文件<BR>-cpio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #对匹配的文件使用cpio命令，将他们备份到磁带设备中<BR>-prune&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #忽略某个目录</P>  <P>====================================================<BR>$find&nbsp;&nbsp; ~&nbsp;&nbsp; -name&nbsp;&nbsp; "*.txt"&nbsp;&nbsp; -print&nbsp;&nbsp;&nbsp;&nbsp; #在$HOME中查.txt文件并显示<BR>$find&nbsp;&nbsp; .&nbsp;&nbsp;&nbsp; -name&nbsp;&nbsp; "*.txt"&nbsp;&nbsp; -print<BR>$find&nbsp;&nbsp; .&nbsp;&nbsp;&nbsp; -name&nbsp;&nbsp; "[A-Z]*"&nbsp;&nbsp; -pri26nbsp;&nbsp;&nbsp;&nbsp; #对匹配的文件使用cpio命令，将他们备份到磁带设备中<BR>-prune&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #忽略某个目录</P>  <P>=====================================================<BR>$find&nbsp;&nbsp; ~&nbsp;&nbsp; -name&nbsp;&nbsp; "*.txt"&nbsp;&nbsp; -print&nbsp;&nbsp;&nbsp;&nbsp; #在$HOME中查.txt文件并显示<BR>$find&nbsp;&nbsp; .&nbsp;&nbsp;&nbsp; -name&nbsp;&nbsp; "*.txt"&nbsp;&nbsp; -print<BR>$find&nbsp;&nbsp; .&nbsp;&nbsp;&nbsp; -name&nbsp;&nbsp; "[A-Z]*"&nbsp;&nbsp; -print&nbsp;&nbsp; #查以大写字母开头的文件<BR>$find&nbsp;&nbsp; /etc&nbsp;&nbsp; -name&nbsp;&nbsp; "host*"&nbsp;&nbsp; -print #查以host开头的文件<BR>$find&nbsp;&nbsp; .&nbsp;&nbsp; -name&nbsp;&nbsp; "[a-z][a-z][0--9][0--9].txt"&nbsp;&nbsp;&nbsp; -print&nbsp;&nbsp; #查以两个小写字母和两个数字开头的txt文件<BR>$find .&nbsp;&nbsp; -perm&nbsp;&nbsp; 755&nbsp;&nbsp; -print<BR>$find&nbsp;&nbsp; .&nbsp;&nbsp; -perm -007&nbsp;&nbsp; -exec ls -l {} \;&nbsp;&nbsp; #查所有用户都可读写执行的文件同-perm 777<BR>$find&nbsp;&nbsp; . -type d&nbsp;&nbsp; -print<BR>$find&nbsp;&nbsp; .&nbsp;&nbsp; !&nbsp;&nbsp; -type&nbsp;&nbsp; d&nbsp;&nbsp; -print <BR>$find&nbsp;&nbsp; .&nbsp;&nbsp; -type l&nbsp;&nbsp; -print</P>  <P>$find&nbsp;&nbsp; .&nbsp;&nbsp; -size&nbsp;&nbsp; +1000000c&nbsp;&nbsp; -print&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查长度大于1Mb的文件<BR>$find&nbsp;&nbsp; .&nbsp;&nbsp; -size&nbsp;&nbsp; 100c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -print&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 查长度为100c的文件<BR>$find&nbsp;&nbsp; .&nbsp;&nbsp; -size&nbsp;&nbsp; +10&nbsp;&nbsp; -print&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查长度超过期作废10块的文件（1块=512字节）</P>  <P>$cd /<BR>$find&nbsp;&nbsp; etc&nbsp;&nbsp; home&nbsp;&nbsp; apps&nbsp;&nbsp;&nbsp; -depth&nbsp;&nbsp; -print&nbsp;&nbsp; | cpio&nbsp;&nbsp; -ivcdC65536&nbsp;&nbsp; -o&nbsp;&nbsp; /dev/rmt0<BR>$find&nbsp;&nbsp; /etc -name "passwd*"&nbsp;&nbsp; -exec grep&nbsp;&nbsp; "cnscn"&nbsp;&nbsp; {}&nbsp;&nbsp; \;&nbsp;&nbsp; #看是否存在cnscn用户<BR>$find . -name "yao*"&nbsp;&nbsp; | xargs file<BR>$find&nbsp;&nbsp; . -name "yao*"&nbsp;&nbsp; |&nbsp;&nbsp; xargs&nbsp;&nbsp; echo&nbsp;&nbsp;&nbsp; "" &gt; /tmp/core.log<BR>$find&nbsp;&nbsp; . -name "yao*"&nbsp;&nbsp; | xargs&nbsp;&nbsp; chmod&nbsp;&nbsp; o-w</P>  <P>======================================================</P>  <P>find&nbsp;&nbsp; -name april*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在当前目录下查找以april开始的文件<BR>find&nbsp;&nbsp; -name&nbsp;&nbsp; april*&nbsp;&nbsp; fprint file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在当前目录下查找以april开始的文件，并把结果输出到file中<BR>find&nbsp;&nbsp; -name ap* -o -name may*&nbsp;&nbsp; 查找以ap或may开头的文件<BR>find&nbsp;&nbsp; /mnt&nbsp;&nbsp; -name tom.txt&nbsp;&nbsp; -ftype vfat&nbsp;&nbsp; 在/mnt下查找名称为tom.txt且文件系统类型为vfat的文件<BR>find&nbsp;&nbsp; /mnt&nbsp;&nbsp; -name t.txt ! -ftype vfat&nbsp;&nbsp;&nbsp; 在/mnt下查找名称为tom.txt且文件系统类型不为vfat的文件<BR>find&nbsp;&nbsp; /tmp&nbsp;&nbsp; -name wa* -type l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在/tmp下查找名为wa开头且类型为符号链接的文件<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -mtime&nbsp;&nbsp; -2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在/home下查最近两天内改动过的文件<BR>find /home&nbsp;&nbsp;&nbsp; -atime -1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查1天之内被存取过的文件<BR>find /home -mmin&nbsp;&nbsp;&nbsp; +60&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在/home下查60分钟前改动过的文件<BR>find /home&nbsp;&nbsp; -amin&nbsp;&nbsp; +30&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查最近30分钟前被存取过的文件<BR>find /home&nbsp;&nbsp; -newer&nbsp;&nbsp; tmp.txt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在/home下查更新时间比tmp.txt近的文件或目录<BR>find /home&nbsp;&nbsp; -anewer&nbsp;&nbsp; tmp.txt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在/home下查存取时间比tmp.txt近的文件或目录<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -used&nbsp;&nbsp; -2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出文件或目录被改动过之后，在2日内被存取过的文件或目录<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -user cnscn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出/home目录内属于用户cnscn的文件或目录<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -uid&nbsp;&nbsp; +501&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出/home目录内用户的识别码大于501的文件或目录<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -group&nbsp;&nbsp; cnscn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出/home内组为cnscn的文件或目录<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -gid 501&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出/home内组id为501的文件或目录<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -nouser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出/home内不属于本地用户的文件或目录<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -nogroup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出/home内不属于本地组的文件或目录<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp;&nbsp; -name tmp.txt&nbsp;&nbsp;&nbsp; -maxdepth&nbsp;&nbsp; 4&nbsp;&nbsp; 列出/home内的tmp.txt 查时深度最多为3层<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -name tmp.txt&nbsp;&nbsp; -mindepth&nbsp;&nbsp; 3&nbsp;&nbsp; 从第2层开始查<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -empty&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查找大小为0的文件或空目录<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -size&nbsp;&nbsp; +512k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查大于512k的文件<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -size&nbsp;&nbsp; -512k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查小于512k的文件<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -links&nbsp;&nbsp; +2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查硬连接数大于2的文件或目录<BR>find&nbsp;&nbsp; /home&nbsp;&nbsp; -perm&nbsp;&nbsp; 0700&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查权限为700的文件或目录<BR>find&nbsp;&nbsp; /tmp&nbsp;&nbsp; -name tmp.txt&nbsp;&nbsp; -exec cat {} \;<BR>find&nbsp;&nbsp; /tmp&nbsp;&nbsp; -name&nbsp;&nbsp; tmp.txt&nbsp;&nbsp; -ok&nbsp;&nbsp; rm {} \;</P>  <P>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -amin&nbsp;&nbsp;&nbsp; -10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 查找在系统中最后10分钟访问的文件<BR>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -atime&nbsp;&nbsp; -2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 查找在系统中最后48小时访问的文件<BR>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -empty&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 查找在系统中为空的文件或者文件夹<BR>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -group&nbsp;&nbsp; cat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 查找在系统中属于 groupcat的文件<BR>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -mmin&nbsp;&nbsp; -5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 查找在系统中最后5分钟里修改过的文件<BR>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -mtime&nbsp;&nbsp; -1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查找在系统中最后24小时里修改过的文件<BR>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -nouser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查找在系统中属于作废用户的文件<BR>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -user&nbsp;&nbsp;&nbsp; fred&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查找在系统中属于FRED这个用户的文件<BR><BR>查当前目录下的所有普通文件 <BR>--------------------------------------------------------------------------------</P>  <P># find . -type f -exec ls -l {} \; <BR>-rw-r--r--&nbsp;&nbsp;&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 34928 2003-02-25&nbsp;&nbsp; ./conf/httpd.conf <BR>-rw-r--r--&nbsp;&nbsp;&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12959 2003-02-25&nbsp;&nbsp; ./conf/magic <BR>-rw-r--r--&nbsp;&nbsp;&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 180 2003-02-25&nbsp;&nbsp; ./conf.d/README <BR>查当前目录下的所有普通文件，并在- e x e c选项中使用ls -l命令将它们列出</P>  <P><BR>=================================================<BR>在/ l o g s目录中查找更改时间在5日以前的文件并删除它们：<BR>$ find logs -type f -mtime +5 -exec&nbsp;&nbsp; -ok&nbsp;&nbsp; rm {} \;</P>  <P><BR>=================================================<BR>查询当天修改过的文件<BR>[root@book class]# find&nbsp;&nbsp; ./&nbsp;&nbsp; -mtime&nbsp;&nbsp; -1&nbsp;&nbsp; -type f&nbsp;&nbsp; -exec&nbsp;&nbsp; ls -l&nbsp;&nbsp; {} \;</P>  <P><BR>=================================================<BR>查询文件并询问是否要显示<BR>[root@book class]# find&nbsp;&nbsp; ./&nbsp;&nbsp; -mtime&nbsp;&nbsp; -1&nbsp;&nbsp; -type f&nbsp;&nbsp; -ok&nbsp;&nbsp; ls -l&nbsp;&nbsp; {} \;&nbsp;&nbsp;<BR>&lt; ls ... ./classDB.inc.php &gt; ? y<BR>-rw-r--r--&nbsp;&nbsp;&nbsp;&nbsp; 1 cnscn&nbsp;&nbsp;&nbsp;&nbsp; cnscn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 13709&nbsp;&nbsp; 1月 12 12:22 ./classDB.inc.php<BR>[root@book class]# find&nbsp;&nbsp; ./&nbsp;&nbsp; -mtime&nbsp;&nbsp; -1&nbsp;&nbsp; -type f&nbsp;&nbsp; -ok&nbsp;&nbsp; ls -l&nbsp;&nbsp; {} \;&nbsp;&nbsp;<BR>&lt; ls ... ./classDB.inc.php &gt; ? n<BR>[root@book class]# </P>  <P>=================================================<BR>查询并交给awk去处理<BR>[root@book class]# who&nbsp;&nbsp; |&nbsp;&nbsp; awk&nbsp;&nbsp; '{print $1"\t"$2}'<BR>cnscn&nbsp;&nbsp;&nbsp; pts/0</P>  <P>=================================================<BR>awk---grep---sed</P>  <P>[root@book class]# df&nbsp;&nbsp; -k |&nbsp;&nbsp; awk '{print $1}' |&nbsp;&nbsp; grep&nbsp;&nbsp; -v&nbsp;&nbsp; 'none' |&nbsp;&nbsp; sed&nbsp;&nbsp; s"/\/dev\///g"<BR>文件系统<BR>sda2<BR>sda1<BR>[root@book class]# df&nbsp;&nbsp; -k |&nbsp;&nbsp; awk '{print $1}' |&nbsp;&nbsp; grep&nbsp;&nbsp; -v&nbsp;&nbsp; 'none'<BR>文件系统<BR>/dev/sda2<BR>/dev/sda1<BR><BR><BR>1)在/tmp中查找所有的*.h，并在这些文件中查找“SYSCALL_VECTOR"，最后打印出所有包含"SYSCALL_VECTOR"的文件名</P>  <P>A) find&nbsp;&nbsp; /tmp&nbsp;&nbsp; -name&nbsp;&nbsp; "*.h"&nbsp;&nbsp; | xargs&nbsp;&nbsp; -n50&nbsp;&nbsp; grep SYSCALL_VECTOR<BR>B) grep&nbsp;&nbsp; SYSCALL_VECTOR&nbsp;&nbsp; /tmp/*.h | cut&nbsp;&nbsp;&nbsp; -d':'&nbsp;&nbsp; -f1| uniq &gt; filename<BR>C) find&nbsp;&nbsp; /tmp&nbsp;&nbsp; -name "*.h"&nbsp;&nbsp; -exec grep "SYSCALL_VECTOR"&nbsp;&nbsp; {}&nbsp;&nbsp; \; -print</P>  <P><BR>2)find / -name filename -exec rm -rf {} \;<BR>&nbsp;&nbsp;&nbsp; find / -name filename -ok rm -rf {} \;</P>  <P><BR>3)比如要查找磁盘中大于3M的文件：<BR>find . -size +3000k -exec ls -ld {} ;</P>  <P><BR>4)将find出来的东西拷到另一个地方<BR>find *.c -exec cp '{}' /tmp ';'</P>  <P>如果有特殊文件，可以用cpio，也可以用这样的语法：<BR>find dir -name filename -print | cpio -pdv newdir</P>  <P><BR>6)查找2004-11-30 16:36:37时更改过的文件<BR># A=`find ./ -name "*php"` |&nbsp;&nbsp; ls -l --full-time $A 2&gt;/dev/null | grep "2004-11-30 16:36:37" </P></DIV></div>
+        <div class="nbw-blog-end"></div>
+
+        <div>
+		</div>
+
+        <div>
+		</div>
+
+		<div>
+      	  <div >
+		  	<script type="text/javascript" id="wumiiRelatedItems"></script>
+		  </div>
+		</div>
+
+        <div class="ptc phide ztag">
+          <span class="ptcp">
+            <span class="iblock bcmimg">&nbsp;</span>
+            <span class="nbc-0 nbc-0-40 ptcmt ptcmt-2">评论这张</span>
+          </span>
+        </div>
+		<div style="display:none" class="ptc phide ztag">
+          <span class="ptcp">
+            <span class="nbc-0 nbc-0-40 ptcmi">
+              <img src="http://b.bst.126.net/newpage/images/microblog.png?1" />
+            </span>
+            <span class="nbc-0 nbc-0-40 ptcmt">转发至微博</span>
+          </span>
+        </div>
+        <div class="ptc phide">
+          <a id="publishtolofter" class="toLofter" title="发布到LOFTER" target="_blank" hidefocus="true">&nbsp;</a>
+        </div>
+        
+        <div style="display:none" class="ptc phide ztag">
+          <span class="ptcp">
+            <span class="nbc-0 nbc-0-40 ptcmi">
+              <img src="http://b.bst.126.net/newpage/images/microblog.png?1" />
+            </span>
+            <span class="nbc-0 nbc-0-40 ptcmt">转发至微博</span>
+          </span>
+        </div>
+
+
+        <div class="nbw-act tbar fc03 clearfix">
+          
+          
+          <div class="editopbar" style="height:32px;line-height:32px;text-align:left;">
+            <span class="fc07">阅读(<span id="$_spaniReadCount">1005</span>)</span><span class="sep fc07">|</span>
+            <span class="fc07">评论(<span id="$_spaniCommentCount">0</span>)</span>
+          </div>
+          
+          
+          <div style="height:40px;line-height:40px;">
+            <div class="pleft rdif">
+              <span style="display:none" class="pleft sep sep-last fc07">|</span>
+              <div class="share-wrap pleft">
+                <span id="$_shareBtn_lofter" title="分享到LOFTER" class="shareitm lofter f-bkicons">&nbsp;</span>
+                <span id="$_shareBtn_sinaweibo" title="分享到新浪微博" class="shareitm sinawb f-bkicons">&nbsp;</span>
+                <span id="$_shareBtn_qq" title="分享到QQ空间" class="shareitm qqzone f-bkicons">&nbsp;</span>
+                <span id="$_shareBtn_qqweibo" title="分享到腾讯微博" class="shareitm qqweibo f-bkicons">&nbsp;</span>
+                <div id="$_shareBtn_weixin" title="分享到微信" class="shareitm weixin f-bkicons">
+<div class="code2dimlayer fc06">
+    <img src="http://blog.163.com/bitMaxImageGen.do?url=http://blog.163.com/lin305_gf/blog/static/9695244020120625516619&w=100&h=100&act=qbbkfxtj_20150420_11">
+    <div class="tips">
+        <p>用微信&nbsp;&nbsp;“扫一扫”</p>
+        <p>将文章分享到朋友圈。</p>
+    </div>
+    <a class="close">&nbsp;</a>
+</div>
+                </div>
+                <div id="$_shareBtn_yixin" title="分享到易信" class="shareitm yixin f-bkicons">
+<div class="code2dimlayer fc06">
+    <img src="http://blog.163.com/bitMaxImageGen.do?url=http://blog.163.com/lin305_gf/blog/static/9695244020120625516619&w=100&h=100&act=qbbkfxtj_20150420_12">
+    <div class="tips">
+        <p>用易信&nbsp;&nbsp;“扫一扫”</p>
+        <p>将文章分享到朋友圈。</p>
+    </div>
+    <a class="close">&nbsp;</a>
+</div>
+                </div>
+              </div>
+              
+              <form style="display:none" id="shareToLofterForm" method="post" target="_blank" action="http://www.lofter.com/sharetext?act=qbblogpost_20131023_04">
+                <input type="hidden" name="thirdId" value="fks_087067082083089064083094094066072095087074081084082071084" />
+                <input type="hidden" name="from" value="BLOGPOST" />
+                <input type="hidden" name="title" value="【每天一shell】Linux中find常见用法示例" />
+                <input type="hidden" name="content" value="  &lt;DIV&gt;  &lt;P&gt;原文：&lt;BR&gt;&lt;/P&gt;  &lt;P&gt;·find&amp;nbsp;&amp;nbsp; path&amp;nbsp;&amp;nbsp; -option&amp;nbsp;&amp;nbsp; [&amp;nbsp;&amp;nbsp; -print ]&amp;nbsp;&amp;nbsp; [ -exec&amp;nbsp;&amp;nbsp; -ok&amp;nbsp;&amp;nbsp; command ]&amp;nbsp;&amp;nbsp; {} \;&lt;BR&gt;#-print 将查找到的文件输出到标准输出&lt;BR&gt;#-exec&amp;nbsp;&amp;nbsp; command&amp;nbsp;&amp;nbsp; {} \;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; -----将查到的文件执行command操作,{} 和 \;之间有空格&lt;BR&gt;#-ok 和-exec相同，只不过在操作前要询用户&lt;/P&gt;  &lt;P&gt;====================================================&lt;/P&gt;  &lt;P&gt;-name&amp;nbsp;&amp;nbsp; filename&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查找名为filename的文件&lt;BR&gt;-perm&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #按执行权限来查找&lt;BR&gt;-user&amp;nbsp;&amp;nbsp;&amp;nbsp; username&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #按文件属主来查找&lt;BR&gt;-group groupname&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #按组来查找&lt;BR&gt;-mtime&amp;nbsp;&amp;nbsp; -n +n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #按文件更改时间来查找文件，-n指n天以内，+n指n天以前&lt;BR&gt;-atime&amp;nbsp;&amp;nbsp;&amp;nbsp; -n +n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #按文件访问时间来查GIN: 0px&quot;&amp;gt;-perm&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #按执行权限来查找&lt;BR&gt;-user&amp;nbsp;&amp;nbsp;&amp;nbsp; username&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #按文件属主来查找&lt;BR&gt;-group groupname&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #按组来查找&lt;BR&gt;-mtime&amp;nbsp;&amp;nbsp; -n +n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #按文件更改时间来查找文件，-n指n天以内，+n指n天以前&lt;BR&gt;-atime&amp;nbsp;&amp;nbsp;&amp;nbsp; -n +n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #按文件访问时间来查找文件，-n指n天以内，+n指n天以前 &lt;BR&gt;-ctime&amp;nbsp;&amp;nbsp;&amp;nbsp; -n +n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #按文件创建时间来查找文件，-n指n天以内，+n指n天以前 &lt;BR&gt;-nogroup&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查无有效属组的文件，即文件的属组在/etc/groups中不存在&lt;BR&gt;-nouser&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查无有效属主的文件，即文件的属主在/etc/passwd中不存&lt;BR&gt;-newer&amp;nbsp;&amp;nbsp; f1 !f2&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 找文件，-n指n天以内，+n指n天以前 &lt;BR&gt;-ctime&amp;nbsp;&amp;nbsp;&amp;nbsp; -n +n&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #按文件创建时间来查找文件，-n指n天以内，+n指n天以前 &lt;BR&gt;-nogroup&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查无有效属组的文件，即文件的属组在/etc/groups中不存在&lt;BR&gt;-nouser&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查无有效属主的文件，即文件的属主在/etc/passwd中不存&lt;BR&gt;-newer&amp;nbsp;&amp;nbsp; f1 !f2&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查更改时间比f1新但比f2旧的文件&lt;BR&gt;-type&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; b/d/c/p/l/f&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查是块设备、目录、字符设备、管道、符号链接、普通文件&lt;BR&gt;-size&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; n[c]&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查长度为n块[或n字节]的文件&lt;BR&gt;-depth&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #使查找在进入子目录前先行查找完本目录&lt;BR&gt;-fstype&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查更改时间比f1新但比f2旧的文件&lt;BR&gt;-type&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; b/d/c/p/l/f&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查是块设备、目录、字符设备、管道、符号链接、普通文件&lt;BR&gt;-size&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; n[c]&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查长度为n块[或n字节]的文件&lt;BR&gt;-depth&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #使查找在进入子目录前先行查找完本目录&lt;BR&gt;-fstype&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查位于某一类型文件系统中的文件，这些文件系统类型通常可 在/etc/fstab中找到&lt;BR&gt;-mount&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查文件时不跨越文件系统mount点&lt;BR&gt;-follow&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #如果遇到符号链接文件，就跟踪链接所指的文件&lt;BR&gt;-cpio&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; %;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查位于某一类型文件系统中的文件，这些文件系统类型通常可 在/etc/fstab中找到&lt;BR&gt;-mount&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查文件时不跨越文件系统mount点&lt;BR&gt;-follow&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #如果遇到符号链接文件，就跟踪链接所指的文件&lt;BR&gt;-cpio&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #对匹配的文件使用cpio命令，将他们备份到磁带设备中&lt;BR&gt;-prune&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #忽略某个目录&lt;/P&gt;  &lt;P&gt;====================================================&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; ~&amp;nbsp;&amp;nbsp; -name&amp;nbsp;&amp;nbsp; &quot;*.txt&quot;&amp;nbsp;&amp;nbsp; -print&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #在$HOME中查.txt文件并显示&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; .&amp;nbsp;&amp;nbsp;&amp;nbsp; -name&amp;nbsp;&amp;nbsp; &quot;*.txt&quot;&amp;nbsp;&amp;nbsp; -print&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; .&amp;nbsp;&amp;nbsp;&amp;nbsp; -name&amp;nbsp;&amp;nbsp; &quot;[A-Z]*&quot;&amp;nbsp;&amp;nbsp; -pri26nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #对匹配的文件使用cpio命令，将他们备份到磁带设备中&lt;BR&gt;-prune&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #忽略某个目录&lt;/P&gt;  &lt;P&gt;=====================================================&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; ~&amp;nbsp;&amp;nbsp; -name&amp;nbsp;&amp;nbsp; &quot;*.txt&quot;&amp;nbsp;&amp;nbsp; -print&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #在$HOME中查.txt文件并显示&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; .&amp;nbsp;&amp;nbsp;&amp;nbsp; -name&amp;nbsp;&amp;nbsp; &quot;*.txt&quot;&amp;nbsp;&amp;nbsp; -print&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; .&amp;nbsp;&amp;nbsp;&amp;nbsp; -name&amp;nbsp;&amp;nbsp; &quot;[A-Z]*&quot;&amp;nbsp;&amp;nbsp; -print&amp;nbsp;&amp;nbsp; #查以大写字母开头的文件&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; /etc&amp;nbsp;&amp;nbsp; -name&amp;nbsp;&amp;nbsp; &quot;host*&quot;&amp;nbsp;&amp;nbsp; -print #查以host开头的文件&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; .&amp;nbsp;&amp;nbsp; -name&amp;nbsp;&amp;nbsp; &quot;[a-z][a-z][0--9][0--9].txt&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp; -print&amp;nbsp;&amp;nbsp; #查以两个小写字母和两个数字开头的txt文件&lt;BR&gt;$find .&amp;nbsp;&amp;nbsp; -perm&amp;nbsp;&amp;nbsp; 755&amp;nbsp;&amp;nbsp; -print&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; .&amp;nbsp;&amp;nbsp; -perm -007&amp;nbsp;&amp;nbsp; -exec ls -l {} \;&amp;nbsp;&amp;nbsp; #查所有用户都可读写执行的文件同-perm 777&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; . -type d&amp;nbsp;&amp;nbsp; -print&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; .&amp;nbsp;&amp;nbsp; !&amp;nbsp;&amp;nbsp; -type&amp;nbsp;&amp;nbsp; d&amp;nbsp;&amp;nbsp; -print &lt;BR&gt;$find&amp;nbsp;&amp;nbsp; .&amp;nbsp;&amp;nbsp; -type l&amp;nbsp;&amp;nbsp; -print&lt;/P&gt;  &lt;P&gt;$find&amp;nbsp;&amp;nbsp; .&amp;nbsp;&amp;nbsp; -size&amp;nbsp;&amp;nbsp; +1000000c&amp;nbsp;&amp;nbsp; -print&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查长度大于1Mb的文件&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; .&amp;nbsp;&amp;nbsp; -size&amp;nbsp;&amp;nbsp; 100c&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; -print&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; # 查长度为100c的文件&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; .&amp;nbsp;&amp;nbsp; -size&amp;nbsp;&amp;nbsp; +10&amp;nbsp;&amp;nbsp; -print&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查长度超过期作废10块的文件（1块=512字节）&lt;/P&gt;  &lt;P&gt;$cd /&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; etc&amp;nbsp;&amp;nbsp; home&amp;nbsp;&amp;nbsp; apps&amp;nbsp;&amp;nbsp;&amp;nbsp; -depth&amp;nbsp;&amp;nbsp; -print&amp;nbsp;&amp;nbsp; | cpio&amp;nbsp;&amp;nbsp; -ivcdC65536&amp;nbsp;&amp;nbsp; -o&amp;nbsp;&amp;nbsp; /dev/rmt0&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; /etc -name &quot;passwd*&quot;&amp;nbsp;&amp;nbsp; -exec grep&amp;nbsp;&amp;nbsp; &quot;cnscn&quot;&amp;nbsp;&amp;nbsp; {}&amp;nbsp;&amp;nbsp; \;&amp;nbsp;&amp;nbsp; #看是否存在cnscn用户&lt;BR&gt;$find . -name &quot;yao*&quot;&amp;nbsp;&amp;nbsp; | xargs file&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; . -name &quot;yao*&quot;&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; xargs&amp;nbsp;&amp;nbsp; echo&amp;nbsp;&amp;nbsp;&amp;nbsp; &quot;&quot; &amp;gt; /tmp/core.log&lt;BR&gt;$find&amp;nbsp;&amp;nbsp; . -name &quot;yao*&quot;&amp;nbsp;&amp;nbsp; | xargs&amp;nbsp;&amp;nbsp; chmod&amp;nbsp;&amp;nbsp; o-w&lt;/P&gt;  &lt;P&gt;======================================================&lt;/P&gt;  &lt;P&gt;find&amp;nbsp;&amp;nbsp; -name april*&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 在当前目录下查找以april开始的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp; -name&amp;nbsp;&amp;nbsp; april*&amp;nbsp;&amp;nbsp; fprint file&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 在当前目录下查找以april开始的文件，并把结果输出到file中&lt;BR&gt;find&amp;nbsp;&amp;nbsp; -name ap* -o -name may*&amp;nbsp;&amp;nbsp; 查找以ap或may开头的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /mnt&amp;nbsp;&amp;nbsp; -name tom.txt&amp;nbsp;&amp;nbsp; -ftype vfat&amp;nbsp;&amp;nbsp; 在/mnt下查找名称为tom.txt且文件系统类型为vfat的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /mnt&amp;nbsp;&amp;nbsp; -name t.txt ! -ftype vfat&amp;nbsp;&amp;nbsp;&amp;nbsp; 在/mnt下查找名称为tom.txt且文件系统类型不为vfat的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /tmp&amp;nbsp;&amp;nbsp; -name wa* -type l&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 在/tmp下查找名为wa开头且类型为符号链接的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -mtime&amp;nbsp;&amp;nbsp; -2&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 在/home下查最近两天内改动过的文件&lt;BR&gt;find /home&amp;nbsp;&amp;nbsp;&amp;nbsp; -atime -1&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 查1天之内被存取过的文件&lt;BR&gt;find /home -mmin&amp;nbsp;&amp;nbsp;&amp;nbsp; +60&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 在/home下查60分钟前改动过的文件&lt;BR&gt;find /home&amp;nbsp;&amp;nbsp; -amin&amp;nbsp;&amp;nbsp; +30&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 查最近30分钟前被存取过的文件&lt;BR&gt;find /home&amp;nbsp;&amp;nbsp; -newer&amp;nbsp;&amp;nbsp; tmp.txt&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 在/home下查更新时间比tmp.txt近的文件或目录&lt;BR&gt;find /home&amp;nbsp;&amp;nbsp; -anewer&amp;nbsp;&amp;nbsp; tmp.txt&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 在/home下查存取时间比tmp.txt近的文件或目录&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -used&amp;nbsp;&amp;nbsp; -2&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 列出文件或目录被改动过之后，在2日内被存取过的文件或目录&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -user cnscn&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 列出/home目录内属于用户cnscn的文件或目录&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -uid&amp;nbsp;&amp;nbsp; +501&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 列出/home目录内用户的识别码大于501的文件或目录&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -group&amp;nbsp;&amp;nbsp; cnscn&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 列出/home内组为cnscn的文件或目录&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -gid 501&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 列出/home内组id为501的文件或目录&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -nouser&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 列出/home内不属于本地用户的文件或目录&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -nogroup&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 列出/home内不属于本地组的文件或目录&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp;&amp;nbsp; -name tmp.txt&amp;nbsp;&amp;nbsp;&amp;nbsp; -maxdepth&amp;nbsp;&amp;nbsp; 4&amp;nbsp;&amp;nbsp; 列出/home内的tmp.txt 查时深度最多为3层&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -name tmp.txt&amp;nbsp;&amp;nbsp; -mindepth&amp;nbsp;&amp;nbsp; 3&amp;nbsp;&amp;nbsp; 从第2层开始查&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -empty&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 查找大小为0的文件或空目录&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -size&amp;nbsp;&amp;nbsp; +512k&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 查大于512k的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -size&amp;nbsp;&amp;nbsp; -512k&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 查小于512k的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -links&amp;nbsp;&amp;nbsp; +2&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 查硬连接数大于2的文件或目录&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /home&amp;nbsp;&amp;nbsp; -perm&amp;nbsp;&amp;nbsp; 0700&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 查权限为700的文件或目录&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /tmp&amp;nbsp;&amp;nbsp; -name tmp.txt&amp;nbsp;&amp;nbsp; -exec cat {} \;&lt;BR&gt;find&amp;nbsp;&amp;nbsp; /tmp&amp;nbsp;&amp;nbsp; -name&amp;nbsp;&amp;nbsp; tmp.txt&amp;nbsp;&amp;nbsp; -ok&amp;nbsp;&amp;nbsp; rm {} \;&lt;/P&gt;  &lt;P&gt;find&amp;nbsp;&amp;nbsp;&amp;nbsp; /&amp;nbsp;&amp;nbsp; -amin&amp;nbsp;&amp;nbsp;&amp;nbsp; -10&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; # 查找在系统中最后10分钟访问的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp;&amp;nbsp; /&amp;nbsp;&amp;nbsp; -atime&amp;nbsp;&amp;nbsp; -2&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; # 查找在系统中最后48小时访问的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp;&amp;nbsp; /&amp;nbsp;&amp;nbsp; -empty&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; # 查找在系统中为空的文件或者文件夹&lt;BR&gt;find&amp;nbsp;&amp;nbsp;&amp;nbsp; /&amp;nbsp;&amp;nbsp; -group&amp;nbsp;&amp;nbsp; cat&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; # 查找在系统中属于 groupcat的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp;&amp;nbsp; /&amp;nbsp;&amp;nbsp; -mmin&amp;nbsp;&amp;nbsp; -5&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; # 查找在系统中最后5分钟里修改过的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp;&amp;nbsp; /&amp;nbsp;&amp;nbsp; -mtime&amp;nbsp;&amp;nbsp; -1&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查找在系统中最后24小时里修改过的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp;&amp;nbsp; /&amp;nbsp;&amp;nbsp; -nouser&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查找在系统中属于作废用户的文件&lt;BR&gt;find&amp;nbsp;&amp;nbsp;&amp;nbsp; /&amp;nbsp;&amp;nbsp; -user&amp;nbsp;&amp;nbsp;&amp;nbsp; fred&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #查找在系统中属于FRED这个用户的文件&lt;BR&gt;&lt;BR&gt;查当前目录下的所有普通文件 &lt;BR&gt;--------------------------------------------------------------------------------&lt;/P&gt;  &lt;P&gt;# find . -type f -exec ls -l {} \; &lt;BR&gt;-rw-r--r--&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 1 root&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; root&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 34928 2003-02-25&amp;nbsp;&amp;nbsp; ./conf/httpd.conf &lt;BR&gt;-rw-r--r--&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 1 root&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; root&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 12959 2003-02-25&amp;nbsp;&amp;nbsp; ./conf/magic &lt;BR&gt;-rw-r--r--&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 1 root&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; root&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 180 2003-02-25&amp;nbsp;&amp;nbsp; ./conf.d/README &lt;BR&gt;查当前目录下的所有普通文件，并在- e x e c选项中使用ls -l命令将它们列出&lt;/P&gt;  &lt;P&gt;&lt;BR&gt;=================================================&lt;BR&gt;在/ l o g s目录中查找更改时间在5日以前的文件并删除它们：&lt;BR&gt;$ find logs -type f -mtime +5 -exec&amp;nbsp;&amp;nbsp; -ok&amp;nbsp;&amp;nbsp; rm {} \;&lt;/P&gt;  &lt;P&gt;&lt;BR&gt;=================================================&lt;BR&gt;查询当天修改过的文件&lt;BR&gt;[root@book class]# find&amp;nbsp;&amp;nbsp; ./&amp;nbsp;&amp;nbsp; -mtime&amp;nbsp;&amp;nbsp; -1&amp;nbsp;&amp;nbsp; -type f&amp;nbsp;&amp;nbsp; -exec&amp;nbsp;&amp;nbsp; ls -l&amp;nbsp;&amp;nbsp; {} \;&lt;/P&gt;  &lt;P&gt;&lt;BR&gt;=================================================&lt;BR&gt;查询文件并询问是否要显示&lt;BR&gt;[root@book class]# find&amp;nbsp;&amp;nbsp; ./&amp;nbsp;&amp;nbsp; -mtime&amp;nbsp;&amp;nbsp; -1&amp;nbsp;&amp;nbsp; -type f&amp;nbsp;&amp;nbsp; -ok&amp;nbsp;&amp;nbsp; ls -l&amp;nbsp;&amp;nbsp; {} \;&amp;nbsp;&amp;nbsp;&lt;BR&gt;&amp;lt; ls ... ./classDB.inc.php &amp;gt; ? y&lt;BR&gt;-rw-r--r--&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 1 cnscn&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; cnscn&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 13709&amp;nbsp;&amp;nbsp; 1月 12 12:22 ./classDB.inc.php&lt;BR&gt;[root@book class]# find&amp;nbsp;&amp;nbsp; ./&amp;nbsp;&amp;nbsp; -mtime&amp;nbsp;&amp;nbsp; -1&amp;nbsp;&amp;nbsp; -type f&amp;nbsp;&amp;nbsp; -ok&amp;nbsp;&amp;nbsp; ls -l&amp;nbsp;&amp;nbsp; {} \;&amp;nbsp;&amp;nbsp;&lt;BR&gt;&amp;lt; ls ... ./classDB.inc.php &amp;gt; ? n&lt;BR&gt;[root@book class]# &lt;/P&gt;  &lt;P&gt;=================================================&lt;BR&gt;查询并交给awk去处理&lt;BR&gt;[root@book class]# who&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; awk&amp;nbsp;&amp;nbsp; '{print $1&quot;\t&quot;$2}'&lt;BR&gt;cnscn&amp;nbsp;&amp;nbsp;&amp;nbsp; pts/0&lt;/P&gt;  &lt;P&gt;=================================================&lt;BR&gt;awk---grep---sed&lt;/P&gt;  &lt;P&gt;[root@book class]# df&amp;nbsp;&amp;nbsp; -k |&amp;nbsp;&amp;nbsp; awk '{print $1}' |&amp;nbsp;&amp;nbsp; grep&amp;nbsp;&amp;nbsp; -v&amp;nbsp;&amp;nbsp; 'none' |&amp;nbsp;&amp;nbsp; sed&amp;nbsp;&amp;nbsp; s&quot;/\/dev\///g&quot;&lt;BR&gt;文件系统&lt;BR&gt;sda2&lt;BR&gt;sda1&lt;BR&gt;[root@book class]# df&amp;nbsp;&amp;nbsp; -k |&amp;nbsp;&amp;nbsp; awk '{print $1}' |&amp;nbsp;&amp;nbsp; grep&amp;nbsp;&amp;nbsp; -v&amp;nbsp;&amp;nbsp; 'none'&lt;BR&gt;文件系统&lt;BR&gt;/dev/sda2&lt;BR&gt;/dev/sda1&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;1)在/tmp中查找所有的*.h，并在这些文件中查找“SYSCALL_VECTOR&quot;，最后打印出所有包含&quot;SYSCALL_VECTOR&quot;的文件名&lt;/P&gt;  &lt;P&gt;A) find&amp;nbsp;&amp;nbsp; /tmp&amp;nbsp;&amp;nbsp; -name&amp;nbsp;&amp;nbsp; &quot;*.h&quot;&amp;nbsp;&amp;nbsp; | xargs&amp;nbsp;&amp;nbsp; -n50&amp;nbsp;&amp;nbsp; grep SYSCALL_VECTOR&lt;BR&gt;B) grep&amp;nbsp;&amp;nbsp; SYSCALL_VECTOR&amp;nbsp;&amp;nbsp; /tmp/*.h | cut&amp;nbsp;&amp;nbsp;&amp;nbsp; -d':'&amp;nbsp;&amp;nbsp; -f1| uniq &amp;gt; filename&lt;BR&gt;C) find&amp;nbsp;&amp;nbsp; /tmp&amp;nbsp;&amp;nbsp; -name &quot;*.h&quot;&amp;nbsp;&amp;nbsp; -exec grep &quot;SYSCALL_VECTOR&quot;&amp;nbsp;&amp;nbsp; {}&amp;nbsp;&amp;nbsp; \; -print&lt;/P&gt;  &lt;P&gt;&lt;BR&gt;2)find / -name filename -exec rm -rf {} \;&lt;BR&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp; find / -name filename -ok rm -rf {} \;&lt;/P&gt;  &lt;P&gt;&lt;BR&gt;3)比如要查找磁盘中大于3M的文件：&lt;BR&gt;find . -size +3000k -exec ls -ld {} ;&lt;/P&gt;  &lt;P&gt;&lt;BR&gt;4)将find出来的东西拷到另一个地方&lt;BR&gt;find *.c -exec cp '{}' /tmp ';'&lt;/P&gt;  &lt;P&gt;如果有特殊文件，可以用cpio，也可以用这样的语法：&lt;BR&gt;find dir -name filename -print | cpio -pdv newdir&lt;/P&gt;  &lt;P&gt;&lt;BR&gt;6)查找2004-11-30 16:36:37时更改过的文件&lt;BR&gt;# A=`find ./ -name &quot;*php&quot;` |&amp;nbsp;&amp;nbsp; ls -l --full-time $A 2&amp;gt;/dev/null | grep &quot;2004-11-30 16:36:37&quot; &lt;/P&gt;&lt;/DIV&gt;" />
+                <input type="hidden" name="source" value="小峰GRain" />
+                <input type="hidden" name="sourceUrl" value="http://blog.163.com/lin305_gf/blog/static/9695244020120625516619" />
+                <input type="hidden" name="tag" value="" />
+              </form>
+              
+            </div>
+            <div class="pright rightoperatebar rightoperatebar-new">
+              <span class="f-myLikeIcons likebtn pnt pright" id="$_spanLike">喜欢</span>
+	            <span class="f-myLikeIcons recommendbtn pnt pright" id="$_spanRecommend">推荐</span>
+	          <span style="display:none" id="$_spanShowRecommend" class="pleft rdct  phide">
+	            <span class="pleft ul fc03"><span id="$_spanRecommendCount">0</span>人</span><span class="pleft iblock icn0 icn0-722 nbw-tgl1 nas-icn0fix">&nbsp;</span><span class="pleft iblock icn0 icn0-621 nbw-tgl0 nas-icn0fix">&nbsp;</span><span class="fc07"></span>|&nbsp;
+	          </span>
+                <span class="f-myLikeIcons reblogbtn pnt pright" id="$_spanCite">转载</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="snl">
+        <div style="display:none" class="phide bdwb bds2 bdc0 rdcnt" id="$_divRecommendContent"></div>
+        <div id="yodaoad" class="bdwb bds2 bdc0" style="display:none;_zoom:1;">&nbsp;</div>
+        <div id="$_newOldBlogLinkBottomDiv" class='top fc03 clearfix'>
+	     </div>
+	    <div class="relateblog phide">
+          <h4 class="bdwb bds2 bdc0 fc07 fs0">历史上的今天</h4>
+          <div class="cnt ztag clearfix"></div>
+        </div>
+	    <div style="display:none;visibility:hidden;width:0;height:0;overflow:hidden;" class="author">
+	      <h4 class="bdwb bds2 bdc0 fc07 fs0">最近读者</h4>
+	      <div class="cnt ztag clearfix"></div>
+	    </div>
+	    <div style="display:none;visibility:hidden;width:0;height:0;overflow:hidden;" id="hotarea" class="hotarea author ">
+	      <h4 class="bdwb bds2 bdc0 fc07 fs0">热度</h4>
+	      <div id="hotlist" class="cnt clearfix"></div>
+	    </div>
+	    <div class="phide" id="yodaoad_1" style="_zoom:1;"></div>
+	    
+	    <div class="m-lmiddlead" style="display:none">
+	        <a class="adlink" href="#" target="_blank" hidefocus="true"><img style="border:none;" id="leftmiddleadimg" /></a>
+	        <div id="flashadwrap" class="flashadwrap"></div>
+	        <iframe marginwidth="0" marginheight="0" id="lmid_iframe" style="display:none;" width="590" height="100" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+	    </div>
+	    
+	    <div>
+	    	<h4 class="bdwb bds2 bdc0 fc07 fs0" style="padding:0 0 0 10px;line-height:30px;text-align:left;">在LOFTER的更多文章</h4>
+	    	<div style="width:100%;overflow:hidden;">
+	    	<iframe style="max-width:780px;margin:10px 0 10px 5px;display:block" id="morecontent_frame" width="100%" height="125" allowtransparency="true" scrolling="no" frameborder="0" src="http://www.lofter.com/recommendblog?email=lin305_gf@163.com"></iframe>
+	    	</div>
+	    </div>
+	    <div id="loftertextlinkad" style="display:none;padding:0 6px 0 5px;">
+	      <div style="height:40px;line-height:40px;margin:15px 0 15px 0;border:1px solid #d5d5d5;background:#ffffe1;text-align:left;">
+	        <span style="float:right;height:20px;line-height:20px;padding:10px 16px 10px 0;color:#d7854e;cursor:pointer;">关闭</span>
+	        <div style="padding-left:24px;color:#000;">玩LOFTER，免费冲印20张照片，人人有奖！&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:#d7854e;text-decoration:none;" href="http://www.lofter.com" target="_blank">我要抢&gt;</a></div>
+	      </div>
+	    </div>
+	    <div class="comment">
+	      <h4 class="bdwb bds2 bdc0 fc07 fs0">评论</h4>
+	      <a name="blogComment" id="blogComment"></a>
+	      <div class="ztag"></div>
+	    </div>
+	    <div class="phide" id="yodaoad_3" style="_zoom:1;"></div>
+      </div>
+      <div class="cite ztag fc03"></div>
+    </div>
+   </div>
+  </div>
+</div>
+<div class="phide nb-init">
+  <textarea name="js">
+    this.p={  m:2,
+              b:2,
+              loftPermalink:'',
+              id:'fks_087067082083089064083094094066072095087074081084082071084',
+              blogTitle:'【每天一shell】Linux中find常见用法示例',
+              blogAbstract:'  <DIV\>  <P\>原文：<BR\></P\>  <P\>·find&nbsp;&nbsp; path&nbsp;&nbsp; -option&nbsp;&nbsp; [&nbsp;&nbsp; -print ]&nbsp;&nbsp; [ -exec&nbsp;&nbsp; -ok&nbsp;&nbsp; command ]&nbsp;&nbsp; {} \\;<BR\>#-print 将查找到的文件输出到标准输出<BR\>#-exec&nbsp;&nbsp; command&nbsp;&nbsp; {} \\;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -----将查到的文件执行command操作,{} 和 \\;之间有空格<BR\>#-ok 和-exec相同，只不过在操作前要询用户</P\>  <P\>====================================================</P\></DIV\>',
+              blogTag:'',
+              blogUrl:'blog/static/9695244020120625516619',
+              isPublished:1,
+              istop:false,
+              type:0,
+              modifyTime:1326732435261,
+              publishTime:1326732435235,
+              permalink:'blog/static/9695244020120625516619',
+              commentCount:0,
+              mainCommentCount:0,
+              recommendCount:0,
+              bsrk:-100,
+              publisherId:0,
+              recomBlogHome:false,
+              currentRecomBlog:false,
+              attachmentsFileIds:[],
+              vote:{},
+              groupInfo:{},
+              friendstatus:'none',
+              followstatus:'unFollow',
+              pubSucc:'',
+              visitorProvince:'',
+              visitorCity:'',
+              visitorNewUser:false,
+              postAddInfo:{},
+              mset:'000',
+              mcon:'',
+              srk:-100,
+              remindgoodnightblog:false,
+              isBlackVisitor:false,
+              isShowYodaoAd:false,
+              hostIntro:'不曾心恨~~~',
+              hmcon:'1',
+              selfRecomBlogCount:'0',
+              lofter_single:'<iframe width="140" height="560" style="overflow:hidden;" src="http://www.lofter.com/mailEntry.do?blogad=1&blog" frameBorder="0"></iframe>'
+            }
+  </textarea>
+  <textarea name="jst" id="m-3-jst-1">
+    {list a as x}
+    {if !!x}
+    <div class="iblock nbw-fce nbw-f40">
+      <a class="fc03 noul" target="_blank" hidefocus="true" href="http://blog.163.com/${x.visitorName}/">
+      {if x.visitorName==visitor.userName}
+      <img alt="${x.visitorNickname|escape}" onerror="this.src=location.f40" class="cwd bdwa bdc0" src="${fn1(x.visitorName)}&r=${visitor.imageUpdateTime}"/>
+      {else}
+      <img alt="${x.visitorNickname|escape}" onerror="this.src=location.f40" class="cwd bdwa bdc0" src="${fn1(x.visitorName)}"/>
+      {/if}
+      </a>
+      <div class="cwd vname thide">
+        {if x.moveFrom=='wap'}
+          <a class="noul pnt" target="_blank" href="http://blog.163.com/services/wapblog.html?frompersonalbloghome"><span title="来自网易手机博客" class="iblock wapIcon">&nbsp;</span></a>
+        {elseif x.moveFrom=='iphone'}
+          <a class="noul pnt" target="_blank"><span title="来自iPhone客户端" class="iblock iphoneIcon">&nbsp;</span></a>
+        {elseif x.moveFrom=='android'}
+          <a class="noul pnt" target="_blank"><span title="来自Android客户端" class="iblock androidIcon">&nbsp;</span></a>
+        {elseif x.moveFrom=='mobile'}
+          <a class="noul pnt" target="_blank" href="http://blog.163.com/services/emsblog.html?frompersonalbloghome"><span title="来自网易短信写博" class="iblock wapIcon">&nbsp;</span></a>
+        {/if}
+        <a class="fc03 m2a"  target="_blank" hidefocus="true" href="http://blog.163.com/${x.visitorName}/">
+          ${fn(x.visitorNickname,8)|escape}
+        </a>
+      </div>
+    </div>
+    {/if}
+    {/list}
+  </textarea>
+  <textarea name="jst" id="m-3-jst-2">
+    {if !!a}
+    <a target="_blank" href="http://blog.163.com/${a.userName}/"><img class="bdwa bdc0 pnt" onerror="this.src=location.f60" src="${fn1(a.userName)}"/></a>
+    <a target="_blank" class="fc03 m2a" href="http://blog.163.com/${a.userName}/">${fn(a.nickname,8)|escape}</a>
+    <div class="intro fc05">${a.selfIntro|escape}{if great260}${suplement}{/if}</div>
+	    <div class="acts ztag"></div>
+	  <div class="mbga phide xtag">
+        <div class="mbgai">&nbsp;</div>
+        <a class="fc03 xtag m2a" href="#" target="_blank"></a>
+      </div>
+    {/if}
+  </textarea>
+  <#--最新日志，群博日志-->
+  <textarea name="jst" id="m-3-jst-3">
+    {list a as x}
+    {if !!x}
+    <li class="thide"><a target="_blank" class="fc03 m2a" href="${furl()}${x.permalink}/?latestBlog">${fn(x.title,26)|escape}</a></li>
+    {/if}
+    {/list}
+  </textarea>
+  <#--推荐日志-->
+  <textarea name="jst" id="m-3-jst-4">
+    <p class="fc06">推荐过这篇日志的人：</p>
+    <div>
+      {list a as x}
+      {if !!x}
+      <div class="iblock nbw-fce nbw-f40">
+        <a class="fc03 noul" target="_blank" hidefocus="true" href="http://blog.163.com/${x.recommenderName}/">
+        <img alt="${x.recommenderNickname|escape}" onerror="this.src=location.f40" class="cwd bdwa bdc0" src="${fn1(x.recommenderName)}"/>
+        </a>
+        <div class="cwd thide">
+          <a class="fc03 m2a" target="_blank" hidefocus="true" href="http://blog.163.com/${x.recommenderName}/">
+            ${fn(x.recommenderNickname,6)|escape}
+          </a>
+        </div>
+      </div>
+      {/if}
+      {/list}
+    </div>
+    {if !!b&&b.length>0}
+    <p  class="fc06">他们还推荐了：</p>
+    <ul>
+    {list b as y}
+      {if !!y}
+        <li class="rrb"><span class="iblock">&#183;</span><a class="fc03 m2a" target="_blank" href="http://blog.163.com/${y.recommendBlogPermalink}/?from=blog/static/9695244020120625516619">${y.recommendBlogTitle|escape}</a></li>
+      {/if}
+    {/list}
+    </ul>
+    {/if}
+  </textarea>
+  <#--引用记录-->
+  <textarea name="jst" id="m-3-jst-5">
+    <span class="pleft fc07">转载记录：</span>
+    <ul class="tbac">
+    {list d as x}
+      <li class="clearfix">
+        <span class="pleft iblock">&#183;</span>
+        <div class="tbl thide pleft"><span><a target="_blank" class="fc07 m2a" href="${x.referBlogUrl}">${x.referBlogTitle|escape}</a></span></div>
+        <div class="tbr pleft"><span><a target="_blank" class="fc07 m2a" href="${x.referHomePage}">${x.referUserName|escape}</a></span></div>
+      </li>
+    {/list}
+    </ul>
+  </textarea>
+  <#--博主推荐-->
+  <textarea name="jst" id="m-3-jst-6">
+    {list a as x}
+    {if !!x}
+    <li class="thide"><a target="_blank" class="fc03 m2a" href="http://blog.163.com/${x.userName}/${x.permalink}/?recommendBlog" title="${x.title|default:""|escape}">${x.title|default:""|escape}</a></li>
+    {/if}
+    {/list}
+  </textarea>
+  <#--随机阅读-->
+  <textarea name="jst" id="m-3-jst-7">
+    {list a as x}
+    {if !!x}
+    <li class="thide"><a target="_blank" class="fc03 m2a" href="http://blog.163.com/${x.userName}/${x.permalink}/?personalRecomBlog" title="${x.title|default:""|escape}">${x.title|default:""|escape}</a></li>
+    {/if}
+    {/list}
+  </textarea>
+  <#--首页推荐-->
+  <textarea name="jst" id="m-3-jst-8">
+    {list a as x}
+    {if !!x}
+    <li class="thide"><a target="_blank" class="fc03 m2a" target="_blank" href="${x.blogUrl|default:""|escape}?recommendReader" title="${x.blogTile|default:""|escape}">${x.blogTile|default:""|escape}</a></li>
+    {/if}
+    {/list}
+  </textarea>
+  <#--历史上的今天-->
+  <textarea name="jst" id="m-3-jst-10">
+    <ul>
+      {list a as x}
+      {if x_index>4}{break}{/if}
+      {if !!x}
+        <li class="thide fc03">
+          <a class="m2a" target="_blank"  href="http://blog.163.com/${x.userName}/${x.permalink|default:""}"  title="${x.title|default:""|escape}">${fn1(x.title,60)|escape}</a><span class="fc07">${fn2(x.publishTime,'yyyy-MM-dd HH:mm:ss')}</span>
+        </li>
+      {/if}
+      {/list}
+    </ul>
+  </textarea>
+  <#--被推荐日志-->
+  <textarea name="jst" id="m-3-jst-11">
+    {list a as x}
+    {if !!x}
+    <li class="thide"><a target="_blank" class="fc03 m2a" href="${furl()}${x.permalink}/">${fn(x.title,26)|escape}</a></li>
+    {/if}
+    {/list}
+  </textarea>
+    <#--上一篇，下一篇-->
+  <textarea name="jst" id="m-3-jst-12">
+     {if !!(blogDetail.preBlogPermalink)}
+       <span class="ilft iblock icn0 icn0-620">&nbsp;</span>
+       <div class="pleft thide"><a class="m2a"  href="http://blog.163.com/lin305_gf/${blogDetail.preBlogPermalink}/">${blogDetail.preBlogTitle|escape}</a></div>
+     {/if}
+     {if !!(blogDetail.nextBlogPermalink)}
+       <span class="irgt iblock icn0 icn0-619">&nbsp;</span>
+       <div class="pright thide"><a class="m2a" href="http://blog.163.com/lin305_gf/${blogDetail.nextBlogPermalink}/">${blogDetail.nextBlogTitle|escape}</a></div>
+     {/if}
+  </textarea>
+  <#-- 热度 -->
+  <textarea name="jst" id="m-3-jst-13">
+    {list a as x}
+    {if !!x}
+    <div class="hotItem iblock nbw-fce nbw-f40">
+      <a class="fc03 noul" target="_blank" hidefocus="true" href="http://blog.163.com/${x.publisherUsername}/">
+      {if x.publisherUsername==visitor.userName}
+      <img alt="${x.publisherNickname|escape}" onerror="this.src=location.f40" class="cwd bdwa bdc0" src="${fn1(x.publisherUsername)}&r=${visitor.imageUpdateTime}"/>
+      {else}
+      <img alt="${x.publisherNickname|escape}" onerror="this.src=location.f40" class="cwd bdwa bdc0" src="${fn1(x.publisherUsername)}"/>
+      {/if}
+      </a>
+      <div class="cwd vname thide">
+        <a class="fc03 m2a"  target="_blank" hidefocus="true" href="http://blog.163.com/${x.publisherUsername}/">
+          ${fn(x.publisherNickname,8)|escape}
+        </a>
+      </div>
+      <a class="f-myLikeIcons hottype {if x.type==1} js-liketype{elseif x.type==2} js-reblogtype{elseif x.type==3} js-sharetype{else}{/if}" target="_blank" hidefocus="true" href="http://blog.163.com/${x.publisherUsername}/">&nbsp;</a>
+    </div>
+    {/if}
+    {/list}
+  </textarea>
+  
+  <#--  网易新闻广告  -->
+  <textarea name="jst" id="m-3-jst-14">
+            <div class="ttlbar fc06 bdwb bdc0 bds0">网易新闻</div>
+            <div class="newscnt">
+                <a class="headnews" hidefocus="true" target="_blank" href="${headlines.url_3w|escape}">
+			        <img src="${imgsize(headlines.imgsrc,240,150,true)}">
+			        <span class="icover"></span>
+			        <span class="info"><span class="imgdesc thide">${headlines.title|escape}</span></span>
+		        </a>
+		        <ul>
+		          {if defined('newslist')&&newslist.length>0}
+                    {list newslist as x}
+                    {if x_index>7}{break}{/if}
+		            <li class="thide"><a hidefocus="true" target="_blank" href="${x.url_3w|escape}" class="fc05"><span class="iblock dot">·</span>${x.title|escape}</a></li>
+		            {/list}
+                  {/if}
+		        </ul>
+		        <div class="download163news">
+		            <a class="fc03" target="_blank" hidefocus="true" href="http://www.163.com/newsapp/">下载网易新闻客户端 &gt;</a>
+		        </div>
+            </div>
+  </textarea>
+  
+  <#--右边模块结构-->
+  <textarea name="txt" id="m-3-txt-0">
+    <div class="uinfo ztag"></div>
+    <h4 class="fc07 fs0 ltt phide ztag">被推荐日志</h4>
+    <ul class="ztag blst"></ul>
+    <h4 class="fc07 fs0 ltt phide ztag">最新日志</h4>
+    <ul class="ztag blst"></ul>
+    <h4 class="fc07 fs0 ltt phide ztag">该作者的其他文章</h4>
+    <ul class="ztag blst"></ul>
+    <h4 class="fc07 fs0 ltt phide ztag">博主推荐</h4>
+    <ul class="ztag blst"></ul>
+    <h4 class="fc07 fs0 ltt phide ztag">随机阅读</h4>
+    <ul class="ztag blst"></ul>
+    <h4 class="fc07 fs0 ltt phide ztag">首页推荐</h4>
+    <ul class="ztag blst"></ul>
+    <div class="more"><a target="_blank" class="fc03 m2a" href="http://blog.163.com">更多&gt;&gt;</a></div>
+    <br/><br/>
+    <div id="yodaoad_r" style="display:none;_zoom:1;"></div>
+    <div id="lofter_single"></div>
+    <div id="blogPublicAccount"></div>
+  </textarea>
+  <#--评论模块结构-->
+  <textarea name="txt" id="m-3-txt-1">
+    <div class="publish ztag"></div>
+    <div class="bdwt bds2 bdc0 phide" id="yodaoad_2" style="_zoom:1;"></div>
+    <div class="ztag bdwt bds2 bdc0">
+      <div class="case"></div>
+      <div class="clearfix"></div>
+    </div>
+  </textarea>
+  <#--引用模块结构-->
+  <textarea name="jst" id="m-3-txt-2">
+     <div class="close">
+       <span class="ztag iblock icn0 icn0-57">&nbsp;</span>
+     </div>
+	 <div class="ztag phide"></div>
+  </textarea>
+    <#--博主发起的投票-->
+  <textarea name="jst" id="m-3-txt-3">
+    {list a as x}
+    {if !!x}
+      <li>
+      <a href="http://blog.163.com/${x.userName}/" target="_blank" class="m2a fc03">${x.nickName|escape}</a>&nbsp;&nbsp;投票给
+        {var first_option = true;}
+        {list x.voteDetailList as voteToOption}
+            {if voteToOption==1}
+              {if first_option==false},{/if}&nbsp;&nbsp;“${b[voteToOption_index]}”&nbsp;&nbsp;
+            {/if}
+        {/list}
+        {if (x.role!="-1") },“我是${c[x.role]}”&nbsp;&nbsp;{/if}
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="fc07">&nbsp;&nbsp;&nbsp;&nbsp;${fn1(x.voteTime)}</span>
+        {if x.userName==''}{/if}
+    {/if}
+    {/list}
+  </textarea>
+</div>
+
+<script type="text/javascript">
+var wumiiPermaLink = "http://blog.163.com/lin305_gf/blog/static/9695244020120625516619/"; //文章的永久链接，作为文章的唯一标识
+var wumiiTags = ""; //文章标签，以英文逗号分隔，如："标签1,标签2"
+var wumiiSitePrefix = "http://blog.163.com/lin305_gf/"; //博客的主页地址，作为博客的唯一标识
+var wumiiParams = "&num=5&mode=3&pf=blog163"; //num为默认显示的相关文章数目，mode为默认的显示模式（1为文字，2为图片，3为自动）
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget.htm"></script>
+</div>
+      <div class="l cl h100">&nbsp;</div>
+      <div class="r cr h100">&nbsp;</div>
+    </div>
+    <div class="nb-mb lcr bh space">
+      <div class="l bl bh">&nbsp;</div>
+      <div class="r br bh">&nbsp;</div>
+      <div class="c bc bh lcr">&nbsp;</div>
+    </div>
+  </div>
+
+</div>
+      <div class="l wl g lg h100">&nbsp;</div>
+      <div class="l wl t lt">&nbsp;</div>
+      <div class="l wl b lb">&nbsp;</div>
+      <div class="r wr g rg h100">&nbsp;</div>
+      <div class="r wr t rt">&nbsp;</div>
+      <div class="r wr b rb">&nbsp;</div>
+    </div>
+  </div>
+  <div class="nb-are nb-smb"><div class="wkg h space"><div class="l h">&nbsp;</div><div class="r h">&nbsp;</div><div class="c h">&nbsp;</div></div></div>
+<div class="nb-are nb-fot">
+  <div class="wkg h">
+    <h2>页脚</h2>
+    <div class="k">      <a rel="nofollow" class="m2a fc08" target="_blank" href="http://yxp.163.com">我的照片书</a>
+      <span class="p fc10">-</span>
+      <a rel="nofollow" class="m2a fc08" target="_blank" href="http://blog.163.com/public/theme/">博客风格</a>
+      <span class="p fc10">-</span>
+      <a rel="nofollow" class="m2a fc08" target="_blank" href="http://blog.163.com/services/wapblog.html">手机博客</a>
+      <span class="p fc10">-</span>
+      <a rel="nofollow" class="m2a fc08" target="_blank" href="http://www.lofter.com/app?act=qbboke_20150209_02">下载LOFTER APP</a>
+      
+      <link rel="alternate" type="application/rss+xml" title="RSS" href="http://blog.163.com/lin305_gf/rss/"/>
+      <span class="p fc10">-</span><span class="fc08" id="$_foot_subscribe"><span class="iblock m2a icn0 icn0-919">&nbsp;</span><a class="m2a fc08">订阅此博客</a></span>
+    </div>
+    <p class="fc08">网易公司版权所有&nbsp;&copy;1997-2016</p>
+  </div>
+</div></div>
+    <!--[if lte IE 6]></div><![endif]-->
+  <!--[if lte IE 6]></div><![endif]-->
+  <div class="nb-layer" id="blog-163-com-layer"></div>
+  <div class="nb-tpl nb-init phide" id="blog-163-com-template" style="display:none;">  <textarea rows="1" cols="1" name="jst" id="nb-jst-a1">  <a rel="nofollow" class="pr" target="_blank" href="http://help.163.com/special/007525FT/blog.html?b13aze1">帮助</a>
+  <span class="fr iblock space icn1 icn1-4">&nbsp;</span>
+  <a class="pr" target="_blank" href="http://blog.163.com/activation.do?host=activation&&username=${u}">${u}</a>
+</textarea>
+  <textarea rows="1" cols="1" name="jst" id="nb-jst-d0">      {list wl as x}
+        <div class="grp">${x.g}</div>
+        {list x.l as y}
+        <a class="itm noul" href="#" hidefocus="true" name="{if typeof(y.v)=='string'}${y.v}{else}${y_index}{/if}">${y.n}</a>
+        {/list}
+      {/list}
+</textarea>
+  <textarea rows="1" cols="1" name="jst" id="nb-jst-d1">	{if defined('wl')}
+        {list wl as x}<a class="itm noul" href="#" hidefocus="true" name="${x.v}">${x.n}</a>{/list}
+    {/if}
+</textarea>
+</div>
+<script type="text/javascript">
+  window.N = {tm:{'zbtn':'nbtn',
+                  'bdc0':'bdc0','bdc2':'bdc1',
+				  'bgc0':'bgc0','bgc1':'bgc1','bgc2':'bgc2','bgh0':'bgc9',
+				  'fc00':'fc03','fc01':'fc04','fc02':'fc05','fc03':'fc06','fc04':'fc07','fc05':'fc09'}};
+  Date.servTime = '03/17/2016 18:33:05';
+  location.api = 'http://api.blog.163.com/';
+  location.msg = 'http://api.blog.163.com/msg/dwr';
+  location.dwr = 'http://api.blog.163.com/lin305_gf/dwr';
+  location.vcd = 'http://api.blog.163.com/cap/captcha.jpgx?parentId=96952440&r=';
+  location.mrt = 'http://b.bst.126.net/newpage/style/mbox/';
+  location.fce = 'http://os.blog.163.com/common/ava.s?host=';
+  location.fce2= 'http://os.blog.163.com/common/ava.s?host=';
+  location.passportfce = 'http://os.blog.163.com/common/ava.s?passport=';
+  location.fpr = 'http://b.bst.126.net/common/portrait/face/preview/';
+  location.f60 = 'http://b.bst.126.net/common/face60.png';
+  location.f140= 'http://b.bst.126.net/common/face140.png';
+  location.f40 = location.f140;
+  location.adf140= 'http://b.bst.126.net/common/admireface140.png';
+  location.ept = 'http://b.bst.126.net/common/empty.png';
+  location.guide_profile_add= 'http://b.bst.126.net/common/guide_profile_add.gif';
+  location.phtoto_dream = 'http://photo.dream.163.com/blog/writeBlogCallback.do';
+  window.CF = {
+    ca:false
+   ,mid:-3
+   ,cb:''
+   ,cc:false
+   ,cd:false
+   ,ce:'-3'
+   ,ck:0
+   ,ci:['api.blog.163.com'
+       ,'http://photo.163.com/photo/html/crossdomain.html?t=20100205'
+        
+        ,'ud.blog.163.com'
+        
+        
+        
+        ]
+   ,cj:[-3]
+   ,cl:''
+   ,cm:["","blog/","album/","music/","collection/","friends/","profile/","pprank/","","loftarchive/"]
+   ,cf:0
+   ,co:{pv:false
+       ,ti:81914443
+       ,tn:''
+       ,tc:0
+       ,tl:3
+       ,ut:0
+       ,un:''
+       ,um:''
+       ,ui:0
+       ,ud:true}
+   ,cp:{nr:1
+       ,cr:1
+       ,vr:-100
+       ,fr:0}
+   ,cs:0
+   ,ct:{'nav':['首页','日志','相册','音乐','收藏','博友','关于我','LOFTER'],'enabled':[0,1,6],'defaultnav':parseInt('11111111',2)}
+   ,cu:false
+   ,cv:false
+   ,cw:false
+  };
+  window.UD = {};
+  UD.host = {
+      userId:96952440
+     ,userName:'lin305_gf'
+     ,nickName:'小峰GRain'
+     ,imageUpdateTime:1268830332145
+     ,baseUrl:'http://blog.163.com/lin305_gf/'
+     ,gender:'他'
+     ,email:'lin305_gf@163.com'
+     ,photo163Name:'lin305_gf'
+     ,photo163HostName:'lin305_gf'
+     ,TOKEN_HTMLMODULE:''
+     ,isMultiUserBlog:false
+     ,isWumiUser:true
+     ,sRank:-100
+  };
+</script>
+    <script type="text/javascript" src="http://b1.bst.126.net/newpage/r/j/pc.js?v=1455591214178"></script>
+    <script type="text/javascript" src="http://b1.bst.126.net/newpage/r/j/m/m-3/pm.js?v=1455591214178"></script>
+  <script src="http://analytics.163.com/ntes.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    _ntes_nacc='blog';neteaseTracker();
+    
+    new Image().src = 'http://blog.163.com/newpage/images/analyse.png?s=p&t='+new Date().getTime();
+  </script>
+<script>
+window.setTimeout(function(){
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69204963-1', 'auto');
+  ga('send', 'pageview');
+},300);
+
+
+
+</script> 
+
+
+<script type="text/javascript">
+    window.setTimeout(function(){
+			J.loadScript('http://music.ph.126.net/ph.js?001');
+			
+			J.postDataByDWR(location.dwr,'MusicBeanNew','setCopyrightMusicSessionToken',false);
+	},1000);
+</script>
+
+    <script type="text/javascript" src="/newpage/prettycode/prettify.js"></script>
+</body>
+</html>

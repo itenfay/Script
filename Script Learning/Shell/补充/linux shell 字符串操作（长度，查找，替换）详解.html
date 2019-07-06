@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>linux shell 字符串操作（长度，查找，替换）详解 - 程默 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=iaIBFyx6Vr94NzNO_3ZPrlgjC7pN1OGR4X2wPvP0lwg1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/Cogitation/bundle-Cogitation.css?v=KxzCsGje7vptXKdp2HZBpXmgRp_h-PvgHFxMy8F9r3o1"/>
+<link type="text/css" rel="stylesheet" href="/blog/customcss/71819.css?v=e2E%2fy%2bxcHUfVqipP3l8dm1gBggQ%3d"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/chengmo/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/chengmo/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/chengmo/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'chengmo', cb_enable_mathjax=false;</script>
+<script src="/bundles/blog-common.js?v=ykDTFH9FE4CgKmGT6HilV870QfVPxO515wqgmKkq4MU1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<div id="top">
+	
+<div>
+	<table>
+		<tr>
+			<td class="HeaderTitles">
+				<h1 class="HeaderTitle"><a id="Header1_HeaderTitle" class="HeaderMainTitle" href="http://www.cnblogs.com/chengmo/">沉于思考，默默学习！</a></h1>
+				<p id="tagline">你不能预知明天，但你可以利用今天。你不能样样顺利，但你可以事事尽力!</p>
+			</td>
+		</tr>
+	</table>
+</div>
+<div class="HeaderBar">
+	<table id="HeaderBar" class="HeaderBar" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="HeaderBarTab" nowrap>
+&nbsp;
+<a id="Header1_MyLinks1_HomeLink" href="http://www.cnblogs.com/">博客园</a> ::
+<a id="Header1_MyLinks1_MyHomeLink" href="http://www.cnblogs.com/chengmo/">首页</a> ::
+<a href="http://q.cnblogs.com" class="menu">博问</a> ::
+<a href="http://home.cnblogs.com/ing/" class="menu">闪存</a> ::
+<a id="Header1_MyLinks1_NewPostLink" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a> ::
+<a id="Header1_MyLinks1_ContactLink" accesskey="9" rel="nofollow" href="http://msg.cnblogs.com/send/%E7%A8%8B%E9%BB%98">联系</a> ::
+<a id="Header1_MyLinks1_Syndication" href="http://www.cnblogs.com/chengmo/rss">订阅</a>
+<a id="Header1_MyLinks1_XMLLink" class="XMLLink" href="http://www.cnblogs.com/chengmo/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a> ::
+<a id="Header1_MyLinks1_Admin" rel="nofollow" href="http://i.cnblogs.com/">管理</a> ::
+
+</td>
+			<td><img id="Header1_BlueTab" src="/skins/Cogitation/Images/BlueTabRight.gif" align="absmiddle" /></td>
+			<td class="HeaderBarTabBack" nowrap width="100%">
+				
+<div class="BlogStatsBar">
+	<table class="BlogStatsBar">
+		<tr>
+			<td width="100%">
+			</td>
+			<td class="BlogStatsBar" nowrap>
+				&nbsp;
+				63 
+				随笔&nbsp;::
+				0 文章
+				::
+				643 评论
+				::
+				0 引用
+			</td>
+		</tr>
+	</table>
+</div>
+
+			</td>
+		</tr>
+	</table>
+</div>
+
+</div>
+<div id="leftmenu">	
+
+	    <div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+		
+<h3>公告</h3>
+<div class="News">
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+		<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+	
+</div>
+<div id="main">
+	
+<div id="post_detail">
+<div class="post">
+	<div class="postTitle">
+		<a id="cb_post_title_url" href="http://www.cnblogs.com/chengmo/archive/2010/10/02/1841355.html">linux shell 字符串操作（长度，查找，替换）详解</a>
+	</div>
+	
+	<div class="postText">
+		<div id="cnblogs_post_body"><p>&nbsp;</p> <p>在做shell批处理程序时候，经常会涉及到字符串相关操作。有很多命令语句，如：awk,sed都可以做字符串各种操作。 其实shell内置一系列操作符号，可以达到类似效果，大家知道，使用内部操作符会省略启动外部程序等时间，因此速度会非常的快。 </p> <p><strong></strong>&nbsp;</p> <p><strong>一、判断读取字符串值</strong></p> <blockquote> <table cellspacing="1" cellpadding="4" width="476" bgcolor="#666666" border="0"> <colgroup> <col></col> <col></col></colgroup> <thead> <tr> <th bgcolor="#cccccc">表达式</th> <th width="347" bgcolor="#cccccc">含义</th></tr></thead> <tbody> <tr> <td bgcolor="#ffffff">${var}</td> <td width="347" bgcolor="#ffffff">变量var的值, 与$var相同</td></tr> <tr> <td bgcolor="#ffffff">&nbsp;</td> <td width="347" bgcolor="#ffffff">&nbsp;</td></tr> <tr> <td bgcolor="#ffffff">${var-DEFAULT}</td> <td width="347" bgcolor="#ffffff">如果var没有被声明, 那么就以$DEFAULT作为其值 *</td></tr> <tr> <td bgcolor="#ffffff">${var:-DEFAULT}</td> <td width="347" bgcolor="#ffffff">如果var没有被声明, 或者其值为空, 那么就以$DEFAULT作为其值 *</td></tr> <tr> <td bgcolor="#ffffff">&nbsp;</td> <td width="347" bgcolor="#ffffff">&nbsp;</td></tr> <tr> <td bgcolor="#ffffff">${var=DEFAULT}</td> <td width="347" bgcolor="#ffffff">如果var没有被声明, 那么就以$DEFAULT作为其值 *</td></tr> <tr> <td bgcolor="#ffffff">${var:=DEFAULT}</td> <td width="347" bgcolor="#ffffff">如果var没有被声明, 或者其值为空, 那么就以$DEFAULT作为其值 *</td></tr> <tr> <td bgcolor="#ffffff">&nbsp;</td> <td width="347" bgcolor="#ffffff">&nbsp;</td></tr> <tr> <td bgcolor="#ffffff">${var+OTHER}</td> <td width="347" bgcolor="#ffffff">如果var声明了, 那么其值就是$OTHER, 否则就为null字符串</td></tr> <tr> <td bgcolor="#ffffff">${var:+OTHER}</td> <td width="347" bgcolor="#ffffff">如果var被设置了, 那么其值就是$OTHER, 否则就为null字符串</td></tr> <tr> <td bgcolor="#ffffff">&nbsp;</td> <td width="347" bgcolor="#ffffff">&nbsp;</td></tr> <tr> <td bgcolor="#ffffff">${var?ERR_MSG}</td> <td width="347" bgcolor="#ffffff">如果var没被声明, 那么就打印$ERR_MSG *</td></tr> <tr> <td bgcolor="#ffffff">${var:?ERR_MSG}</td> <td width="347" bgcolor="#ffffff">如果var没被设置, 那么就打印$ERR_MSG *</td></tr> <tr> <td bgcolor="#ffffff">&nbsp;</td> <td width="347" bgcolor="#ffffff">&nbsp;</td></tr> <tr> <td bgcolor="#ffffff">${!varprefix*}</td> <td width="347" bgcolor="#ffffff">匹配之前所有以varprefix开头进行声明的变量</td></tr> <tr> <td bgcolor="#ffffff">${!varprefix@}</td> <td width="347" bgcolor="#ffffff">匹配之前所有以varprefix开头进行声明的变量</td></tr></tbody></table></blockquote> <p><span style="color: #808000">加入了“*”&nbsp; 不是意思是： 当然, 如果变量var已经被设置的话, 那么其值就是$var.</span> </p> <blockquote> <p>[chengmo@localhost ~]$ echo ${abc-'ok'}<br>ok<br>[chengmo@localhost ~]$ echo $abc </p> <p>[chengmo@localhost ~]$ echo ${abc='ok'}<br>ok<br>[chengmo@localhost ~]$ echo $abc<br>ok </p> <p>&nbsp;</p> <p><span style="color: #0000ff">如果abc 没有声明“=" 还会给abc赋值。</span></p> <p>[chengmo@localhost ~]$ var1=11;var2=12;var3=<br>[chengmo@localhost ~]$ echo ${!v@}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>var1 var2 var3<br>[chengmo@localhost ~]$ echo ${!v*}<br>var1 var2 var3 </p> <p>&nbsp; </p> <p><span style="color: #0000ff">${!varprefix*}与${!varprefix@}相似，可以通过变量名前缀字符，搜索已经定义的变量,无论是否为空值。</span></p></blockquote> <p>&nbsp;</p> <p><strong>二、字符串操作（长度，读取，替换）</strong></p> <blockquote> <table cellspacing="1" cellpadding="4" width="462" bgcolor="#333333" border="0"> <colgroup> <col></col> <col></col></colgroup> <thead> <tr> <th bgcolor="#cccccc">表达式</th> <th width="229" bgcolor="#cccccc">含义</th></tr></thead> <tbody> <tr> <td bgcolor="#ffffff">${#string}</td> <td width="229" bgcolor="#ffffff">$string的长度</td></tr> <tr> <td bgcolor="#ffffff">&nbsp;</td> <td width="229" bgcolor="#ffffff">&nbsp;</td></tr> <tr> <td bgcolor="#ffffff">${string:position}</td> <td width="229" bgcolor="#ffffff">在$string中, 从位置$position开始提取子串 </td></tr> <tr> <td bgcolor="#ffffff">${string:position:length}</td> <td width="229" bgcolor="#ffffff">在$string中, 从位置$position开始提取长度为$length的子串 </td></tr> <tr> <td bgcolor="#ffffff">&nbsp;</td> <td width="229" bgcolor="#ffffff">&nbsp;</td></tr> <tr> <td bgcolor="#ffffff">${string#substring}</td> <td width="229" bgcolor="#ffffff">从变量$string的开头, 删除最短匹配$substring的子串 </td></tr> <tr> <td bgcolor="#ffffff">${string##substring}</td> <td width="229" bgcolor="#ffffff">从变量$string的开头, 删除最长匹配$substring的子串 </td></tr> <tr> <td bgcolor="#ffffff">${string%substring}</td> <td width="229" bgcolor="#ffffff">从变量$string的结尾, 删除最短匹配$substring的子串 </td></tr> <tr> <td bgcolor="#ffffff">${string%%substring}</td> <td width="229" bgcolor="#ffffff">从变量$string的结尾, 删除最长匹配$substring的子串 </td></tr> <tr> <td bgcolor="#ffffff">&nbsp;</td> <td width="229" bgcolor="#ffffff">&nbsp;</td></tr> <tr> <td bgcolor="#ffffff">${string/substring/replacement}</td> <td width="229" bgcolor="#ffffff">使用$replacement, 来代替第一个匹配的$substring </td></tr> <tr> <td bgcolor="#ffffff">${string//substring/replacement}</td> <td width="229" bgcolor="#ffffff">使用$replacement, 代替<em>所有</em>匹配的$substring </td></tr> <tr> <td bgcolor="#ffffff">${string/#substring/replacement}</td> <td width="229" bgcolor="#ffffff">如果$string的<em>前缀</em>匹配$substring, 那么就用$replacement来代替匹配到的$substring</td></tr> <tr> <td bgcolor="#ffffff">${string/%substring/replacement}</td> <td width="229" bgcolor="#ffffff">如果$string的<em>后缀</em>匹配$substring, 那么就用$replacement来代替匹配到的$substring</td></tr> <tr> <td bgcolor="#ffffff">&nbsp;</td> <td width="229" bgcolor="#ffffff">&nbsp;</td></tr></tbody></table></blockquote> <p><span style="color: #808000"><strong>说明："*</strong> $substring”可以是一个<em>正则表达式</em>.</span> </p> <p>&nbsp;</p> <blockquote> <p><strong>1.长度</strong></p> <p>[web97@salewell97 ~]$ test='I love china'<br>[web97@salewell97 ~]$ echo ${#test}<br>12 </p> <p>${#变量名}得到字符串长度 </p> <p>&nbsp;</p> <p><span style="color: #000000"><strong>2.截取字串</strong></span></p> <p>[chengmo@localhost ~]$ test='I love china'<br>[chengmo@localhost ~]$ echo ${test:5}&nbsp;&nbsp;&nbsp;&nbsp; <br>e china<br>[chengmo@localhost ~]$ echo ${test:5:10} <br>e china </p> <p>${变量名:起始:长度}得到子字符串 </p> <p>&nbsp; </p> <p><strong>3.字符串删除</strong> </p> <p>[chengmo@localhost ~]$ test='c:/windows/boot.ini'<br>[chengmo@localhost ~]$ echo ${test#/}<br>c:/windows/boot.ini<br>[chengmo@localhost ~]$ echo ${test#*/}<br>windows/boot.ini<br>[chengmo@localhost ~]$ echo ${test##*/}<br>boot.ini </p> <p>[chengmo@localhost ~]$ echo ${test%/*} <br>c:/windows<br>[chengmo@localhost ~]$ echo ${test%%/*} </p> <p>${变量名#substring正则表达式}从字符串开头开始配备substring,删除匹配上的表达式。 </p> <p>${变量名%substring正则表达式}从字符串结尾开始配备substring,删除匹配上的表达式。 </p> <p>注意：${test##*/},${test%/*} 分别是得到文件名，或者目录地址最简单方法。 </p> <p><strong>4.字符串替换</strong> </p> <p>[chengmo@localhost ~]$ test='c:/windows/boot.ini'<br>[chengmo@localhost ~]$ echo ${test/\//\\}<br>c:\windows/boot.ini<br>[chengmo@localhost ~]$ echo ${test//\//\\}<br>c:\windows\boot.ini </p> <p>&nbsp;</p> <p>${变量/查找/替换值} 一个“/”表示替换第一个，”//”表示替换所有,当查找中出现了：”/”请加转义符”\/”表示。</p></blockquote> <p><strong>三、性能比较</strong></p> <blockquote> <p>在shell中，通过awk,sed,expr 等都可以实现，字符串上述操作。下面我们进行性能比较。 </p> <p>[chengmo@localhost ~]$ test='c:/windows/boot.ini'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>[chengmo@localhost ~]$ time for i in $(seq 10000);do a=${#test};done;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p> <p>real&nbsp;&nbsp;&nbsp; 0m0.173s<br>user&nbsp;&nbsp;&nbsp; 0m0.139s<br>sys&nbsp;&nbsp;&nbsp;&nbsp; 0m0.004s </p> <p>[chengmo@localhost ~]$ time for i in $(seq 10000);do a=$(expr length $test);done;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p> <p>real&nbsp;&nbsp;&nbsp; 0m9.734s<br>user&nbsp;&nbsp;&nbsp; 0m1.628s </p> <p>&nbsp;</p> <p><span style="color: #808000">速度相差上百倍，调用外部命令处理，与内置操作符性能相差非常大。在shell编程中，尽量用内置操作符或者函数完成。使用awk,sed类似会出现这样结果。</span></p></blockquote></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+	</div>
+	
+	<div class="postfoot">
+		posted on <span id="post-date">2010-10-02 17:08</span> <a href='http://www.cnblogs.com/chengmo/'>程默</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=1841355" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(1841355);return false;">收藏</a>
+	</div>
+</div>
+<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=71819,cb_entryId=1841355,cb_blogApp=currentBlogApp,cb_blogUserGuid='eee985f0-5b74-df11-ba8f-001cf0cd104b',cb_entryCreatedDate='2010/10/2 17:08:00';loadViewCount(cb_entryId);</script>
+
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='ad_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='ad_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+</div>
+<div class="footer">
+
+<p id="footer">
+	Powered by: 
+	<br />
+	
+	<a id="Footer1_Hyperlink3" NAME="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>
+	<br />
+	Copyright &copy; 程默
+</p>
+</div>
+<!--PageEndHtml Block Begin-->
+<!-- Baidu Button BEGIN -->
+
+
+
+<noscript><a href="http://www.linezing.com"><img src="http://img.tongji.linezing.com/3462101/tongji.gif"/></a></noscript>
+<!-- Baidu Button END -->
+<!--PageEndHtml Block End-->
+</body>
+</html>

@@ -1,0 +1,567 @@
+<!Doctype html>
+<html xmlns=http://www.w3.org/1999/xhtml>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+	<title>Python 环境搭建 | 菜鸟教程</title>
+
+  <link rel="canonical" href="http://www.runoob.com/python/python-install.html" />
+<meta name="keywords" content="Python 环境搭建">
+<meta name="description" content="Python 环境搭建  本章节我们将向大家介绍如何在本地搭建Python开发环境。 Python可应用于多平台包括 Linux 和 Mac OS X。 你可以通过终端窗口输入 “python” 命令来查看本地是否已经安装Python以及Python的安装版本。   Unix (Solaris, Linux, FreeBSD, AIX, HP/UX, SunOS, IRIX, 等等。) Win 9x/NT/2000 Macintosh ..">
+		
+	<link rel="shortcut icon" href="http://www.runoob.com/favicon.ico" mce_href="http://www.runoob.com/favicon.ico" type="image/x-icon" >
+	<link rel="stylesheet" href="http://www.runoob.com/wp-content/themes/runoob/style.css?v=1.02" type="text/css" media="all" />	
+	<link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.2.0/css/font-awesome.min.css" media="all" />	
+  <script src="http://apps.bdimg.com/libs/jquery/1.8.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+     <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
+  <![endif]-->
+  <link rel="apple-touch-icon" href="http://static.runoob.com/images/icon/mobile-icon.png"/>
+  <meta name="apple-mobile-web-app-title" content="菜鸟教程">
+</head>
+<body>
+<!--  头部 -->
+<div class="container logo-search">
+
+  <div class="col search row-search-mobile">
+    <form action="http://www.runoob.com/">
+      <input class="placeholder" id="s" name="s" value="搜索……" autocomplete="off">
+    </form>
+  </div>
+
+  <div class="row">
+    <div class="col logo">
+      <h1><a href="/">菜鸟教程 -- 学的不仅是技术，更是梦想！</a></h1>
+    </div>
+        <div class="col right-list"> 
+    <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse" id="pull" style=""> <i class="fa fa-navicon"></i> </button>
+    </div>
+        <div class="col search search-desktop last">
+      <form action="http://www.runoob.com/">
+        <input class="placeholder" id="s" name="s" value="搜索……" autocomplete="off">
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- 导航栏 -->
+<!-- 导航栏 -->
+<div class="container navigation">
+	<div class="row">
+		<div class="col nav">
+			<ul class="pc-nav">
+				<li><a href="http://www.runoob.com/">首页</a></li>
+				<li><a href="/html/html-tutorial.html">HTML</a></li>
+				<li><a href="/css/css-tutorial.html">CSS</a></li>
+				<li><a href="/js/js-tutorial.html">JavaScript</a></li>
+				<li><a href="/jquery/jquery-tutorial.html">jQuery</a></li>
+				<li><a href="/bootstrap/bootstrap-tutorial.html">Bootstrap</a></li>
+				<li><a href="/sql/sql-tutorial.html">SQL</a></li>
+				<li><a href="/mysql/mysql-tutorial.html">MySQL</a></li>
+				<li><a href="/php/php-tutorial.html">PHP</a></li>
+				<li><a href="/python/python-tutorial.html">Python</a></li>
+				<li><a href="/cprogramming/c-tutorial.html">C</a></li>
+				<li><a href="/cplusplus/cpp-tutorial.html">C++</a></li>
+				<li><a href="/csharp/csharp-tutorial.html">C#</a></li>
+				<li><a href="/java/java-tutorial.html">Java</a></li>
+				<li><a href="/ruby/ruby-tutorial.html">Ruby</a></li>
+				
+				<li><a href="/sitemap">更多……</a></li>
+      		</ul>
+			<ul class="mobile-nav">
+				<li><a href="http://www.runoob.com/">首页</a></li>
+				<li><a href="/html/html-tutorial.html">HTML</a></li>
+				<li><a href="/css/css-tutorial.html">CSS</a></li>
+				<li><a href="/js/js-tutorial.html">JavaScript</a></li>
+				<a href="javascript:void(0)" class="search-reveal">Search</a> 
+			</ul>
+			
+		</div>
+	</div>
+</div><!--  内容  -->
+<div class="container main">
+	<!-- 中间 -->
+	<div class="row">
+	
+<div class="col left-column">
+	<div class="tab">Python 基础教程</div>
+	<div class="sidebar-box gallery-list">
+		<div class="design" id="leftcolumn">
+						<a target="_top" title="Python 基础教程"  href="/python/python-tutorial.html" >
+			Python 基础教程			</a>
+						<a target="_top" title="Python 简介"  href="/python/python-intro.html" >
+			Python 简介			</a>
+						<a target="_top" title="Python 环境搭建"  href="/python/python-install.html" >
+			Python 环境搭建			</a>
+			<a target="_top" title="Python 中文编码" href="python-chinese-encoding.html"> Python 中文编码 </a>			<a target="_top" title="Python 基础语法"  href="/python/python-basic-syntax.html" >
+			Python 基础语法			</a>
+						<a target="_top" title="Python 变量类型"  href="/python/python-variable-types.html" >
+			Python 变量类型			</a>
+						<a target="_top" title="Python 运算符"  href="/python/python-operators.html" >
+			Python 运算符			</a>
+						<a target="_top" title="Python 条件语句"  href="/python/python-if-statement.html" >
+			Python 条件语句			</a>
+						<a target="_top" title="Python 循环语句"  href="/python/python-loops.html" >
+			Python 循环语句			</a>
+						<a target="_top" title="Python While循环语句"  href="/python/python-while-loop.html" >
+			Python While循环语句			</a>
+						<a target="_top" title="Python for 循环语句"  href="/python/python-for-loop.html" >
+			Python for 循环语句			</a>
+						<a target="_top" title="Python 循环嵌套"  href="/python/python-nested-loops.html" >
+			Python 循环嵌套			</a>
+						<a target="_top" title="Python break 语句"  href="/python/python-break-statement.html" >
+			Python break 语句			</a>
+						<a target="_top" title="Python continue  语句"  href="/python/python-continue-statement.html" >
+			Python continue  语句			</a>
+						<a target="_top" title="Python pass 语句"  href="/python/python-pass-statement.html" >
+			Python pass 语句			</a>
+						<a target="_top" title="Python 数字"  href="/python/python-numbers.html" >
+			Python 数字			</a>
+						<a target="_top" title="Python 字符串"  href="/python/python-strings.html" >
+			Python 字符串			</a>
+						<a target="_top" title="Python 列表(Lists)"  href="/python/python-lists.html" >
+			Python 列表(Lists)			</a>
+						<a target="_top" title="Python 元组"  href="/python/python-tuples.html" >
+			Python 元组			</a>
+						<a target="_top" title="Python 字典(Dictionary)"  href="/python/python-dictionary.html" >
+			Python 字典(Dictionary)			</a>
+						<a target="_top" title="Python 日期和时间"  href="/python/python-date-time.html" >
+			Python 日期和时间			</a>
+						<a target="_top" title="Python 函数"  href="/python/python-functions.html" >
+			Python 函数			</a>
+						<a target="_top" title="Python 模块"  href="/python/python-modules.html" >
+			Python 模块			</a>
+						<a target="_top" title="Python 文件I/O"  href="/python/python-files-io.html" >
+			Python 文件I/O			</a>
+			<a target="_top" title="Python break 语句" href="file-methods.html">Python File 方法</a>			<a target="_top" title="Python 异常处理"  href="/python/python-exceptions.html" >
+			Python 异常处理			</a>
+			<br><h2 class="left"><span class="left_h2">Python</span> 高级教程</h2>			<a target="_top" title="Python 面向对象"  href="/python/python-object.html" >
+			Python 面向对象			</a>
+						<a target="_top" title="Python正则表达式"  href="/python/python-reg-expressions.html" >
+			Python正则表达式			</a>
+						<a target="_top" title="Python CGI编程"  href="/python/python-cgi.html" >
+			Python CGI编程			</a>
+						<a target="_top" title="python操作mysql数据库"  href="/python/python-mysql.html" >
+			python操作mysql数据库			</a>
+						<a target="_top" title="Python使用SMTP发送邮件"  href="/python/python-email.html" >
+			Python使用SMTP发送邮件			</a>
+						<a target="_top" title="Python 多线程"  href="/python/python-multithreading.html" >
+			Python 多线程			</a>
+						<a target="_top" title="Python XML解析"  href="/python/python-xml.html" >
+			Python XML解析			</a>
+						<a target="_top" title="python GUI编程(Tkinter)"  href="/python/python-gui-tkinter.html" >
+			python GUI编程(Tkinter)			</a>
+						<a target="_top" title="Python2.x与3​​.x版本区别"  href="/python/python-2x-3x.html" >
+			Python2.x与3​​.x版本区别			</a>
+						<a target="_top" title="Python IDE"  href="/python/python-ide.html" >
+			Python IDE			</a>
+						<a target="_top" title="Python JSON"  href="/python/python-json.html" >
+			Python JSON			</a>
+						<a target="_top" title="Python 100例"  href="/python/python-100-examples.html" >
+			Python 100例			</a>
+				
+		</div>
+	</div>	
+</div>	<div class="col middle-column">
+		
+	
+	<div class="article">
+			<div class="article-heading-ad">
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- 移动版 自动调整 -->
+		<ins class="adsbygoogle"
+		     style="display:inline-block;min-width:300px;max-width:970px;width:100%;height:90px"
+		     data-ad-client="ca-pub-5751451760833794"
+		     data-ad-slot="1691338467"
+		     data-ad-format="horizontal"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		</div>
+		<div class="previous-next-links">
+			<div class="previous-design-link">← <a href="http://www.runoob.com/python/python-intro.html" rel="prev"> Python 简介</a> </div>
+			<div class="next-design-link"><a href="http://www.runoob.com/python/python-basic-syntax.html" rel="next"> Python 基础语法</a> →</div>
+		</div>
+		<div class="article-body">
+		
+			<div class="article-intro" id="content">
+			
+			<h1>Python <span class="color_h1">环境搭建</span></h1>
+<div class="tutintro">
+<p>本章节我们将向大家介绍如何在本地搭建Python开发环境。</p>
+<p>Python可应用于多平台包括 Linux 和 Mac OS X。</p>
+<p>你可以通过终端窗口输入 "python" 命令来查看本地是否已经安装Python以及Python的安装版本。</p>
+</div>
+<ul>
+<li>Unix (Solaris, Linux, FreeBSD, AIX, HP/UX, SunOS, IRIX, 等等。)</li>
+<li>Win 9x/NT/2000</li>
+<li>Macintosh (Intel, PPC, 68K)</li>
+<li>OS/2</li>
+<li>DOS (多个DOS版本)</li>
+<li>PalmOS</li>
+<li>Nokia 移动手机</li>
+<li>Windows CE</li>
+<li>Acorn/RISC OS</li>
+<li>BeOS</li>
+<li>Amiga</li>
+<li>VMS/OpenVMS</li>
+<li>QNX</li>
+<li>VxWorks</li>
+<li>Psion</li>
+<li>Python 同样可以移植到 Java 和 .NET 虚拟机上。</li>
+</ul>
+<br><hr><h2>Python下载</h2>
+<p>Python最新源码，二进制文档，新闻资讯等可以在Python的官网查看到：</p>
+<p>Python官网：<a rel="nofollow" href="http://www.python.org/" target="_blank">http://www.python.org/</a></p>
+<p>你可以在一下链接中下载Python的文档，你可以下载 HTML、PDF 和 PostScript 等格式的文档。</p>
+<p>Python文档下载地址：<a rel="nofollow" href="http://www.python.org/doc/" target="_blank">www.python.org/doc/</a></p>
+
+<br><hr><h2>Python安装</h2>
+<p>Python已经被移植在许多平台上（经过改动使它能够工作在不同平台上）。</p>
+<p>您需要下载适用于您使用平台的二进制代码，然后安装Python。</p>
+<p>如果您平台的二进制代码是不可用的，你需要使用C编译器手动编译源代码。</p>
+<p>编译的源代码，功能上有更多的选择性， 为python安装提供了更多的灵活性。</p>
+<p>以下为不同平台上安装Python的方法：</p>
+<h3>Unix & Linux 平台安装 Python:</h3>
+<p>以下为在Unix & Linux 平台上安装 Python 的简单步骤：</p>
+<ul class="list">
+<li>打开WEB浏览器访问<a rel="nofollow" href="http://www.python.org/download/" target="_blank">http://www.python.org/download/</a></li>
+<li>选择适用于Unix/Linux的源码压缩包。</li>
+<li>下载及解压压缩包。</li>
+<li>如果你需要自定义一些选项修改<i>Modules/Setup</i> </li>
+<li><b>执行</b> ./configure 脚本</li>
+<li>make</li>
+<li>make install</li>
+</ul>
+<p>执行以上操作后，Python会安装在 /usr/local/bin 目录中，Python库安装在/usr/local/lib/pythonXX，XX为你使用的Python的版本号。</p>
+<h3>Window 平台安装 Python:</h3>
+<p>以下为在 Window 平台上安装 Python 的简单步骤：</p>
+<ul class="list">
+<li>打开WEB浏览器访问<a rel="nofollow" href="http://www.python.org/download/" target="_blank">http://www.python.org/download/</a></li>
+<li>在下载列表中选择Window平台安装包，包格式为：<i>python-XYZ.msi</i> 文件 ， XYZ 为你要安装的版本号。</li>
+<li>要使用安装程序 <i>python-XYZ.msi</i>, Windows系统必须支持Microsoft Installer 2.0搭配使用。只要保存安装文件到本地计算机，然后运行它，看看你的机器支持MSI。Windows XP和更高版本已经有MSI，很多老机器也可以安装MSI。 </li>
+<li>下载后，双击下载包，进入Python安装向导，安装非常简单，你只需要使用默认的设置一直点击"下一步"直到安装完成即可。</li>
+</ul>
+
+<h3>MAC 平台安装 Python:</h3>
+<p>最近的Macs系统都自带有Python环境，你也可以在链接 <a rel="nofollow" href="http://www.python.org/download/" target="_blank">http://www.python.org/download/</a> 上下载最新版安装。</p>
+<br><hr><h2>环境变量配置</h2>
+
+<p>程序和可执行文件可以在许多目录，而这些路径很可能不在操作系统提供可执行文件的搜索路径中。</p>
+
+<p>path(路径)存储在环境变量中，这是由操作系统维护的一个命名的字符串。这些变量包含可用的命令行解释器和其他程序的信息。</p>
+
+<p>Unix或Windows中路径变量为PATH（UNIX区分大小写，Windows不区分大小写）。</p>
+
+<p>在Mac OS中，安装程序过程中改变了python的安装路径。如果你需要在其他目录引用Python，你必须在path中添加Python目录。</p>
+
+<h3>在 Unix/Linux 设置环境变量</h3>
+<ul>
+<li><b>在 csh shell:</b> 输入 <br><pre>setenv PATH "$PATH:/usr/local/bin/python"</pre> , 按下"Enter"。</li>
+<li><b>在 bash shell (Linux):</b> 输入 <br><pre>export PATH="$PATH:/usr/local/bin/python" </pre>，按下"Enter"。</li>
+<li><b>在 sh 或者 ksh shell:</b> 输入 <br><pre>PATH="$PATH:/usr/local/bin/python" </pre>, 按下"Enter"。</li>
+</ul>
+
+<p><strong>注意: </strong>/usr/local/bin/python 是Python的安装目录。</p>
+<h3>在 Windows 设置环境变量</h3>
+<p>在环境变量中添加Python目录：</p>
+<p><b>在命令提示框中(cmd) :</b> 输入 <br><pre>path=%path%;C:\Python </pre> 按下"Enter"。
+</p>
+<p><strong>注意: </strong>C:\Python 是Python的安装目录。</p>
+<p>也可以通过以下方式设置：</p>
+<ul><li>右键点击"计算机"，然后点击"属性"</li><li>然后点击"高级系统设置"</li><li>
+选择"系统变量"窗口下面的"Path",双击即可！</li><li>
+</li><li>
+然后在"Path"行，添加python安装路径即可(我的D:\Python32)，所以在后面，添加该路径即可。
+<b>ps：记住，路径直接用分号"；"隔开！</b></li><li>
+
+最后设置成功以后，在cmd命令行，输入命令"python"，就可以有相关显示。</li></ul><p>
+<img src="http://www.runoob.com/wp-content/uploads/2013/11/201209201707594792.png"></p>
+<hr>
+<h2>Python 环境变量</h2>
+<p>下面几个重要的环境变量，它应用于Python：</p>
+
+<table class="reference">
+<tbody><tr><th >变量名</th><th>描述</th></tr>
+<tr><td>PYTHONPATH</td><td> PYTHONPATH是Python搜索路径，默认我们import的模块都会从PYTHONPATH里面寻找。</td></tr>
+<tr><td>PYTHONSTARTUP </td><td>Python启动后，先寻找PYTHONSTARTUP环境变量，然后执行此文件中变量指定的执行代码。</td></tr>
+<tr><td>PYTHONCASEOK  </td><td>加入PYTHONCASEOK的环境变量, 就会使python导入模块的时候不区分大小写.</td></tr>
+<tr><td>PYTHONHOME   </td><td>另一种模块搜索路径。它通常内嵌于的PYTHONSTARTUP或PYTHONPATH目录中，使得两个模块库更容易切换。</td></tr>
+</tbody></table>
+<br><hr>
+<h2>运行Python</h2>
+<p>有三种方式可以运行Python：</p>
+<h3>1、交互式解释器：</h3>
+<p>你可以通过命令行窗口进入python并开在交互式解释器中开始编写Python代码。</p>
+<p>你可以在Unix，DOS或任何其他提供了命令行或者shell的系统进行python编码工作。</p>
+<div class="code"><div>
+$ python             # Unix/Linux
+
+<br><br>
+或者  
+<br><br>
+C:>python           # Windows/DOS
+</div></div>
+<p>以下为Python命令行参数：</p>
+<table class="reference">
+<tbody><tr>
+<th>选项</th><th>描述</th></tr>
+<tr><td>-d</td><td>在解析时显示调试信息</td></tr>
+<tr><td>-O</td><td>生成优化代码 ( .pyo 文件 )</td></tr>
+<tr><td>-S</td><td>启动时不引入查找Python路径的位置</td></tr>
+<tr><td>-V</td><td>输出Python版本号</td></tr>
+<tr><td>-X</td><td>
+从 1.6版本之后基于内建的异常（仅仅用于字符串）已过时。</td></tr>
+<tr><td>-c cmd</td><td>执行 Python 脚本，并将运行结果作为 cmd 字符串。</td></tr>
+<tr><td>file</td><td>在给定的python文件执行python脚本。</td></tr>
+</tbody></table>
+
+<h3>2、命令行脚本</h3>
+<p>在你的应用程序中通过引入解释器可以在命令行中执行Python脚本，如下所示：</p>
+<div class="code"><div>
+$ python  script.py          # Unix/Linux
+<br><br>
+或者
+<br><br>
+C:>python script.py         # Windows/DOS
+</div></div>
+<p><strong>注意：</strong>在执行脚本时，请检查脚本是否有可执行权限。</p>
+
+<h3>3、集成开发环境（IDE：Integrated Development Environment）</h3>
+<p>您可以使用图形用户界面（GUI）环境来编写及运行Python代码。以下推荐各个平台上使用的IDE：</p>
+<ul class="list">
+<li><b>Unix:</b> IDLE 是 UNIX 上最早的 Python IDE 。</li>
+<li><b>Windows:</b> PythonWin 是一个 Python 集成开发环境,在许多方面都比 IDE 优秀</li>
+<li><b>Macintosh:</b> Python 的 Mac 可以使用 IDLE IDE，你可以在网站上下载对应MAC的IDLE 。</li>
+
+</ul>
+<p>继续下一章之前，请确保您的环境已搭建成功。如果你不能够建立正确的环境，那么你就可以从您的系统管理员的帮助。</p>
+
+<p>在以后的章节中给出的例子已在 Python2.7.6 版本测试通过。</p>			
+			
+			</div>
+		</div>
+		
+		<div class="previous-next-links">
+			<div class="previous-design-link">← <a href="http://www.runoob.com/python/python-intro.html" rel="prev"> Python 简介</a> </div>
+			<div class="next-design-link"><a href="http://www.runoob.com/python/python-basic-syntax.html" rel="next"> Python 基础语法</a> →</div>
+		</div>
+		
+		<div class="sidebar-box ad-box ad-box-large">
+		<div class="ad-336280">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<!-- 移动版 自动调整 -->
+			<ins class="adsbygoogle"
+			     style="display:inline-block;min-width:200px;max-width:360px;width:100%;height:100%px"
+			     data-ad-client="ca-pub-5751451760833794"
+			     data-ad-slot="1691338467"
+			     data-ad-format="rectangle"></ins>
+			<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		</div>
+		</div>
+		
+	</div>
+</div>
+	
+
+<!-- 右边栏 -->
+<div class="fivecol last right-column">
+	<div class="tab tab-light-blue" style="text-align: center;">关注微信</div>
+	<div class="sidebar-box">
+		<a href="http://m.runoob.com/" target="_blank"> <img src="http://www.runoob.com/wp-content/themes/w3cschool.cc/assets/img/qrcode.jpg" alt="移动版"> </a>
+		<div class="qqinfo">
+		<a target="_blank" href="http://jq.qq.com/?_wv=1027&k=dOwwKN" id="qqhref">
+		<img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="菜鸟家族" title="菜鸟家族"></a>
+		<span>(群号：<span id="qqid">365967760</span>)</span>
+		</div>
+		
+	</div>
+	
+
+	
+	<div class="tab tab-light-blue">分类导航</div>
+	<div class="sidebar-box sidebar-cate">
+		
+		<div class="sidebar-tree" >
+			<ul><li><a href="javascript:void(0);" class="tit">HTML / CSS</a><ul><li><a title="HTML 教程" href="http://www.runoob.com/html/html-tutorial.html">HTML 教程</a></li><li><a title="HTML5 教程" href="http://www.runoob.com/html/html5-intro.html">HTML5 教程</a></li><li><a title="CSS 教程" href="http://www.runoob.com/css/css-tutorial.html">CSS 教程</a></li><li><a title="CSS3 教程" href="http://www.runoob.com/css3/css3-tutorial.html">CSS3 教程</a></li><li><a title="Bootstrap 教程" href="http://www.runoob.com/bootstrap/bootstrap-tutorial.html">Bootstrap 教程</a></li><li><a title="Foundation 教程" href="http://www.runoob.com/foundation/foundation-tutorial.html">Foundation 教程</a></li></ul></li><li><a href="javascript:void(0);" class="tit">JavaScript</a><ul><li><a title="JavaScript 教程" href="http://www.runoob.com/js/js-tutorial.html">JavaScript 教程</a></li><li><a title="HTML DOM 教程" href="http://www.runoob.com/htmldom/htmldom-tutorial.html">HTML DOM 教程</a></li><li><a title="jQuery 教程" href="http://www.runoob.com/jquery/jquery-tutorial.html">jQuery 教程</a></li><li><a title="AngularJS 教程" href="http://www.runoob.com/angularjs/angularjs-tutorial.html">AngularJS 教程</a></li><li><a title="jQuery UI 教程" href="http://www.runoob.com/jqueryui/jqueryui-tutorial.html">jQuery UI 教程</a></li><li><a title="jQuery EasyUI 教程" href="http://www.runoob.com/jeasyui/jqueryeasyui-tutorial.html">jQuery EasyUI 教程</a></li><li><a title="Node.js 教程" href="http://www.runoob.com/nodejs/nodejs-tutorial.html">Node.js 教程</a></li><li><a title="AJAX 教程" href="http://www.runoob.com/ajax/ajax-tutorial.html">AJAX 教程</a></li><li><a title="JSON 教程" href="http://www.runoob.com/json/json-tutorial.html">JSON 教程</a></li><li><a title="Highcharts 教程" href="http://www.runoob.com/highcharts/highcharts-tutorial.html">Highcharts 教程</a></li><li><a title="Google 地图 教程" href="http://www.runoob.com/googleapi/google-maps-basic.html">Google 地图 教程</a></li></ul></li><li><a href="javascript:void(0);" class="tit">服务端</a><ul><li><a title="PHP 教程" href="http://www.runoob.com/php/php-tutorial.html">PHP 教程</a></li><li><a title="Python 教程" href="http://www.runoob.com/python/python-tutorial.html">Python 教程</a></li><li><a title="Python3 教程" href="http://www.runoob.com/python3/python3-tutorial.html">Python3 教程</a></li><li><a title="Django 教程" href="http://www.runoob.com/django/django-tutorial.html">Django 教程</a></li><li><a title="Linux 教程" href="http://www.runoob.com/linux/linux-tutorial.html">Linux 教程</a></li><li><a title="Ruby 教程" href="http://www.runoob.com/ruby/ruby-tutorial.html">Ruby 教程</a></li><li><a title="Java 教程" href="http://www.runoob.com/java/java-tutorial.html">Java 教程</a></li><li><a title="C 教程" href="http://www.runoob.com/c/c-tutorial.html">C 教程</a></li><li><a title="C++ 教程" href="http://www.runoob.com/cplusplus/cpp-tutorial.html">C++ 教程</a></li><li><a title="Servlet 教程" href="http://www.runoob.com/servlet/servlet-tutorial.html">Servlet 教程</a></li><li><a title="JSP 教程" href="http://www.runoob.com/jsp/jsp-tutorial.html">JSP 教程</a></li><li><a title="Lua 教程" href="http://www.runoob.com/lua/lua-tutorial.html">Lua 教程</a></li><li><a title="Scala 教程" href="http://www.runoob.com/scala/scala-tutorial.html">Scala 教程</a></li><li><a title="Go 教程" href="http://www.runoob.com/go/go-tutorial.html">Go 教程</a></li><li><a title="设计模式" href="http://www.runoob.com/design-pattern/design-pattern-tutorial.html">设计模式</a></li><li><a title="正则表达式" href="http://www.runoob.com/regexp/regexp-tutorial.html">正则表达式</a></li><li><a title="ASP 教程" href="http://www.runoob.com/asp/asp-tutorial.html">ASP 教程</a></li><li><a title="AppML 教程" href="http://www.runoob.com/appml/appml-tutorial.html">AppML 教程</a></li><li><a title="VBScript 教程" href="http://www.runoob.com/vbscript/vbscript-tutorial.html">VBScript 教程</a></li></ul></li><li><a href="javascript:void(0);" class="tit">数据库</a><ul><li><a title="SQL 教程" href="http://www.runoob.com/sql/sql-tutorial.html">SQL 教程</a></li><li><a title="Mysql 教程" href="http://www.runoob.com/mysql/mysql-tutorial.html">Mysql 教程</a></li><li><a title="SQLite 教程" href="http://www.runoob.com/sqlite/sqlite-tutorial.html">SQLite 教程</a></li><li><a title="MongoDB 教程" href="http://www.runoob.com/mongodb/mongodb-tutorial.html">MongoDB 教程</a></li><li><a title="Redis 教程" href="http://www.runoob.com/redis/redis-tutorial.html">Redis 教程</a></li><li><a title="Memcached 教程" href="http://www.runoob.com/Memcached/Memcached-tutorial.html">Memcached 教程</a></li></ul></li><li><a href="javascript:void(0);" class="tit">移动端</a><ul><li><a title="Android 教程" href="http://www.runoob.com/w3cnote/android-tutorial-intro.html">Android 教程</a></li><li><a title="Swift 教程" href="http://www.runoob.com/swift/swift-tutorial.html">Swift 教程</a></li><li><a title="jQuery Mobile 教程" href="http://www.runoob.com/jquerymobile/jquerymobile-tutorial.html">jQuery Mobile 教程</a></li><li><a title="ionic 教程" href="http://www.runoob.com/ionic/ionic-tutorial.html">ionic 教程</a></li></ul></li><li><a href="javascript:void(0);" class="tit">XML 教程</a><ul><li><a title="XML 教程" href="http://www.runoob.com/xml/xml-tutorial.html">XML 教程</a></li><li><a title="DTD 教程" href="http://www.runoob.com/dtd/dtd-tutorial.html">DTD 教程</a></li><li><a title="XML DOM 教程" href="http://www.runoob.com/dom/dom-tutorial.html">XML DOM 教程</a></li><li><a title="XSLT 教程" href="http://www.runoob.com/xsl/xsl-tutorial.html">XSLT 教程</a></li><li><a title="XPath 教程" href="http://www.runoob.com/xpath/xpath-tutorial.html">XPath 教程</a></li><li><a title="XQuery 教程" href="http://www.runoob.com/xquery/xquery-tutorial.html">XQuery 教程</a></li><li><a title="XLink 教程" href="http://www.runoob.com/xlink/xlink-tutorial.html">XLink 教程</a></li><li><a title="XPointer 教程" href="http://www.runoob.com/xlink/xlink-tutorial.html">XPointer 教程</a></li><li><a title="XML Schema 教程" href="http://www.runoob.com/schema/schema-tutorial.html">XML Schema 教程</a></li><li><a title="XSL-FO 教程" href="http://www.runoob.com/xslfo/xslfo-tutorial.html">XSL-FO 教程</a></li><li><a title="SVG 教程" href="http://www.runoob.com/svg/svg-tutorial.html">SVG 教程</a></li></ul></li><li><a href="javascript:void(0);" class="tit">ASP.NET</a><ul><li><a title="ASP.NET 教程" href="http://www.runoob.com/aspnet/aspnet-tutorial.html">ASP.NET 教程</a></li><li><a title="C# 教程" href="http://www.runoob.com/csharp/csharp-tutorial.html">C# 教程</a></li><li><a title="Web Pages 教程" href="http://www.runoob.com/aspnet/webpages-intro.html">Web Pages 教程</a></li><li><a title="Razor 教程" href="http://www.runoob.com/aspnet/razor-intro.html">Razor 教程</a></li><li><a title="MVC 教程" href="http://www.runoob.com/aspnet/mvc-intro.html">MVC 教程</a></li><li><a title="Web Forms 教程" href="http://www.runoob.com/aspnet/aspnet-intro.html">Web Forms 教程</a></li></ul></li><li><a href="javascript:void(0);" class="tit">Web Services</a><ul><li><a title="Web Services 教程" href="http://www.runoob.com/webservices/webservices-tutorial.html">Web Services 教程</a></li><li><a title="WSDL 教程" href="http://www.runoob.com/wsdl/wsdl-tutorial.html">WSDL 教程</a></li><li><a title="SOAP 教程" href="http://www.runoob.com/soap/soap-tutorial.html">SOAP 教程</a></li><li><a title="RSS 教程" href="http://www.runoob.com/rss/rss-tutorial.html">RSS 教程</a></li><li><a title="RDF 教程" href="http://www.runoob.com/rdf/rdf-tutorial.html">RDF 教程</a></li></ul></li><li><a href="javascript:void(0);" class="tit">开发工具</a><ul><li><a title="Eclipse 教程" href="http://www.runoob.com/eclipse/eclipse-tutorial.html">Eclipse 教程</a></li><li><a title="Git 教程" href="http://www.runoob.com/git/git-tutorial.html">Git 教程</a></li><li><a title="Firebug 教程" href="http://www.runoob.com/firebug/firebug-tutorial.html">Firebug 教程</a></li></ul></li><li><a href="javascript:void(0);" class="tit">网站建设</a><ul><li><a title="HTTP 教程" href="http://www.runoob.com/http/http-tutorial.html">HTTP 教程</a></li><li><a title="网站建设指南" href="http://www.runoob.com/web/web-buildingprimer.html">网站建设指南</a></li><li><a title="浏览器信息" href="http://www.runoob.com/browsers/browser-information.html">浏览器信息</a></li><li><a title="网站主机教程" href="http://www.runoob.com/hosting/hosting-tutorial.html">网站主机教程</a></li><li><a title="TCP/IP 教程" href="http://www.runoob.com/tcpip/tcpip-tutorial.html">TCP/IP 教程</a></li><li><a title="W3C 教程" href="http://www.runoob.com/w3c/w3c-tutorial.html">W3C 教程</a></li><li><a title="网站品质" href="http://www.runoob.com/quality/quality-tutorial.html">网站品质</a></li></ul></li></ul>			</div>
+	
+	</div>
+	
+	<br>
+	
+	<div class="sidebar-box ad-box ad-box-large">
+		<div class="sidebar-box advertise-here">
+			<a href="javascript:void(0);">Advertisement</a>
+		</div>
+		<div class="ad-600160">
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- 侧栏1 -->
+		<ins class="adsbygoogle"
+			 style="display:inline-block;width:160px;height:600px"
+			 data-ad-client="ca-pub-5751451760833794"
+			 data-ad-slot="4106274865"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		</div>
+	</div>
+</div></div>
+
+</div>
+<!-- 底部 -->
+
+
+<div id="footer" class="mar-t50">
+   <div class="w3cschoolcc-block">
+    <div class="w3cschoolcc cf">
+     <dl>
+      <dt>
+       在线实例
+      </dt>
+      <dd>
+       &middot;<a href="/html/html-examples.html">HTML 实例</a>
+      </dd>
+      <dd>
+       &middot;<a href="/css/css-examples.html">CSS 实例</a>
+      </dd>
+      <dd>
+       &middot;<a href="/js/js-examples.html">JavaScript 实例</a>
+      </dd>
+      <dd>
+       &middot;<a href="/ajx/ajax-examples.html">Ajax 实例</a>
+      </dd>
+       <dd>
+       &middot;<a href="/jquery/jquery-examples.html">jQuery 实例</a>
+      </dd>
+      <dd>
+       &middot;<a href="/xml/xml-examples.html">XML 实例</a>
+      </dd>
+      <dd>
+       &middot;<a href="/java/java-examples.html">Java 实例</a>
+      </dd>
+     
+     </dl>
+     <dl>
+      <dt>
+      字符集&工具
+      </dt>
+      <dd>
+       &middot; <a href="/charsets/html-charsets.html">HTML 字符集设置</a>
+      </dd>
+      <dd>
+       &middot; <a href="/tags/html-ascii.html">HTML ASCII 字符集</a>
+      </dd>
+     <dd>
+       &middot; <a href="/tags/ref-entities.html">HTML ISO-8859-1</a>
+      </dd> 
+      <dd>
+       &middot; <a href="/tags/ref-symbols.html">HTML 实体符号</a>
+      </dd>
+      <dd>
+       &middot; <a href="/tags/html-colorpicker.html">HTML 拾色器</a>
+      </dd>
+      <dd>
+       &middot; <a href="/jsontool">JSON 格式化工具</a>
+      </dd>
+     </dl>
+     <dl>
+      <dt>
+       最新更新
+      </dt>
+                   <dd>
+       &middot;
+      <a href="http://www.runoob.com/react/react-component-life-cycle.html" title="React 组件生命周期">React 组件生命周期</a>
+      </dd>
+              <dd>
+       &middot;
+      <a href="http://www.runoob.com/react/react-component-api.html" title="React 组件 API">React 组件 API</a>
+      </dd>
+              <dd>
+       &middot;
+      <a href="http://www.runoob.com/react/react-props.html" title="React Props">React Props</a>
+      </dd>
+              <dd>
+       &middot;
+      <a href="http://www.runoob.com/react/react-state.html" title="React State(状态)">React State(状态)</a>
+      </dd>
+              <dd>
+       &middot;
+      <a href="http://www.runoob.com/react/react-components.html" title="React 组件">React 组件</a>
+      </dd>
+              <dd>
+       &middot;
+      <a href="http://www.runoob.com/react/react-jsx.html" title="React JSX">React JSX</a>
+      </dd>
+              <dd>
+       &middot;
+      <a href="http://www.runoob.com/react/react-install.html" title="React 安装">React 安装</a>
+      </dd>
+             </dl>
+     <dl>
+      <dt>
+       站点信息
+      </dt>
+      <dd>
+       &middot;
+       <a target="_blank" href="//mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=ssbDyoOAgfLU3crf09venNHd3w" rel="external nofollow">意见反馈</a>
+      </dd>
+      <dd>
+       &middot;
+      <a href="/disclaimer">免责声明</a>
+       </dd>
+      <dd>
+       &middot;
+       <a href="/aboutus">关于我们</a>
+       </dd>
+      <dd>
+       &middot;
+      <a href="/archives">文章归档</a>
+      </dd>
+      
+     </dl>
+     <div class="search-share">
+      <div class="app-download">
+        <div>
+         <strong>关注微信</strong>
+        </div>
+      </div>
+      <div class="share">
+      <img width="150" height="150" src="http://www.runoob.com/wp-content/themes/w3cschool.cc/assets/img/qrcode.jpg" />
+       </div>
+     </div>
+    </div>
+   </div>
+   <div class="w-1000 copyright">
+     Copyright &copy; 2013-2016    <strong><a href="http://www.runoob.com/" target="_blank">菜鸟教程</a></strong>&nbsp;
+    <strong><a href="http://www.runoob.com/" target="_blank">runoob.com</a></strong> All Rights Reserved. 备案号：闽ICP备15012807号-1
+   </div>
+  </div>
+  <div class="fixed-btn">
+    <a class="go-top" href="javascript:void(0)" title="返回顶部"> <i class="fa fa-angle-up"></i></a>
+    <a class="qrcode"  href="javascript:void(0)" title="关注我们"><i class="fa fa-qrcode"></i></a>
+    <a class="writer" target="_blank" href="//mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=ssbDyoOAgfLU3crf09venNHd3w" style="font-size: 12px;" title="Bug 反馈">反馈</a>
+    <!-- qrcode modal -->
+    <div id="bottom-qrcode" class="modal panel-modal hide fade in">
+      <h4>微信关注</h4>
+      <div class="panel-body"><img alt="微信关注" width="128" height="128" src="http://www.runoob.com/wp-content/themes/runoob/assets/img/qrcode.jpg"></div>
+    </div>
+  </div>
+<div style="display:none;">
+  <script src="http://s11.cnzz.com/stat.php?id=5578006&web_id=5578006" language="JavaScript"></script>
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?8e2a116daf0104a78d601f40a45c75b4";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+</div>
+<script src="http://www.runoob.com/wp-content/themes/runoob/assets/js/main.js?v=1.02"></script>
+<script src="http://www.runoob.com/wp-content/themes/runoob/assets/js/hl/run_prettify.js?v=1.02"></script>
+</body>
+</html>

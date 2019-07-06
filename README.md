@@ -29,3 +29,7 @@
 - [ExcelTxtScript: 传送门](https://github.com/dgynfi/Script/tree/master/ExcelTxtScript)
 
 一个将excel文件(.xlsx)与TXT文件(.txt)互相转换一个脚本项目。[ExcelTxtScript的应用 -『MacExcelTool (MacOS应用) 』](https://github.com/dgynfi/MacExcelTool)
+
+## Script Learning
+ 
+ 脚本学习

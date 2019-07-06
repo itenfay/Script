@@ -1,0 +1,151 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>使用PlistBuddy我如何添加一个数组到一个plist中？-ios,xcode,bash,壳shell,plist-CodeGo.net</title>
+<meta name="keywords" content="使用PlistBuddy我如何添加一个数组到一个plist中？,ios,xcode,bash,壳shell,plist"/>
+<meta name="description" content="使用PlistBuddy我如何添加一个数组到一个plist中？ ios,xcode,bash,壳shell,plist 这个问题是一个Sub-Question/Alternative办法的办法是什么我想通过这个问题做：怎"/>
+<link href="/css.css" rel="stylesheet" type="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+</head>
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="head">
+<tr><td><table border="0" align="center" cellpadding="0" cellspacing="0" class="width960 middle">
+<tr><td class="logo"><a href="/">CodeGo.net</a></td>
+<td class="right">
+&nbsp;
+<script src="http://e.e708.net/cpc/diy/index.php?41394_4_20_2_d70000_700|60_" charset="gb2312"></script>
+</td></tr></table></td></tr></table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="head">
+<tr><td class="henglan"><table border="0" align="center" cellpadding="0" cellspacing="0" class="width960 middle">
+<tr><td class="qianse"> <li><nobr><h1>使用PlistBuddy我如何添加一个数组到一个plist中？</h1></nobr></li> </td>
+<td class="fenlei"> <li><nobr>本文关于 ios,xcode,bash,壳shell,plist</nobr></li></td>
+</tr></table></td></tr></table>
+<table border="0" align="center" cellpadding="0" cellspacing="0" class="zhu">
+<tr><td><li><a href="/">CodeGo.net</a> > <a href="/564698/">使用PlistBuddy我如何添加一个数组到一个plist中？</a></li>
+</td></tr></table>
+<table width="960" border="0" align="center" cellpadding="0" cellspacing="0" class="zhu">
+<tr><td class="zuoce">&nbsp;
+<br>
+<h1>使用PlistBuddy我如何添加一个数组到一个plist中？</h1>
+<br>
+<br>
+<span class="shenlan">
+ <a href="/12/11/224/">ios</a> <a href="/32/3/244/">xcode</a> <a href="/67/3/117/">bash</a> <a href="/98/2/136/">壳shell</a> <a href="/1065/1/36/">plist</a></span><br>
+这个问题是一个Sub-Question/Alternative办法的办法是什么我想通过这个问题做：怎样才能PListBuddy到一个条目从一个文件复制到另一个？
+ 我想通过XCode中的plist文件A中的条目复制到plist文件PlistBuddy构建脚本，使用bash /壳牌。通过这样做，我PlistBuddy的“复制”函数。我必须通过复制每个单独的条目，它的所有，因为你不能添加/套字典，但必须与PlistBuddy通过“项目”进行互动。
+ 我所要做的是把plist文件A和存储它的标题/值数组的“PSMultiValueSpecifier”我能抢的数组，并将它们打印到屏幕上 CodeGo.net，但是当我去将它们添加到目标的plist文件B，数组仍然是空的。
+ 代码：（代码获取的Entry添加）
+<pre><code># Configure the Entry
+${PLISTBUDDY} -c "Add PreferenceSpecifiers:$DEST_INDEX dict" ${DEST_PLIST}
+${PLISTBUDDY} -c "Add PreferenceSpecifiers:$DEST_INDEX:Type string 'PSMultiValueSpecifier'" ${DEST_PLIST}
+# Retrieve the Additional Field Value
+preferenceTitle=`$PLISTBUDDY -c "Print PreferenceSpecifiers:$SOURCE_INDEX:Title" $SOURCE_PLIST 2&gt;&amp;1`
+preferenceKey=`$PLISTBUDDY -c "Print PreferenceSpecifiers:$SOURCE_INDEX:Key" $SOURCE_PLIST 2&gt;&amp;1`
+preferenceDefaultValue=`$PLISTBUDDY -c "Print PreferenceSpecifiers:$SOURCE_INDEX:DefaultValue" $SOURCE_PLIST 2&gt;&amp;1`
+preferenceValues=`$PLISTBUDDY -c "Print PreferenceSpecifiers:$SOURCE_INDEX:Values" $SOURCE_PLIST 2&gt;&amp;1`
+preferenceTitles=`$PLISTBUDDY -c "Print PreferenceSpecifiers:$SOURCE_INDEX:Titles" $SOURCE_PLIST 2&gt;&amp;1`
+</code></pre>
+ 代码以添加新条目：
+<pre><code># Set the Additional Field Values
+${PLISTBUDDY} -c "Add PreferenceSpecifiers:$DEST_INDEX:Title string $preferenceTitle" ${DEST_PLIST}
+${PLISTBUDDY} -c "Add PreferenceSpecifiers:$DEST_INDEX:Key string $preferenceKey" ${DEST_PLIST}
+${PLISTBUDDY} -c "Add PreferenceSpecifiers:$DEST_INDEX:DefaultValue integer $preferenceDefaultValue" ${DEST_PLIST}
+####BORKEN####
+${PLISTBUDDY} -c "Add PreferenceSpecifiers:$DEST_INDEX:Values array $preferenceValues" ${DEST_PLIST}
+${PLISTBUDDY} -c "Add PreferenceSpecifiers:$DEST_INDEX:Titles array $preferenceTitles" ${DEST_PLIST}
+####BORKEN####
+</code></pre>
+ 下面是代码的片段，从而产生如下的数据：
+<pre><code>echo "#########"
+echo "[$THIS] adding $preference: $preferenceDict"
+echo "#########"
+echo "Source: "`$PLISTBUDDY -c "Print PreferenceSpecifiers:$SOURCE_INDEX:Values" $SOURCE_PLIST`
+echo "Source: "`$PLISTBUDDY -c "Print PreferenceSpecifiers:$SOURCE_INDEX:Titles" $SOURCE_PLIST`
+echo "#########"
+echo "Destination: "`$PLISTBUDDY -c "Print PreferenceSpecifiers:$DEST_INDEX:Values" $DEST_PLIST`
+echo "Destination: "`$PLISTBUDDY -c "Print PreferenceSpecifiers:$DEST_INDEX:Titles" $DEST_PLIST`
+echo "#########"
+</code></pre>
+ 下面是提供证明的正确的领域正在传输的数据
+<pre><code>#########
+[addDebugSettingsMenu.bash] adding : Dict {
+ Titles = Array {
+  Meters
+  Feet
+ }
+ DefaultValue = 1
+ Values = Array {
+  1
+  2
+ }
+ Key = UserPreferences_UnitsKey
+ Type = PSMultiValueSpecifier
+ Title = Units
+}
+#########
+Source: Array {  1  2 }
+Source: Array {  Meters  Feet }
+#########
+Destination: Array { }
+Destination: Array { }
+#########
+</code></pre>
+ 请帮助，如果您有任何关于PlistBuddy特征的知识。手册页是超薄和例子都远远之间。
+ 我要感谢你读这篇文章，借给你的大脑来解决我的脖子这一重大痛苦。<br>
+本文地址 ：CodeGo.net/564698/ 
+<br>
+<span class="qh">
+-------------------------------------------------------------------------------------------------------------------------
+</span><br>
+<span class="xuhao">1. </span>有可能是一个更好的方式来做到这一点，但我已经通过计算源数组中，然后分别复制他们在解决了这个问题。
+<pre><code>${PLISTBUDDY} -c "Add PreferenceSpecifiers:$DEST_INDEX:Titles array" ${DEST_PLIST} 
+${PLISTBUDDY} -c "Add PreferenceSpecifiers:$DEST_INDEX:Titles:0 string 'TITLE_1'" 
+${DEST_PLIST} ${PLISTBUDDY} -c "Add PreferenceSpecifiers:$DEST_INDEX:Titles:1 string 'TITLE_2'" ${DEST_PLIST} 
+etc... 
+</code></pre>
+<br><span class="xuhao">2. </span>
+它可能会解决你的问题，但它是不正确的方式来在脚本中。检查下面我答。
+<pre><code>/usr/libexec/PlistBuddy -x -c "Print PreferenceSpecifiers" ${FROM_PLIST} &gt; ${TO_PLIST}
+</code></pre><br>
+本文标题 ：使用PlistBuddy我如何添加一个数组到一个plist中？<br>
+本文地址 ：CodeGo.net/564698/ 
+<br>
+</td><td class="youce">
+<span class="xuhao">1. </span>
+<a href="/564696/">加载HTML和脚本执行顺序</a><br>
+<span class="xuhao">2. </span>
+<a href="/564695/">捕捉静态的UIImage无压缩（从CMSampleBufferRef）？</a><br>
+<span class="xuhao">3. </span>
+<a href="/564694/">进度条中的AsyncTask没有显示上载</a><br>
+<span class="xuhao">4. </span>
+<a href="/564693/">ASP.NET AJAX中的UpdatePanel和动态HTML插入股（Telerik）</a><br>
+<span class="xuhao">5. </span>
+<a href="/564692/">SIMPE VBA子：错误的函数的开始，但之后不</a><br>
+<span class="xuhao">6. </span>
+<a href="/564691/">如何正确解析查询字符串在C＃？</a><br>
+<span class="xuhao">7. </span>
+<a href="/564690/">如何在笨建立在“维护模式”？</a><br>
+<span class="xuhao">8. </span>
+<a href="/564689/">doctrine的ORM内存问题</a><br>
+<span class="xuhao">9. </span>
+<a href="/564688/">PHP的会话已停止工作</a><br>
+<span class="xuhao">10. </span>
+<a href="/564687/">的iOS-如何设置日期和时间编程</a><br>
+<br>&nbsp;
+</td></tr></table>
+﻿<table border="0" align="center" cellpadding="0" cellspacing="0" class="zhu">
+<tr><td>
+<br>
+Copyright © 2014 CodeGo.net 
+<br>
+<a href="http://www.886abc.com" target="_blank">路由器设置</a>
+<a href="http://codego.net/xinwen/" target="_blank">http://codego.net/xinwen/</a>
+</td></tr></table>
+<script src="http://e.e708.net/cpc/pf.php?41394_3_17_0|1|2_d70000__" charset="gb2312"></script>
+
+
+<span style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=1257117766&web_id=1257117766" language="JavaScript"></script>
+</span></body>
+</html>

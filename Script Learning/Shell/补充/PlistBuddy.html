@@ -1,0 +1,1268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>   
+    
+     
+    <script type="text/javascript" src="http://c.csdnimg.cn/pubfooter/js/tracking.js" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script>
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <title>PlistBuddy - 明明
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="编写一个气象数据挖掘的MapReduce程序1. 气象数据在哪里？&#160; &#160; NCDC &#160;美国国家气候数据中心&#160; &#160; 获取数据的方式在www.hadoopbook.com里给出了，是这里http://hadoopbook.com/code.html&#160; &#160; 两个示例的数据在这里下载https://github.com/tomwhite/hadoop-book/" />
+    <script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+        <!--new top-->
+               <link rel="stylesheet" href="http://c.csdnimg.cn/public/common/toolbar/css/index.css">        <!--new top-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/default/css/style.css?v=1.1" />
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/a351945755/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+</head>
+<body>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/a351945755">明明</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+            
+                <li id="btnContents"><a href="http://blog.csdn.net/a351945755?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/a351945755?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/a351945755/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "a351945755";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/a351945755";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/50737496">
+<font color=red>【征文】Hadoop十周年特别策划——我与Hadoop不得不说的故事
+</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://blog.csdn.net/csdnedu/article/details/50788201">
+<font color=blue>前端精品课程免费看，写课评赢心动大礼！
+
+<a href="http://lib.csdn.net/base/18">
+<font color=red>JavaScript知识库发布
+</font></a>
+
+</font></a>
+</div>                        </div>
+                        
+
+
+
+<!--AdForward Begin:-->
+<script type="text/javascript" ads-src="http://csdnim.qtmojo.com/main/s?user=csdn|blog|fumeiti&db=csdnim&border=0&local=yes&js=ie" src="http://creatim.qtmojo.cn/td/AllyesDeliver.min.js" charset="gbk"></script>
+<!--AdForward End-->
+
+  
+<link href="http://static.blog.csdn.net/css/comment1.css" type="text/css" rel="stylesheet" />
+<link href="http://static.blog.csdn.net/css/style1.css" type="text/css" rel="stylesheet" />
+<script language='JavaScript' type='text/javascript' src='http://download.csdn.net/js/jquery.cookie.js'></script>
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/search-service/main.js"></script>
+<link rel="stylesheet" href="http://static.blog.csdn.net/public/res-min/markdown_views.css?v=1.0" />
+<link rel="stylesheet" href="http://static.blog.csdn.net/css/category.css?v=1.0" />
+<script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+
+ <script type="text/javascript" src="http://static.blog.csdn.net/scripts/web-storage-cache.min.js"></script>
+
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+          
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Repost"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="/a351945755/article/details/46561249">
+        PlistBuddy            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_r">
+            <span class="link_postdate">2015-06-19 14:37</span>
+            <span class="link_view" title="阅读次数">671人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(0)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('PlistBuddy','46561249');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(46561249,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+    <div class="embody"  style="display:none" id="embody">
+        <span class="embody_t">本文章已收录于：</span>
+        <div class="embody_c" id="lib" value="{&quot;err&quot;:0,&quot;msg&quot;:&quot;ok&quot;,&quot;data&quot;:[]}"></div>
+    </div>
+    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            var lib = eval("("+$("#lib").attr("value")+")");
+            var html = "";
+            if (lib.err == 0) {
+                $.each(lib.data, function (i) {
+                    var obj = lib.data[i];
+                    //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                    html += ' <a href="' + obj.url + '" target="_blank">';
+                    html += ' <img src="' + obj.logo + '">';
+                    html += ' <em><b>' + obj.name + '</b></em>';
+                    html += ' </a>';
+                });
+                if (html != "") {
+                    setTimeout(function () {
+                        $("#lib").html(html);
+                        /*
+                        var testhtml = "";
+                        testhtml += '<a href="#">';
+                        testhtml += '<img src="http://img.knowledge.csdn.net/upload/base/1455589744328_328.jpg">';
+                        testhtml += '<em>Android知识库</em>';
+                        testhtml += '</a>';
+                        $(".embody_c").html(testhtml);
+                        */
+                        $("#embody").show();
+                    }, 100);
+                }
+            }          
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="http://static.blog.csdn.net/images/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label  onclick="GetCategoryArticles('1225400','a351945755','top','46561249');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">iOS<em>（387）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/a351945755/article/category/1225400"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_1225400">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+    <script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>  
+
+  
+
+  
+  
+     
+
+<div id="article_content" class="article_content">
+
+<p style="margin:20px 0px; padding:0px; outline:0px; border:0px; vertical-align:baseline; font-size:2.5em; font-family:'Myriad Pro',Helvetica,Arial,sans-serif; clear:both; color:rgb(51,51,50); letter-spacing:-1px; line-height:1; word-wrap:break-word; width:720px">
+</p>
+<p style="margin-top:0px; margin-bottom:1em; padding-top:0px; padding-bottom:0px; outline:0px; border:0px; vertical-align:baseline; font-size:19px; font-family:Georgia,'Times New Roman',Times,serif; line-height:28.5px">
+最近由于工作需要，发现了这么一个小工具。</p>
+<p style="margin-top:0px; margin-bottom:1em; padding-top:0px; padding-bottom:0px; outline:0px; border:0px; vertical-align:baseline; font-size:19px; font-family:Georgia,'Times New Roman',Times,serif; line-height:28.5px">
+PlistBuddy是一个Mac里的命令行下读写plist文件的工具。<br>
+位于/usr/libexec/下，由于这个路径不在默认的PATH里，需要通过绝对路径/usr/libexec/PlistBuddy引用。</p>
+<p style="margin-top:0px; margin-bottom:1em; padding-top:0px; padding-bottom:0px; outline:0px; border:0px; vertical-align:baseline; font-size:19px; font-family:Georgia,'Times New Roman',Times,serif; line-height:28.5px">
+</p>
+<h1 style="margin:0px 0px 20px; padding:0px; border:0px; list-style:none; font-weight:normal; font-size:31px; font-family:微软雅黑,幼圆,sans-serif; vertical-align:baseline; line-height:34px; color:rgb(147,147,147)">
+用PlistBuddy修改Plist文件</h1>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+&nbsp;<wbr></p>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+Plist文件是以.plist为结尾的文件的总称. 众所周知, Plist在Mac OSX系统中起着举足轻重的作用，就如同Windows里面的Registry一样，系统和程序使用Plist文件来存储自己的安装/配置/属性等信息。正如可以使用命令行命令来处理大多数系统管理一样，操作Plist文件也是系统提供的。 &nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+所幸有PlistBuddy工具，这个工具通过它的简单语法就可以操作嵌套的键&#20540;。如果你的系统没有PlistBudy可以安装苹果的开发工具。</p>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+基本的使用可以查看man文档或者是在线帮助:</p>
+<div style="font-size:14px; margin:0px; padding:0px; border:0px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+<div style="padding:0px; border:0px; font-style:inherit; font-family:inherit; vertical-align:baseline; margin:1em 0px!important; font-size:1em!important; width:690px; position:relative!important; overflow-x:auto!important; overflow-y:hidden!important">
+<table border="0" cellpadding="0" cellspacing="0" style="margin:0px!important; padding:0px!important; line-height:1.1em!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:690px; min-height:inherit!important">
+<tbody style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">
+<tr style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">
+<td style="margin:0px!important; padding:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; line-height:1.1em!important; border:0px!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(175,175,175)!important">
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+1</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+2</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+3</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+4</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+5</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+6</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+7</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+8</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+9</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+10</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+11</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+12</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+13</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+14</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+15</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+16</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+17</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+18</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+19</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+20</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+21</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+22</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+23</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+24</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+25</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+26</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+27</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+28</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+29</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+30</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+31</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+32</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+33</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+34</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+35</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+36</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+37</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+38</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+39</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+40</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+41</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+42</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+43</div>
+<div style="margin:0px!important; padding:0px 0.5em 0px 1em!important; border-width:0px 3px 0px 0px!important; border-right-style:solid!important; border-right-color:rgb(108,226,108)!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; text-align:right!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:nowrap!important">
+44</div>
+</td>
+<td style="margin:0px!important; padding:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; line-height:1.1em!important; border:0px!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:650px; min-height:inherit!important">
+<div style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:relative!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">$
+ plistbuddy -h</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Command
+ Format:</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Help-
+ Prints this information</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Exit-
+ Exits the program, changes are not saved to the file</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Save-
+ Saves the current changes to the file</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Revert-
+ Reloads the last saved version of the file</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Clear[&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">Type</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;]-
+ Clears out all existing entries, and creates root ofType</code></code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Print[&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">Entry</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;]-
+ Prints value of Entry.&nbsp;<wbr> Otherwise, printsfile</code></code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Set&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">Entry</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">Value</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;-
+ Sets the value at Entry to Value</code></code></code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Add&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">Entry</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">Type</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;[&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">Value</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;]-
+ Adds Entry to the plist, with valueValue</code></code></code></code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Copy&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">EntrySrc</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">EntryDst</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;-
+ Copies the EntrySrc property toEntryDst</code></code></code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Delete&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">Entry</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;-
+ Deletes Entry from the plist</code></code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Merge&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">file.plist</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;[&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">Entry</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;]-
+ Adds the contents of file.plist toEntry</code></code></code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Import&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">Entry</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;&lt;&lt;/code&gt;<code style="margin:0px!important; padding:0px!important; border:0px!important; font-weight:bold!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; color:rgb(0,102,153)!important">file</code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&gt;-
+ Creates or sets Entry the contents offile</code></code></code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code>&nbsp;<wbr></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Entry
+ Format:</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Entriesconsist
+ of property key names delimited bycolons.&nbsp;<wbr> Array items</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">arespecified
+ by a zero-based integer index.&nbsp;<wbr>Examples:</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">:CFBundleShortVersionStri<wbr>ng</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">:CFBundleDocumentTypes:2:CFBundleTypeExtensions</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code>&nbsp;<wbr></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Types:</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">string</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">array</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">dict</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">bool</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">real</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">integer</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">date</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">data</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code>&nbsp;<wbr></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Examples:</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Set:CFBundleIdentifier
+ com.apple.plistbuddy</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Setsthe
+ CFBundleIdentifier property tocom.apple.plistbuddy</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Add:CFBundleGetInfoString
+ string &quot;App version 1.0.1&quot;</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Addsthe
+ CFBundleGetInfoString property to the plist</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Add:CFBundleDocumentTypes:
+ dict</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Addsa
+ new item of type dict to the CFBundleDocumentTypesarray</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Add:CFBundleDocumentTypes:0
+ dict</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Addsthe
+ new item to the beginning of the array</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Delete:CFBundleDocumentTypes:0
+ dict</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Deletesthe
+ FIRST item in the array</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Delete:CFBundleDocumentTypes</code></div>
+<div style="margin:0px!important; padding:0px 1em!important; border:0px!important; font-size:1em!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important; white-space:pre!important">
+<code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></code><code style="margin:0px!important; padding:0px!important; border:0px!important; font-size:1em!important; font-family:Consolas,'Bitstream Vera sans Mono','Courier new',Courier,monospace!important; vertical-align:baseline!important; bottom:auto!important; float:none!important; height:auto!important; left:auto!important; line-height:1.1em!important; outline:0px!important; overflow:visible!important; position:static!important; right:auto!important; top:auto!important; width:auto!important; min-height:inherit!important">Deletesthe
+ ENTIRE CFBundleDocumentTypes array</code></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+这里主要解释一下PlistBuddy的几个关键点.</p>
+<ul style="margin:0px 0px 0px 15px; padding:0px 0px 10px; border:0px; list-style:none; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+<li style="margin:0px; padding:0px 0px 5px; border:0px; list-style:disc!important; font-style:inherit; font-family:inherit; vertical-align:baseline; line-height:22px">
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:21px; font-style:inherit; font-family:inherit; vertical-align:baseline">
+如何定义嵌套的键&#20540;: 正如前面说的它使用一种简单的描述方式，上一层的键&#20540;在前面，而每个键&#20540;之间使用&quot;:&quot;符号分隔,比如：本文最初的例子中Software-&gt;Gallery-&gt;OnlineMarketplace表述为:&quot;:Software:Gallery:OnlineMarketplace&quot;, 第一个&quot;:&quot;表示根.</p>
+</li><li style="margin:0px; padding:0px 0px 5px; border:0px; list-style:disc!important; font-style:inherit; font-family:inherit; vertical-align:baseline; line-height:22px">
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:21px; font-style:inherit; font-family:inherit; vertical-align:baseline">
+而如果键&#20540;的名称包含空&#26684;等特殊字符的时候，如同命令行的转义字符一样，使用&quot;/&quot;来转义，比如: &quot;:Software:Gallery:Online/ Marketplace&quot;.</p>
+</li><li style="margin:0px; padding:0px 0px 5px; border:0px; list-style:disc!important; font-style:inherit; font-family:inherit; vertical-align:baseline; line-height:22px">
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:21px; font-style:inherit; font-family:inherit; vertical-align:baseline">
+PlistBuddy如果不使用&quot;-c&quot;参数，则进入人机交互模式, &quot;-c&quot;的意思就是执行它后面的命令列表，而命令如果有参数，需要把它们包含在引号中，</p>
+</li></ul>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+1.添加</p>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+plistbuddy -c 'Add :Software:Gallery:Version string &quot;1.0&quot;' ~/Desktop/com.sample.plist</p>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+2.输出</p>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+plistbuddy -c &quot;Print&quot; ~/Desktop/com.sample.plist</p>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+3.修改</p>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+plistbuddy -c 'Set :Software:Gallery:Version &quot;1.1&quot;' ~/Desktop/com.sample.plist</p>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+4.删除</p>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+plistbuddy -c 'Delete :Software:Gallery:Version' ~/Desktop/com.sample.plist</p>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+5.合并<br>
+</p>
+<p style="margin-top:8px; margin-bottom:7px; padding-top:0px; padding-bottom:0px; border:0px; list-style:none; word-wrap:normal; word-break:normal; line-height:22px; font-size:14px; font-family:Arial,宋体,sans-serif; vertical-align:baseline; color:rgb(147,147,147)">
+plistbuddy -c &quot;Merge ~/Desktop/Global.plist :Software:Gallery&quot; ~/Desktop/com.sample.plist</p>
+<br>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   <link rel="stylesheet" href="http://static.blog.csdn.net/css/blog_detail.css" />
+
+    
+<!--172.16.140.13-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+ 
+
+        <div id="digg" ArticleId="46561249">
+            <dl id="btnDigg" class="digg digg_disable">
+               
+                 <dt>顶</dt>
+                <dd>0</dd>
+            </dl>
+            <dl id="btnBury" class="digg digg_disable">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>
+            </dl>
+        </div>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/a351945755/article/details/46561203';">上一篇</span><a href="/a351945755/article/details/46561203" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">修改ipa</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/a351945755/article/details/46562099';">下一篇</span><a href="/a351945755/article/details/46562099" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">40 个很有用的 Mac OS X Shell 脚本和终端命令</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+        <div class="similar_article"  style="display:none">
+                <h4>我的同类文章</h4>
+                <div class="similar_c"style="margin:20px 0px 0px 0px">
+                    <div class="similar_c_t">
+                                <label class="similar_cur">
+                                    <span  style="cursor:pointer"  onclick="GetCategoryArticles('1225400','a351945755','foot','46561249');">iOS<em>（387）</em></span>
+                                </label>
+                    </div>
+                   
+                    <div class="similar_wrap tracking-ad" data-mod="popu_141"  style="max-height:195px;">
+                        <a href="http://blog.csdn.net" style="display:none">http://blog.csdn.net</a>
+                        <ul class="similar_list fl">                          
+                        </ul>
+
+                        <ul class="similar_list fr">                           
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+    <script  type="text/javascript">
+        $(function () {
+            GetCategoryArticles('1225400', 'a351945755','foot','46561249');
+        });
+    </script>
+      
+</div>
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/a351945755/svc/GetSuggestContent/46561249",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+<dl class="blog-ass-articl" id="res-relatived" > 
+    <div class="embody embody_b" id="libkeyparent"  style="display:none">
+            <span class="embody_t">更多资料请参考：</span>
+            <div class="embody_c" id="libkey"></div>
+    </div>
+
+
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+
+    <div id="adCollege" style="width: 42%;float: left;"> 
+        <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script> 
+        <script type="text/javascript">
+            csdn.position.showEdu({
+                sourceType: "blog",
+                searchType: "detail",
+                searchKey: "46561249",
+                username: "",
+                recordcount: "5",
+                containerId: "adCollege" //容器DIV的id。 
+            });
+        </script> 
+    </div>  
+
+    
+     <div id="res"  data-mod="popu_36"  class="tracking-ad" style="width: 42%;float: left;margin-right: 30px;"></div>
+   
+</dl>
+
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var searchtitletags = 'PlistBuddy' + ',' + $("#tags").html();
+            searchService({
+                index: 'blog',
+                query: searchtitletags,
+                from: 5,
+                size: 5,
+                appendTo: '#res',
+                url: 'recommend',
+                his: 2,
+                client: "blog_cf_enhance",
+                tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+            });
+        }, 500);
+    });    
+
+ </script>  
+
+    <div id="ad_cen">        
+<!--AdForward Begin:-->
+<script type="text/javascript" src="http://csdnim.qtmojo.com/main/s?user=csdn|blog|banner2&db=csdnim&border=0&local=yes&js=ie" charset="gbk"></script>
+<!--AdForward End-->    </div>  
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '46561249';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="display:none"></div>
+  <script  language="javascript" type='text/javascript'>     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/a351945755/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });
+        },200);  
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+</script>
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/a351945755" target="_blank">
+    <img src="http://avatar.csdn.net/4/A/B/1_a351945755.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/a351945755" class="user_name" target="_blank">a351945755</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=a351945755','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>852269次</span></li>
+    <li>积分：<span>10078</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog7.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：10078 </div>
+        </span>  </li>
+    <li>排名：<span>第931名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>50篇</span></li>
+    <li>转载：<span>838篇</span></li>
+    <li>译文：<span>2篇</span></li>
+    <li>评论：<span>51条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/a351945755/article/category/1225399" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">cocos2d-x</a><span>(47)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/1225400" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">iOS</a><span>(388)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/1234432" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">box2d</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/817290" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">javascript</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/1258184" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">algorithm</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/1264922" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">system</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/1266635" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">BUG</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/1280266" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">感悟</a><span>(10)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/1286043" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">JAVA</a><span>(82)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/1376911" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">C++</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/1441465" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">erlang</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/1544363" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">ANE</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/1893897" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">服务器</a><span>(285)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/2337313" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">unity3d</a><span>(66)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/2344383" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">tomcat</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/2350019" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Protocol Buffer</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/2351195" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">mysql</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/2357073" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">NGUI</a><span>(19)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/2360861" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">HTML</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/2361975" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">C#</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/3053513" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Swift</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/3103103" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Android</a><span>(37)</span>
+                </li>
+                 <li>
+                    <a href="/a351945755/article/category/6108976" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">php</a><span>(1)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/a351945755/article/month/2016/03">2016年03月</a><span>(42)</span></li><li><a href="/a351945755/article/month/2016/02">2016年02月</a><span>(4)</span></li><li><a href="/a351945755/article/month/2016/01">2016年01月</a><span>(1)</span></li><li><a href="/a351945755/article/month/2015/12">2015年12月</a><span>(5)</span></li><li><a href="/a351945755/article/month/2015/11">2015年11月</a><span>(2)</span></li><li><a href="/a351945755/article/month/2015/09">2015年09月</a><span>(11)</span></li><li><a href="/a351945755/article/month/2015/08">2015年08月</a><span>(18)</span></li><li><a href="/a351945755/article/month/2015/07">2015年07月</a><span>(21)</span></li><li><a href="/a351945755/article/month/2015/06">2015年06月</a><span>(43)</span></li><li><a href="/a351945755/article/month/2015/05">2015年05月</a><span>(3)</span></li><li><a href="/a351945755/article/month/2015/04">2015年04月</a><span>(4)</span></li><li><a href="/a351945755/article/month/2015/03">2015年03月</a><span>(11)</span></li><li><a href="/a351945755/article/month/2015/01">2015年01月</a><span>(5)</span></li><li><a href="/a351945755/article/month/2014/12">2014年12月</a><span>(3)</span></li><li><a href="/a351945755/article/month/2014/11">2014年11月</a><span>(2)</span></li><li><a href="/a351945755/article/month/2014/10">2014年10月</a><span>(7)</span></li><li><a href="/a351945755/article/month/2014/09">2014年09月</a><span>(2)</span></li><li><a href="/a351945755/article/month/2014/08">2014年08月</a><span>(4)</span></li><li><a href="/a351945755/article/month/2014/07">2014年07月</a><span>(39)</span></li><li><a href="/a351945755/article/month/2014/06">2014年06月</a><span>(60)</span></li><li><a href="/a351945755/article/month/2014/05">2014年05月</a><span>(24)</span></li><li><a href="/a351945755/article/month/2014/04">2014年04月</a><span>(86)</span></li><li><a href="/a351945755/article/month/2014/03">2014年03月</a><span>(119)</span></li><li><a href="/a351945755/article/month/2014/02">2014年02月</a><span>(92)</span></li><li><a href="/a351945755/article/month/2013/09">2013年09月</a><span>(2)</span></li><li><a href="/a351945755/article/month/2013/08">2013年08月</a><span>(2)</span></li><li><a href="/a351945755/article/month/2013/06">2013年06月</a><span>(2)</span></li><li><a href="/a351945755/article/month/2013/05">2013年05月</a><span>(1)</span></li><li><a href="/a351945755/article/month/2013/04">2013年04月</a><span>(5)</span></li><li><a href="/a351945755/article/month/2013/03">2013年03月</a><span>(18)</span></li><li><a href="/a351945755/article/month/2013/02">2013年02月</a><span>(3)</span></li><li><a href="/a351945755/article/month/2013/01">2013年01月</a><span>(17)</span></li><li><a href="/a351945755/article/month/2012/12">2012年12月</a><span>(20)</span></li><li><a href="/a351945755/article/month/2012/11">2012年11月</a><span>(97)</span></li><li><a href="/a351945755/article/month/2012/10">2012年10月</a><span>(59)</span></li><li><a href="/a351945755/article/month/2012/09">2012年09月</a><span>(35)</span></li><li><a href="/a351945755/article/month/2012/08">2012年08月</a><span>(20)</span></li><li><a href="/a351945755/article/month/2011/05">2011年05月</a><span>(1)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/a351945755/article/details/24782145" title="navicat for mysql只导出数据表结构">navicat for mysql只导出数据表结构</a><span>(20005)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/23979403" title="iOS 上 App 内购买（in-app purchase）的误消费可以退款吗？">iOS 上 App 内购买（in-app purchase）的误消费可以退款吗？</a><span>(17182)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/21003249" title="IIS7.5 报错 HTTP 错误 404.0- Not Found 您要找的资源已被删除、已更名或暂时不可用 解决方案&#183;&#183;&#183;">IIS7.5 报错 HTTP 错误 404.0- Not Found 您要找的资源已被删除、已更名或暂时不可用 解决方案&#183;&#183;&#183;</a><span>(15469)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/41945039" title="ios 一个正则表达式测试（只可输入中文、字母和数字）">ios 一个正则表达式测试（只可输入中文、字母和数字）</a><span>(13936)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/24554429" title="删除Xcode中多余的证书provisioning profile">删除Xcode中多余的证书provisioning profile</a><span>(12661)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/40635937" title="iOS 的 APP 在系统中如何适应 iPhone 5s/6/6 Plus 三种屏幕的尺寸？">iOS 的 APP 在系统中如何适应 iPhone 5s/6/6 Plus 三种屏幕的尺寸？</a><span>(12370)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/8047142" title="如何使用UIAutomation进行iOS 自动化测试（Part I）">如何使用UIAutomation进行iOS 自动化测试（Part I）</a><span>(12048)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/21000453" title="检测到在集成的托管管道模式下不适用的ASP.NET设置的解决方法（非简单设置为【经典】模式）。 - CatcherX">检测到在集成的托管管道模式下不适用的ASP.NET设置的解决方法（非简单设置为【经典】模式）。 - CatcherX</a><span>(10541)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/39159263" title="IOS代码管控APP页面横竖屏切换">IOS代码管控APP页面横竖屏切换</a><span>(9768)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/22782229" title="java ssl https 连接详解 生成证书">java ssl https 连接详解 生成证书</a><span>(9417)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/a351945755/article/details/25691343" title="google play支付如何用php验证订单完成的合法性">google play支付如何用php验证订单完成的合法性</a><span>(7)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/22788855" title="Java SSLSocket的使用">Java SSLSocket的使用</a><span>(5)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/8047142" title="如何使用UIAutomation进行iOS 自动化测试（Part I）">如何使用UIAutomation进行iOS 自动化测试（Part I）</a><span>(3)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/23034219" title="Sublime Text 3显示中文乱码">Sublime Text 3显示中文乱码</a><span>(3)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/8156148" title="xcode升级到4.4.1后 Suppress warning “Category is implementing a method which will also be implemented by">xcode升级到4.4.1后 Suppress warning “Category is implementing a method which will also be implemented by</a><span>(3)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/23979469" title="IAP付费成功后，如何通过用户提供的itunes购买截图跟某一个指定的IAP订单匹配？">IAP付费成功后，如何通过用户提供的itunes购买截图跟某一个指定的IAP订单匹配？</a><span>(2)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/9762433" title="flash builder4.7 for Mac升级AIRSDK详解">flash builder4.7 for Mac升级AIRSDK详解</a><span>(1)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/19553381" title="基于Netty的HTTP通信研究分析">基于Netty的HTTP通信研究分析</a><span>(1)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/19414347" title="基于netty的项目中使用protobuf，巧妙定义proto完成不同消息的编码和解码处理 .">基于netty的项目中使用protobuf，巧妙定义proto完成不同消息的编码和解码处理 .</a><span>(1)</span>
+</li>
+<li>
+<a href="/a351945755/article/details/19194633" title="Protocol Buffer技术详解(语言规范)">Protocol Buffer技术详解(语言规范)</a><span>(1)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/unix21/article/details/50911387" 
+
+target="_blank">*调试JDK源码-一步一步看HashMap怎么Hash和扩容</a></li>
+<li><a href="http://blog.csdn.net/CloudyBird/article/details/50910617" 
+target="_blank">*你真的了解iOS代理设计模式吗？</a></li>
+<li><a href="http://blog.csdn.net/fanyun_01/article/details/50921678" 
+
+target="_blank">*浅谈Storm流式处理框架</a></li>
+<li><a 
+
+href="http://blog.csdn.net/u013088062/article/details/50893901"target="_blank">*有关深度学习领域的几点想法</a></li>
+<li><a href="http://blog.csdn.net/u013064109/article/details/50907741" 
+target="_blank">* 浅谈百度地图的简单开发之结合方向传感器实现定位功能（三）</a></li>
+<li><a href="http://blog.csdn.net/fanyun_01/article/details/50912026" target="_blank">*大数据常用十种开发语言</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/a351945755/article/details/36892635#comments">unity3d中获得物体的size</a>
+    <p style="margin:0px;"><a href="/haobaworenle" class="user_name">haobaworenle</a>:
+666，这个正解。不过有个问题，不知道怎么可以在编辑框随时查看实时size？
+    </p>
+    </li>
+    <li>
+   
+         <a href="/a351945755/article/details/46332999#comments">mac命令行下使用xcodebuild编译ios app的一点点总结</a>
+    <p style="margin:0px;"><a href="/liwuking" class="user_name">liwuking</a>:
+第三个问题，第三方库需要提前编译。这个是看了N多E文问答后才晓得的，他的这个项目使用了SDWebIm...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/a351945755/article/details/22788855#comments">Java SSLSocket的使用</a>
+    <p style="margin:0px;"><a href="/sinat_33242604" class="user_name">sinat_33242604</a>:
+请问完整代码在哪里？找不到附件
+    </p>
+    </li>
+    <li>
+   
+         <a href="/a351945755/article/details/22788855#comments">Java SSLSocket的使用</a>
+    <p style="margin:0px;"><a href="/sinat_33242604" class="user_name">sinat_33242604</a>:
+111111111111
+    </p>
+    </li>
+    <li>
+   
+         <a href="/a351945755/article/details/39159263#comments">IOS代码管控APP页面横竖屏切换</a>
+    <p style="margin:0px;"><a href="/globalYK" class="user_name">globalYK</a>:
+。。。。。。
+    </p>
+    </li>
+    <li>
+   
+         <a href="/a351945755/article/details/21000453#comments">检测到在集成的托管管道模式下不适用的ASP.NET设置的解决方法（非简单设置为【经典】模式）。 - CatcherX</a>
+    <p style="margin:0px;"><a href="/qq_27785023" class="user_name">qq_27785023</a>:
+哈哈。。解决问题了
+    </p>
+    </li>
+    <li>
+   
+         <a href="/a351945755/article/details/46380745#comments">使用代码为 Xcode 工程添加文件</a>
+    <p style="margin:0px;"><a href="/u013629554" class="user_name">u013629554</a>:
+兄弟，求联系方式
+    </p>
+    </li>
+    <li>
+   
+         <a href="/a351945755/article/details/21785647#comments">SSH的端口转发:本地转发Local Forward和远程转发Remote Forward</a>
+    <p style="margin:0px;"><a href="/xianweisi" class="user_name">xianweisi</a>:
+感觉这个本地转发和远程转发的区别就是看最终要访问的服务是在本地还是远程。不知道这样理解有没有问题
+    </p>
+    </li>
+    <li>
+   
+         <a href="/a351945755/article/details/22190789#comments">IOS推送消息(java实现)</a>
+    <p style="margin:0px;"><a href="/sdnliumei" class="user_name">sdnliumei</a>:
+很好，运行成功了，赞一个
+    </p>
+    </li>
+    <li>
+   
+         <a href="/a351945755/article/details/8047142#comments">如何使用UIAutomation进行iOS 自动化测试（Part I）</a>
+    <p style="margin:0px;"><a href="/zhenggaoxing" class="user_name">zhenggaoxing</a>:
+我先mac一下
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+ </div>   
+            <div class="clear">
+            </div>
+        </div>
+        
+
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/cnick/cnick.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=1087727"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/JavaScript1.js"></script>
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js"></script>
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://c.csdnimg.cn/public/common/toolbar/js/toolbar.js"></script>     <!--new top-->
+   
+    <link href="http://c.csdnimg.cn/comm_ask/css/ask_float_block.css" type="text/css" rel="stylesheet" />
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/wmd.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/showdown.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/prettify.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/apps/ask_float_block.js'></script>
+   
+</body>
+</html>   
+ 

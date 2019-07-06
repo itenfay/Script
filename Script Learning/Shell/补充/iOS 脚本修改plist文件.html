@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>iOS 脚本修改plist文件_iOS_IThao123 - IT行业第一站</title>
+    <meta name="keywords" content="iOS 脚本修改plist文件" />
+    <meta name="description" content="iOS 脚本修改plist文件_iOS 项目中多个target编译前修改plist文件某个 目前我的项目是由一份Project多个Target多个shema构成的。因为代码逻辑都是一样的，仅仅是里面的资源和请求接口不一样，所以添加了多个Ta" />
+
+    <meta name="mobile-agent"content="format=[wml|xhtml|html5]; url=http://m.ithao123.cn/content-42682.html">
+    <link href="http://m.ithao123.cn/content-42682.html" rel="alternate" media="only screen and (max-width: 640px)" />
+
+    <meta name="applicable-device" content="pc">
+
+    <link rel="stylesheet" type="text/css" href="/statics/zhuanti/css/base.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/statics/zhuanti/css/footer.css" media="all">
+	
+	<script src="http://www.ithao123.cn/statics/uaredirect.js"></script>
+	
+	<script type="text/javascript">uaredirect("http://m.ithao123.cn/content-42682.html");</script>
+
+
+
+    <script>
+
+        var IS_LOGIN 	= "";
+        var LEIPHONE_HOME_URL = USER_CENTER  = "http://zhuanti.ithao123.cn/";
+		
+    </script>
+
+    <!--[if IE]>
+    <script>
+        (function(){var e="abbr, article, aside, audio, canvas, datalist, details, dialog, eventsource, figure, footer, header, hgroup, mark, menu, meter, nav, output, progress, section, time, video".split(', ');var i=e.length;while(i--){document.createElement(e[i])}})()
+    </script>
+    <![endif]-->
+
+    <script src="http://www.ithao123.cn/statics/zhuanti/js/sea.js"></script>
+    <script src="http://www.ithao123.cn/statics/zhuanti/js/jquery.js"></script>
+    <script src="http://www.ithao123.cn/statics/zhuanti/js/tips.js"></script>
+    <link rel="stylesheet" href="http://www.ithao123.cn/statics/zhuanti/css/tips.css">
+<!--
+    <script src="http://www.ithao123.cn/statics/zhuanti/js/global.js"></script>
+    -->
+    <script>
+        seajs.use('http://www.ithao123.cn/statics/zhuanti/js/global.js',function(){
+        });
+    </script>
+
+    <!--
+    <script src="/statics/zhuanti/js/sea.js"></script>
+    <script src="/statics/zhuanti/js/jquery.js"></script>
+    -->
+
+    <link rel="stylesheet" href="/statics/zhuanti/css/yp_login.css">
+    <link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style0_16.css?v=8105b07e.css">
+</head>
+<body>
+
+
+<div class="header">
+    <div class="w1200 auto">
+        <div class="header_nav">
+            <ul>
+                <li><a href="http://www.ithao123.cn/">IThao123首页</a></li>
+                <li><a href="http://m.ithao123.cn">手机版</a></li>
+                <!--
+                <li>
+                    <a href="#"><span class="l">网站导航</span><i class="r"></i></a>
+                </li>
+
+                <li><a href="#" rel="nofollow">帮助中心</a></li>
+                -->
+
+            </ul>
+        </div>
+        <div class="header_login">
+            欢迎来到IThao123.cn！
+            			            您尚未 [&nbsp;<a href="/index.php?m=member&amp;c=index&amp;a=login" class="red" rel="nofollow">登录</a>&nbsp;]
+            或 [&nbsp;<a href="/index.php?m=member&amp;c=index&amp;a=register&amp;siteid=1" class="red" rel="nofollow">注册</a>&nbsp;]
+                    </div>
+    </div>
+</div>
+
+
+
+<header class="yp-header">
+    <div class="yp-header-top  inner clr">
+        <a class="yp-header-logo" href="http://www.ithao123.cn">
+            <img src="http://www.ithao123.cn/statics/zhuanti/images/lp_logo.png" height="52" alt="logo">
+            <span style="color:#DC6E4B;">
+				&nbsp;&nbsp;&nbsp;专注互联网行业
+			</span>
+        </a>
+        <!--
+        <div class="yp-header-user-box">
+            <div class="yp-header-user"><input type="hidden" id="is_login_tag_status" value="0"><div class="user-main"><div class="avatar"><img width="36" height="36" src="/statics/zhuanti/images/noLogin.jpg" alt=""></div><span class="nickname">用户</span><span class="arrow"></span></div><div class="user-link"><ul><li class="l1"><a href="javascript:YP_LOGIN_WINDOW.show();"><i></i>登录</a></li><li class="l2"><a href="http://home.ithao123.cn/main/register?returnUrl=http%3A%2F%2Fwww.ithao123.cn%2Fcategory%2Fzixun"><i></i>注册</a></li></ul></div></div>
+        </div>
+        -->
+        <div class="yp-header-search">
+            <form method="GET" action="" style="height: 100%;">
+                <input class="text" type="text" id="searchq" name="q" autocomplete="off" value="">
+                <input class="submit" type="botton" id="searchbtn" value="">
+            </form>
+        </div>
+    </div>
+
+
+    <nav class="yp-header-nav" id="yp-header-nav">
+        <div class="inner clr">
+            <div class="yp-header-menu">
+                <span class="arrow" style="left: 35px; display: block;"></span>
+                <ul>
+                    <li><a href="http://www.ithao123.cn">首页</a></li>
+                    <li class="ej" data-dl="newsDl"><a href="http://zixun.ithao123.cn">资讯<span class="arro"></span></a>
+                        <div class="news-menu">
+                                                        <div class="dline">
+                                                                                                                                <a href="http://www.ithao123.cn/news/dashuju/">大数据</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/yejie/">业界</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/shouji/">移动互联</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/chuangye/">创业</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/touzi/">投资</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/jiaoyu/">IT教育</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/wangluo/">网络</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/anquan/">安全</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/jishu/">技术</a><span>|</span>
+                                                                </div><div class='dline'>                                                                                                                                <a href="http://www.ithao123.cn/news/chanpin/">产品</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/yunying/">运营</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/dianshang/">电子商务</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/pingce/">评测攻略</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/sheji/">设计</a><span>|</span>
+                                                                                                                                                                                                <a href="http://www.ithao123.cn/news/youxi/">游戏</a><span>|</span>
+                                                                                                                                                            </div>
+                            
+                        </div>
+                    </li>
+                    <li class="ej"><a href="http://zhuanti.ithao123.cn">专题<span class="arro"></span></a>
+
+                        <div class="news-menu">
+                            <div class="dline">
+                                <a href="http://zhuanti.ithao123.cn/jishu/">技术</a><span>|</span>
+                                <a href="http://zhuanti.ithao123.cn/chanpin/">产品</a><span>|</span>
+                                <a href="http://zhuanti.ithao123.cn/yunying/">运营</a><span>|</span>
+                                <a href="http://zhuanti.ithao123.cn/zhanzhang/">站长学院</a><span>|</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="http://zhoukan.ithao123.cn">周刊</a></li>
+                    <li class="ej"><a href="http://jishu.ithao123.cn">技术<span class="arro"></span></a>
+
+
+                        <div class="news-menu">
+                                                                <div class="dline">
+                                                                                                                                                <a href="http://biancheng.ithao123.cn">编程</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://yidong.ithao123.cn">移动开发</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://web.ithao123.cn">web开发</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://db.ithao123.cn">架构存储</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://yun.ithao123.cn">云计算</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://wangluo.ithao123.cn">网络安全</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://xitong.ithao123.cn">系统</a><span>|</span>
+                                                                                                                                                                         </div>
+                                
+                        </div>
+
+                    </li>
+                    <li class="ej"><a href="http://chanpin.ithao123.cn">产品<span class="arro"></span></a>
+                        <div class="news-menu">
+
+                                                                <div class="dline">
+                                                                                                                                                <a href="http://www.ithao123.cn/chanpin/sheji/">产品设计</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/chanpin/tiyan/">用户体验</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/chanpin/seo/">SEO优化</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/chanpin/youhua/">产品优化</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/chanpin/guanli/">产品管理</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/chanpin/xuqiu/">需求分析</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/chanpin/wendang/">产品文档</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/chanpin/gongju/">常用工具</a><span>|</span>
+                                                                        </div><div class='dline'>                                                                                                                                        <a href="http://www.ithao123.cn/chanpin/xiangmu/">项目管理</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/chanpin/yonghudiaoyan/">用户调研</a><span>|</span>
+                                                                                                                                                                    </div>
+                                
+
+
+                        </div>
+                    </li>
+                    <li class="ej"><a href="http://yunying.ithao123.cn">运营<span class="arro"></span></a>
+
+                        <div class="news-menu">
+
+                                                                <div class="dline">
+                                                                                                                                                <a href="http://www.ithao123.cn/yunying/chanpin/">产品运营</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/cehua/">运营策划</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/shangye/">商业产品运营</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/wangzhan/">网站运营</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/yonghu/">用户运营</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/neirong/">内容运营</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/guanxi/">关系运营</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/app/">APP运营</a><span>|</span>
+                                                                        </div><div class='dline'>                                                                                                                                        <a href="http://www.ithao123.cn/yunying/dianshang/">电商运营</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/shequ/">社区运营</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/shichang/">市场运营</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/qudao/">渠道运营</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/huati/">话题运营</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/huodong/">活动运营</a><span>|</span>
+                                                                                                                                                                                                                <a href="http://www.ithao123.cn/yunying/youxiyunying/">游戏运营</a><span>|</span>
+                                                                                                                                                                    </div>
+                                
+
+
+                        </div>
+                    </li>
+                    <li class="ej"><a href="http://sheji.ithao123.cn/">设计<span class="arro"></span></a>
+
+                        <div class="news-menu">
+
+                                                        <div class="dline">
+                                                                                                                                <a href="http://www.ithao123.cn/sheji/tiyan/">用户体验设计</a><span>|</span>
+                                                                                                                                                                                        <a href="http://www.ithao123.cn/sheji/jiaohu/">交互设计</a><span>|</span>
+                                                                                                                                                                                        <a href="http://www.ithao123.cn/sheji/jiemian/">用户界面设计</a><span>|</span>
+                                                                                                                                                                                        <a href="http://www.ithao123.cn/sheji/shijue/">视觉设计</a><span>|</span>
+                                                                                                                                                                                        <a href="http://www.ithao123.cn/sheji/sheying/">摄影教程</a><span>|</span>
+                                                                                                                                                                                        <a href="http://www.ithao123.cn/sheji/ps/">photoshop教程</a><span>|</span>
+                                                                </div><div class='dline'>                                                                                                                        <a href="http://www.ithao123.cn/sheji/fireworks/">Fireworks教程</a><span>|</span>
+                                                                                                                                                                                        <a href="http://www.ithao123.cn/sheji/coreldraw/">CorelDraw教程</a><span>|</span>
+                                                                                                                                                                                        <a href="http://www.ithao123.cn/sheji/illustrator/">Illustrator教程</a><span>|</span>
+                                                                                                                                                                                        <a href="http://www.ithao123.cn/sheji/painter/">Painter教程</a><span>|</span>
+                                                                                                                                                                                        <a href="http://www.ithao123.cn/sheji/freehand/">Freehand教程</a><span>|</span>
+                                                                                                                                                                                        <a href="http://www.ithao123.cn/sheji/indesign/">Indesign</a><span>|</span>
+                                                                </div><div class='dline'>                                                                                </div>
+                            
+
+
+                        </div>
+                    </li>
+                    <!--
+                    <li><a href="http://www.wenda114.com/c-10001/" target="_blank">问答</a></li>
+                    <li><a href="http://www.wocaiwang.cn" target="_blank">培训</a></li>
+                    <li><a href="http://www.ithao123.cn/huodong/" rel="nofollow">活动</a></li>
+                    <li><a href="#" rel="nofollow">招聘</a></li>
+                    -->
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+
+
+
+</header>
+
+<link rel="stylesheet" type="text/css" href="/statics/zhuanti/css/article.css" media="all">
+<link rel="stylesheet" type="text/css" href="/statics/zhuanti/css/artCont_web_admin.css" media="all">
+
+<div class="index-main lph-main clr">
+    <div class="inner">
+
+        <div>
+            <a href="http://www.ithao123.cn">首页</a><span> &gt; </span>
+                                                <a href="http://www.ithao123.cn/jishu/">技术</a><span> &gt; </span>
+                        <a href="http://www.ithao123.cn/yidong/">移动开发</a><span> &gt; </span>
+                        <a href="http://www.ithao123.cn/yidong/ios/">iOS</a><span> &gt; </span>
+                                    iOS 脚本修改plist文件        </div>
+        <div class="article-left lph-left">
+            <div class="pageTop">
+                <h1>iOS 脚本修改plist文件</h1>
+            </div>
+            <!-- pageTop END-->
+            <div class="pageInfo clr">
+                <div class="pi-author">
+                    <!--
+                    <span>1970-01-01</span>
+
+                    <span>10:33</span>
+                    <i style="color:#FD5D3C;">原创</i>
+                    <a href="#" target="_blank">橙太白</a>
+                    -->
+                </div>
+                <!-- pi-author END -->
+                <div class="pi-comment">
+                    <a href="javascript:void(0);"><span>0</span><span>条评论</span></a>
+                </div>
+                <!-- pi-comment END -->
+            </div>
+            <!-- pageInfo END -->
+
+            <div style="width: 100%;float: left;margin-top: 10px;margin-bottom: 20px;clear: both;">
+			
+				<div style="width: 780px;float: left;">
+                    <script type="text/javascript">
+                        var cpro_id="u2313137";
+                        (window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"780",rsi1:"90",pat:"1",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"0",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",tft:"0",tlt:"1",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+                    </script>
+                    <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+                </div>
+		
+				
+				<div style="width:780px;text-align:center;margin:0 auto;">
+                    <script type="text/javascript">
+    /*在线_IT_内容页_正文上方广告2_v2_780*90 创建于 2016-01-14*/
+    var cpro_id = "u2491258";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+                </div>
+				
+				<div style="width:780px;text-align:center;margin:0 auto;">
+					<script type="text/javascript">
+                        var cpro_id="u2313137";
+                        (window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"780",rsi1:"90",pat:"1",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"0",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",tft:"0",tlt:"1",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+                    </script>
+                    <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+
+                </div>
+				
+				
+				
+
+
+            </div>
+            <div class="pageCont lph-article-comView ">
+
+
+                <p style="text-align: center;"><span style="line-height: 1.8;"></span></p>
+				
+				[摘要：iOS 项目中多个target编译前点窜plist文件某个 现在我的项目是由一份Project多个Target多个shema组成的。由于代码逻辑皆是一样的，仅仅是内里的资本战要求接心纷歧样，以是增加了多个Ta] <br><br>
+
+                <div align="center"><span style="font-size:24px"><strong>iOS 项目中多个target编译前修改plist文件某个&#20540;<br>
+</strong></span><br>
+<div align="left"><br>
+<span style="font-size:24px"><strong>&nbsp;&nbsp;&nbsp;&nbsp; </strong><span style="font-size:18px">目前我的项目是由一份Project多个Target多个shema构成的。因为代码逻辑都是一样的，仅仅是里面的资源和请求接口不一样，所以添加了多个Target.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 项目中用到了JPush, 但是Jpush很坑爹，有一个PushConfig.plist文件,程序运行的时候会读取此文件中的&#20540;：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 内容如下：<br>
+<br>
+<img src="/uploads/u/cc/ed/cced721611096ed5cfdedcaf6588c006." alt="\"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 最主要的 APP_KEY 因为不同的Target ， APP_KEY&#20540;不一样。这样一来每次编译打包的时候，都需要更改此文件.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 太麻烦了。<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 步骤如下：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. 存放所有Jpush AppKey的文件,如：JPUSHKEY <br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 里面存放的key按照 $PRODUCTNAME=$APPKEY这种&#26684;式排列<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. shell 脚本一份.&nbsp; modifyJPushKey.sh<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3. 项目中点中TARGETS，右边选择 Build Phases<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 点击 &#43; （NEW Run Script Build Phase)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 点击 Run Script 一栏，下拉展开：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 里面可以填写脚本:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （我为了编写修改脚本便，脚本我拿出来单独写成一份文件。这个 Run Script 里面，就去执行这个写出来的脚本。）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SHELL_PATH=$PROJECT_DIR/modifyJPushKey.sh<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chmod &#43;x ${SHELL_PATH}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sh ${SHELL_PATH}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="/uploads/u/6d/44/6d4403f67094243a1b336fafbb01bd6d." alt="\"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 展开 Run Script 如图:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="/uploads/u/37/6d/376d616079cf61a12544627ab9215c1a." alt="\"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这时候可以把它（Run Script 这一栏）拖动到前面,以便脚本在合适的时候执行.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+附录:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. JPUSHKEY文件如下:&nbsp; = 号左右的是 PRODUCTNAME<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =号右边的就是 key&#20540;<br>
+</span></span><pre name="code" class="html">A_HD=8031cffad446b************
+B_HD=0f4f8ff111ba38************
+C_HD=e2ef1b1560833******
+D_HD=6531d43b365e2******
+E_HD=d7c71863e1d620******
+F_HD=9b7a1d141e97f0******
+G_HD=13c75c512e3feaaf******</pre><br>
+<br>
+2. modifyJPushKey.sh<br>
+<pre name="code" class="python">#!/bin/bash
+
+#productName
+PRODUCTNAME=${PRODUCT_NAME}
+#JPUSHKEY文件 绝对路径
+JPUSHKEY_FILE_PATH=$PROJECT_DIR/******/*******/JPUSHKEY
+#PushConfig.plist文件 绝对路径
+PushConfig_FILE_PATH=$PROJECT_DIR/******/******/PushConfig.plist
+#存放AppKey值
+keyString=&quot;&quot;
+
+#根据PRODUCTNAME 查找JPUSHKEY文件中 对应的keyString值
+cat ${JPUSHKEY_FILE_PATH} | while read line
+do
+	productName=${line%%=*}
+
+	if [ &quot;${PRODUCTNAME}&quot; == &quot;${productName}&quot; ]; then
+
+		keyString=${line#*=}
+
+		echo $productName   $keyString
+
+		#替换 PushConfig.plist 文件中 appkey的值
+		sed -i &#39;&#39; &quot;/&lt;key&gt;APP_KEY&lt;/key&gt;/{ n; s/(&lt;string&gt;).*(&lt;/string&gt;)/1${keyString}2/;}&quot; ${PushConfig_FILE_PATH}
+
+		exit 0
+	fi
+done
+
+
+
+
+</pre>就是这样的。<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+<br>
+</div>
+</div>
+<br><br>
+ 感谢关注 Ithao123iOS频道，ithao123.cn是专门为互联网人打造的学习交流平台，全面满足互联网人工作与学习需求，更多互联网资讯尽在 IThao123!
+
+            </div>
+
+
+            <br>
+            <div class="realted-artle">
+                <div class="list clr">
+
+                    <script type="text/javascript">
+                        var cpro_id="u2288424";
+                        (window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"780",rsi1:"350",pat:"6",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"0",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+                    </script>
+                    <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+
+
+                </div>
+				
+				
+                </div>
+				
+				<!--
+            <br>
+
+            <div class="jm_CL">
+                <ul>
+                    <li><a rel="nofollow" href="http://www.aikang8.com/content-20-876-1.html" title="魅研社艺术模特丁筱南翘臀拍写真" target="_blank">
+                        <img src="http://doc.wocaiwang.cn/aik/1f/97/f5/1f97f5369d13df6a8f95f717d1ef9637.jpg" alt="魅研社艺术模特丁筱南翘臀拍写真" width="" height="152"></a>
+                        <p><a rel="nofollow" href="http://www.aikang8.com/content-20-876-1.html" title="魅研社艺术模特丁筱南翘臀拍写真" target="_blank">魅研社艺术模特丁筱南翘臀拍写真</a></p>
+                    </li>
+                    <li><a rel="nofollow" href="http://www.aikang8.com/content-59-885-1.html" title="性感女郎大奶诱惑人体私房写真(1/39)" target="_blank">
+				<img src="http://doc.wocaiwang.cn/aik/64/74/9a/64749a9ca1b090a2bb5e46f222273974.jpg" alt="性感女郎大奶诱惑人体私房写真(1/39)" width="" height="152"></a>
+				<p><a rel="nofollow" href="http://www.aikang8.com/content-59-885-1.html" title="性感女郎大奶诱惑人体私房写真(1/39)" target="_blank">性感女郎大奶诱惑人体私房写真(1/39)</a></p>
+			</li>
+                    <li><a rel="nofollow" href="http://www.aikang8.com/content-20-836-1.html" title="尤果性感美女王凌宇艺术影像写真" target="_blank">
+				<img src="http://doc.wocaiwang.cn/aik/ba/4c/d9/ba4cd936bfca4fbf03e34c13d316583e.jpg" alt="尤果性感美女王凌宇艺术影像写真" width="" height="152"></a>
+				<p><a rel="nofollow" href="http://www.aikang8.com/content-20-836-1.html" title="尤果性感美女王凌宇艺术影像写真" target="_blank">尤果性感美女王凌宇艺术影像写真</a></p>
+			</li>
+                    <li><a rel="nofollow" href="http://www.aikang8.com/content-20-874-1.html" title="极品空姐顾欣怡红色制服私房写真" target="_blank">
+                        <img src="http://doc.wocaiwang.cn/aik/2a/53/a4/2a53a4cf095c49c216ca99d7a2d90c95.jpg" alt="极品空姐顾欣怡红色制服私房写真" width="" height="152"></a>
+                        <p><a rel="nofollow" href="http://www.aikang8.com/content-20-874-1.html" title="极品空姐顾欣怡红色制服私房写真" target="_blank">极品空姐顾欣怡红色制服私房写真</a></p>
+                    </li>
+					<li><a rel="nofollow" href="http://www.aikang8.com/content-59-857-1.html" title="翘臀妹子笑笑性感蛋糕浴诱惑写真(1/54)" target="_blank">
+				<img src="http://doc.wocaiwang.cn/aik/ce/12/c3/ce12c3a619866be7fb9cc41af57573cd.jpg" alt="翘臀妹子笑笑性感蛋糕浴诱惑写真(1/54)" width="" height="152"></a>
+				<p><a rel="nofollow" href="http://www.aikang8.com/content-59-857-1.html" title="翘臀妹子笑笑性感蛋糕浴诱惑写真(1/54)" target="_blank">翘臀妹子笑笑性感蛋糕浴诱惑写真(1/54)</a></p>
+			</li>
+
+                </ul>
+
+            </div>
+			-->
+
+
+            <div class="realted-artle">
+                <div class="tit">
+
+            		<span class="keyword">
+                                                                                        关键词：
+
+                                                                                                                        <a href="http://www.ithao123.cn/tag/iOS/"  target="_blank">iOS</a>
+                                                                                                                                                                <a href="http://www.ithao123.cn/tag/脚本/"  target="_blank">脚本</a>
+                                                                                                                                                                <a href="http://www.ithao123.cn/tag/更改plist/"  target="_blank">更改plist</a>
+                                                                                                                                                                <a href="http://www.ithao123.cn/tag/多个target/"  target="_blank">多个target</a>
+                                                                                                                                                                <a href="http://www.ithao123.cn/tag/修改plist/"  target="_blank">修改plist</a>
+                                                                                                                                           </span>
+                </div>
+                <div class="list clr" style="float:left;width:445px;">
+                                        <ul>
+                                                <li>
+                            <a href="http://www.ithao123.cn/content-3627.html" target="_blank" title="批处理脚本修改hosts文件指定域名解析IP">批处理脚本修改hosts文件指定域名解析IP</a>
+                        </li>
+                                                <li>
+                            <a href="http://www.ithao123.cn/content-4507886.html" target="_blank" title="iOS开发——修改指定文件的内存管理状态">iOS开发——修改指定文件的内存管理状态</a>
+                        </li>
+                                                <li>
+                            <a href="http://www.ithao123.cn/content-4834451.html" target="_blank" title="iOS学习之 plist文件的读写">iOS学习之 plist文件的读写</a>
+                        </li>
+                                                <li>
+                            <a href="http://www.ithao123.cn/content-5182062.html" target="_blank" title="ios开发入门- plist 文件读写">ios开发入门- plist 文件读写</a>
+                        </li>
+                                                <li>
+                            <a href="http://www.ithao123.cn/content-7142898.html" target="_blank" title="实用的shell脚本-------修改cfg文件">实用的shell脚本-------修改cfg文件</a>
+                        </li>
+                                                <li>
+                            <a href="http://www.ithao123.cn/content-7316577.html" target="_blank" title="IOS怎么获取plist文件里的属性">IOS怎么获取plist文件里的属性</a>
+                        </li>
+                                                <li>
+                            <a href="http://www.ithao123.cn/content-7329013.html" target="_blank" title="objective 修改plist文件">objective 修改plist文件</a>
+                        </li>
+                                                <li>
+                            <a href="http://www.ithao123.cn/content-8100676.html" target="_blank" title="PlistBuddy 命令行说明 －－ 写脚本配置 plist 文件的时候可以用到">PlistBuddy 命令行说明 －－ 写脚本配置 plist 文件的时候可以用到</a>
+                        </li>
+                                                <li>
+                            <a href="http://www.ithao123.cn/content-8204368.html" target="_blank" title="Reveal分析IOS界面，plist文件读取">Reveal分析IOS界面，plist文件读取</a>
+                        </li>
+                                            </ul>
+                    
+                </div>
+                <div class="list clr" style="float:right;width:300px;">
+
+                    <script type="text/javascript">
+                        var cpro_id="u2288425";
+                        (window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"300",rsi1:"300",pat:"1",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",tft:"0",tlt:"0",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+                    </script>
+                    <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+
+
+
+
+                </div>
+
+
+
+
+            </div>
+
+            <br>
+            <div style="clear: both;">
+            <script type="text/javascript">
+    /*在线_ithao123_内容页相关文章下方图片广告_v2_788*100 创建于 2015-08-31*/
+    var cpro_id = "u2288428";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>            </div>
+
+
+
+
+            <!-- pageRelate END -->
+            <!-- 评论 -->
+            <div class="article-coment">
+
+
+
+
+    <div class="lp-comment useComJs" id="lph-comment">
+        <input id="lp_item_id" type="hidden" name="item_id" value="46925">
+        <input id="lp_item_type" type="hidden" name="type" value="2">
+
+        <div class="h2 clr">
+            <h2>文章点评：</h2>
+            <!-- <strong class="h2-tip">
+                （您需要<a class="c-log" href="javascript:openPop('#lp-login-pop');">登录</a>后才能评论 <a href="http://home.ithao123.cn/main/register" class="c-reg">没有账号</a> ？）</strong>
+            -->
+        </div>
+                <form action="http://www.ithao123.cn/index.php?m=comment&c=index&a=post&commentid=content_61-42682-1" method="post">
+        <div class="submit clr" id="commentForm">
+
+            <div class="text">
+
+
+
+                    <input type="hidden" name="title" value="aU9TIOiEmuacrOS%2FruaUuXBsaXN05paH5Lu2">
+                                       <input type="hidden" name="url" value="aHR0cDovL3d3dy5pdGhhbzEyMy5jbi9jb250ZW50LTQyNjgyLmh0bWw%3D">
+                <input type="hidden" name="module" value="content_61">
+                <input type="hidden" name="data_id" value="42682">
+                    <input type="hidden" name="direction" value="1" />
+                    <a name="comment"></a>
+                    <textarea rows="8" cols="80" name="content" id="saytext0"></textarea><br>
+
+
+            </div>
+            <div class="sub clr publishtosina">
+
+                <button type="submit" title="提交">提交</button>
+            </div>
+        </div>
+        </form>
+
+                        
+    </div>
+</div>
+            <!-- 评论 -->
+
+            <div class="idx-selLead clr">
+                <div class="tip">
+                    <h4><span>精选专题</span></h4>
+                </div>
+                <div class="list">
+
+            
+    <div class="items pr15 mr13 pb15 items-borb clr">
+    <div class="pic">
+        <a href="http://11.zhuanti.ithao123.cn" target="_blank">
+            <img src="http://zhuanti.ithao123.cn/uploadfile/2015/0607/20150607064706838.jpg" alt="Laravel入门教程" width="168" height="112">
+        </a>
+    </div>
+    <div class="txt">
+        <div class="tit">
+            <a href="http://11.zhuanti.ithao123.cn" target="_blank">Laravel入门教程</a>
+        </div>
+        <p>Laravel是一套简洁、优雅的PHP Web开发框架(PHP Web Framework)。它可以让你从面条一样杂乱的代码中解脱出来；它可以帮你构建一个完美的网络APP，而且每行代码都可以简洁、富于表达力。</p>
+    </div>
+</div>
+<div class="items-line"></div>
+
+    <div class="items ml14 pl15 pb15 clr  items-borb">
+    <div class="pic">
+        <a href="http://10.zhuanti.ithao123.cn" target="_blank">
+            <img src="http://zhuanti.ithao123.cn/uploadfile/2015/0606/20150606081115788.jpg" alt="hadoop学习及应用" width="168" height="112">
+        </a>
+    </div>
+    <div class="txt">
+        <div class="tit">
+            <a href="http://10.zhuanti.ithao123.cn" target="_blank">hadoop学习及应用</a>
+        </div>
+        <p>Hadoop是一个由Apache基金会所开发的分布式系统基础架构。
+用户可以在不了解分布式底层细节的情况下，开发分布式程序。充分利用集群的威力进行高速运算和存储。
+Hadoop实现了一个分布式文件系统（Hadoop Distributed File System），简称HDFS。HDFS有高容错性的特点，并且设计用来部署在低廉的（low-cost）硬件上；而且它提供高吞吐量（high throughput）来访问应用程序的数据，适合那些有着超大数据集（large data set）的应用程序。HDFS放宽了（relax）POSIX的要求，可以以流的形式访问（streaming access）文件系统中的数据。
+Hadoop的框架最核心的设计就是：HDFS和MapReduce。HDFS为海量的数据提供了存储，则MapReduce为海量的数据提供了计算。</p>
+    </div>
+</div>
+
+    <div class="items pr15 mr13 clr">
+    <div class="pic">
+        <a href="http://9.zhuanti.ithao123.cn" target="_blank">
+            <img src="http://zhuanti.ithao123.cn/uploadfile/2015/0605/20150605112544230.jpg" alt="互联网产品设计" width="168" height="112">
+        </a>
+    </div>
+    <div class="txt">
+        <div class="tit">
+            <a href="http://9.zhuanti.ithao123.cn" target="_blank">互联网产品设计</a>
+        </div>
+        <p>产品设计是互联网产品经理的核心能力，一个好的产品经理一定在产品设计方面有扎实的功底，本专题将从互联网产品设计的几个方面谈谈产品设计</p>
+    </div>
+</div>
+<div class="items-line"></div>
+
+    <div class="items ml14 pl15 clr">
+    <div class="pic">
+        <a href="http://7.zhuanti.ithao123.cn" target="_blank">
+            <img src="http://zhuanti.ithao123.cn/uploadfile/2015/0603/20150603100649512.png" alt="产品经理职责" width="168" height="112">
+        </a>
+    </div>
+    <div class="txt">
+        <div class="tit">
+            <a href="http://7.zhuanti.ithao123.cn" target="_blank">产品经理职责</a>
+        </div>
+        <p>随着国内互联网的发展，产品经理岗位需求大幅增加，在国内，从事产品工作的大部分岗位为产品经理，其实现实中，很多从事产品工作的岗位是不能称为产品经理，主要原因是对产品经理的职责不明确，那产品经理的职责有哪些，本专题将详细介绍产品经理的主要职责</p>
+    </div>
+</div>
+
+
+</div>            </div>
+
+
+        </div>
+        <!-- lph-left -->
+        <!-- 只有文章内页才去引用 -->
+
+        <!-- 发送私信 -->
+
+        <!-- # 发送私信-->
+        <div class="lph-right">
+
+    <!-- 临时广告begin  -->
+    <div class="right-box">
+        <script type="text/javascript">
+    /*在线_IT_内容页_右侧最新专题上方广告_v2_300*250 创建于 2015-12-21*/
+    var cpro_id = "u2458794";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+    </div>
+	 
+<!--
+	<div class="right-box">
+        
+		<style >
+		#slider{overflow:hidden;width:300px;height:300px;position:relative;}
+		#slider .pics{width:300px;height:300px}
+		#slider .pics li{height:300px;width:300px;float:left}
+		#slider #nav {position:absolute;bottom:5px;right:5px;}
+		#slider #nav li.nav{background:#F47500; color:#fff;}
+		#slider #nav li{border:1px solid #f47500; color:#d94b01; cursor:pointer;background:#fff;font-size:12px; height:15px;width:15px;float:left;margin-left:4px;display:inline;text-align:center}
+		</style>		
+		<div id="slider">
+			<ul class="pics">
+		<li><a href="http://www.edu360.cn/" rel="nofollow"><img  src="http://doc.ithao123.cn/d/2016/0111/20160111112314869.jpg" /></a></li>
+		<li><a href="http://www.edu360.cn/classroom/21/courses" rel="nofollow"><img src="http://doc.ithao123.cn/d/2016/0111/20160111112440657.jpg" /></a></li>	
+			</ul>
+			<ul id="nav">
+				<li onmouseover="setTimeout(function(){lanrenzhijia.slider.pos(0)},300)">1</li>
+				<li onmouseover="setTimeout(function(){lanrenzhijia.slider.pos(1)},300)">2</li>
+
+			</ul>
+		</div>
+<script>
+var lanrenzhijia = {}, H$ = function(id){return document.getElementById(id)}, H$$ = function(c,p){return p.getElementsByTagName(c)}
+lanrenzhijia.slider = function(){
+	return{
+		init:function(id,options){
+			var ul = this.u = H$$('ul',H$(id))[0], li = H$$('li',ul); this.l=li.length; this.index = 0;
+			if(options.navId&&options.curClass){this.nav = H$$('li',H$(options.navId)), this.c = options.curClass;}
+			this.a=options.auto||0; this.v=options.vertical||0;H$(id).style.overflow = 'hidden';H$(id).style.position = 'relative';ul.style.position='absolute';
+			if(this.v){ul.style.top=0; this.h=options.height||li[0].offsetHeight; ul.style.height=(this.l*this.h)+'px';}
+			else{ul.style.left=0; this.w=options.width||li[0].offsetWidth; ul.style.width=(this.l*this.w)+'px';}
+			this.pos(options.index||0,this.a?1:0);
+		},
+		
+		pos:function(pos,a){
+			clearInterval(this.u.posAnim); clearInterval(this.u.auto);
+			var curPos=this.v?parseInt(this.u.style.top):parseInt(this.u.style.left),
+			correctPos=this.v?pos*this.h:pos*this.w, 
+			direction = correctPos>Math.abs(curPos)?1:-1;
+			correctPos*=-1; 
+			this.index = pos;
+			if(this.nav){for(var i=0;i<this.l;i++){this.nav[i].className = i==pos?this.c:''}}
+			this.u.posAnim = setInterval(function(){lanrenzhijia.slider.anim(correctPos,direction,a)},10);
+		},
+		
+		anim:function(des,dir,a){
+			var curPos=this.v?parseInt(this.u.style.top):parseInt(this.u.style.left);
+			if(curPos == des){
+				clearInterval(this.u.posAnim);
+				if(a||this.a){lanrenzhijia.slider.auto()}
+			}
+			else{
+				var v=curPos-Math.ceil(Math.abs(des-curPos)*.07)*dir+'px';
+				this.v?this.u.style.top=v:this.u.style.left=v;
+			}
+		},
+		
+		auto:function(){
+			this.u.auto=setInterval(function(){lanrenzhijia.slider.move(1,1)},this.a*1000)
+		},
+		
+		move:function(n,a){
+			var num=this.index+n, i=n==1?num==this.l?0:num:num<0?this.l-1:num; lanrenzhijia.slider.pos(i,a);
+		}
+	};
+}();
+</script>
+<script>
+lanrenzhijia.slider.init('slider',{	
+	auto:4,
+	vertical:1,
+	navId:'nav',
+	curClass:'nav',
+	index:0});
+</script>
+		
+		
+
+    </div>
+	-->
+
+	
+
+    <!-- 右侧专题 -->
+    <div class="kuaixun right-box">
+    <div class="right-box-title">
+        <h3>最新专题</h3>
+    </div>
+    <ul class="kx-ul">
+
+                                <li class="clr hov">
+            <a href="http://199.zhuanti.ithao123.cn" target="_blank">
+                <div class="time"><span class="r">18</span>/<span class="y">03月</span> </div>
+                <div class="title">android游戏开发教程</div>
+            </a>
+        </li>
+                        <li class="clr">
+            <a href="http://198.zhuanti.ithao123.cn" target="_blank">
+                <div class="time"><span class="r">18</span>/<span class="y">03月</span> </div>
+                <div class="title">webos手机</div>
+            </a>
+        </li>
+                        <li class="clr">
+            <a href="http://197.zhuanti.ithao123.cn" target="_blank">
+                <div class="time"><span class="r">18</span>/<span class="y">03月</span> </div>
+                <div class="title">重庆ios培训</div>
+            </a>
+        </li>
+                        <li class="clr">
+            <a href="http://196.zhuanti.ithao123.cn" target="_blank">
+                <div class="time"><span class="r">18</span>/<span class="y">03月</span> </div>
+                <div class="title">ios开发教程</div>
+            </a>
+        </li>
+                        <li class="clr">
+            <a href="http://195.zhuanti.ithao123.cn" target="_blank">
+                <div class="time"><span class="r">18</span>/<span class="y">03月</span> </div>
+                <div class="title">android应用开发实战</div>
+            </a>
+        </li>
+                        
+
+    </ul>
+</div>
+    <div class="right-box">
+        <script type="text/javascript">
+    var cpro_id="u2354052";
+    (window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"300",rsi1:"300",pat:"17",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"0",titFF:"",titFS:"14",rss2:"#000000",titSU:"0"}
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+
+    </div>
+
+    <!-- 右侧周刊 -->
+    <div class="kuaixun right-box">
+    <div class="right-box-title">
+        <h3>IThao123周刊</h3>
+    </div>
+    <ul class="kx-ul">
+
+                                <li class="clr hov">
+            <a href="http://200.zhoukan.ithao123.cn" target="_blank">
+                <div class="time"><span class="r">14</span>/<span class="y">09月</span> </div>
+                <div class="title"> IThao123互联网周刊，互联网资讯不错...</div>
+            </a>
+        </li>
+                        <li class="clr">
+            <a href="http://182.zhoukan.ithao123.cn" target="_blank">
+                <div class="time"><span class="r">08</span>/<span class="y">09月</span> </div>
+                <div class="title"> IThao123互联网周刊，互联网资讯不错...</div>
+            </a>
+        </li>
+                        <li class="clr">
+            <a href="http://171.zhoukan.ithao123.cn" target="_blank">
+                <div class="time"><span class="r">02</span>/<span class="y">09月</span> </div>
+                <div class="title">IThao123互联网周刊，互联网资讯不错过(...</div>
+            </a>
+        </li>
+                        <li class="clr">
+            <a href="http://126.zhoukan.ithao123.cn" target="_blank">
+                <div class="time"><span class="r">26</span>/<span class="y">08月</span> </div>
+                <div class="title"> IThao123互联网周刊，互联网资讯不错...</div>
+            </a>
+        </li>
+                        <li class="clr">
+            <a href="http://113.zhoukan.ithao123.cn" target="_blank">
+                <div class="time"><span class="r">17</span>/<span class="y">08月</span> </div>
+                <div class="title">IThao123互联网周刊，互联网资讯不错过(...</div>
+            </a>
+        </li>
+                        
+    </ul>
+</div>
+    <!-- 临时广告begin   -->
+
+
+    <div class="right-box">
+        <script type="text/javascript">
+            /*ithao123_内容页右侧猜您关注上方广告_v2_300*250 创建于 2015-08-13*/
+            var cpro_id = "u2288422";
+        </script>
+        <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+    </div>
+
+    <!-- 临时广告end -->
+
+    <!-- 猜您关注 -->
+    <div class="kuaixun right-box">
+    <div class="right-box-title">
+        <h3>猜您关注</h3>
+    </div>
+    <ul class="kx-ul" style="height:415px;" id="guess">
+
+                                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891267.html" target="_blank">
+                iOS开发--1【Objective-C】            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891251.html" target="_blank">
+                iOS-UIWebView            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891247.html" target="_blank">
+                ios开发之libcurl库的编译详细教程            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891246.html" target="_blank">
+                iOS开发之libcurl库的使用            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891245.html" target="_blank">
+                iOS开发之手机号验证（简单）            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891244.html" target="_blank">
+                [置顶]
+        ios...            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891166.html" target="_blank">
+                iOS 开发之 ReactiveCocoa...            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891165.html" target="_blank">
+                iOS9 3D touch 适配开发            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891162.html" target="_blank">
+                IOS开发 PageViewController和UIPageControl            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891160.html" target="_blank">
+                iOS开发中尽量不要在viewWill...            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891158.html" target="_blank">
+                ios 录音，播放 tips            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891154.html" target="_blank">
+                iOS/OS X内存管理：借助工具...            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891151.html" target="_blank">
+                [iOS]iOS9 3DTouch、Shortcu...            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891150.html" target="_blank">
+                [iOS]技术学习路线图(长期更...            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891146.html" target="_blank">
+                iOS 滑动性能优化            </a>
+        </li>
+                <li class="clr">
+            <a href="http://www.ithao123.cn/content-10891145.html" target="_blank">
+                iOS实时卡顿监控            </a>
+        </li>
+                
+
+    </ul>
+</div>
+    <div class="right-box" style="border:1px #ccc solid;padding-top:10px;background:#fff;z-index:1000;" id="guessdownad">
+        <script type="text/javascript">
+            var cpro_id="u2307775";
+            (window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"298",rsi1:"300",pat:"6",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"0",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",ptbg:"90",piw:"120",pih:"70",ptp:"0"}
+        </script>
+        <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+
+
+    </div>
+    <script type="text/javascript">
+        $(function() {
+
+            $(window).scroll(function () {
+                var scroH = $(window).scrollTop();
+                //console.log();
+                //var hh = scroH - $('#guessdownad').height();
+                var articlelefth = $('.article-left').height();
+
+                if(parseInt(articlelefth) < 2000){
+                    return false;
+                }
+
+                var oset = $('#guess').offset();
+                var hh = oset.top + 400;
+                if (scroH >= hh) {
+                    $('#guessdownad').css({'position': 'fixed', 'top': '60px'});
+                } else {
+                    $('#guessdownad').css({'position': 'relative', 'top': 'none'});
+                }
+            });
+        });
+    </script>
+
+
+
+</div>        <!-- lph-right -->
+    </div>
+</div>
+<!-- index-main END -->
+
+<!-- js END -->
+<div class="yp-footer">
+    <div class="inner">
+        <div class="yp-footer-top clr">
+
+            <div class="left">
+                <!-- JiaThis Button BEGIN -->
+                <div class="jiathis_style_32x32">
+                    <a class="jiathis_button_qzone"></a>
+                    <a class="jiathis_button_tsina"></a>
+                    <a class="jiathis_button_tqq"></a>
+                    <a class="jiathis_button_weixin"></a>
+                    <a class="jiathis_button_renren"></a>
+                    <a href="http://www.jiathis.com/share?uid=1951562" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+                    <a class="jiathis_counter_style"></a>
+                </div>
+                <script type="text/javascript">
+                    var jiathis_config = {data_track_clickback:'true'};
+                </script>
+                <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405996127865441" charset="utf-8"></script>
+                <!-- JiaThis Button END -->
+            </div>
+
+            <div class="right clr">
+                <div class="links">
+                    <a rel="nofollow" href="http://www.ithao123.cn/about.html">关于我们</a>|
+                    <a rel="nofollow" href="http://www.ithao123.cn/mianze.html">免责声明</a>|
+                    <a rel="nofollow" href="http://www.ithao123.cn/guanggao.html">广告服务</a>|
+                    <a rel="nofollow" href="http://www.ithao123.cn/lianxi.html">联系我们</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="yp-footer-btm">
+
+                    <div class="hotwords">
+    <h3 class="site_map_title">热门搜索</h3>
+    <ul>
+                <li><a href="http://www.ithao123.cn/search/key_shell脚本修改xml文件/">shell脚本修改xml文件</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_shell脚本找出文件修改时间/">shell脚本找出文件修改时间</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_shell脚本修改文件内容/">shell脚本修改文件内容</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_delphi 修改文本文件/">delphi 修改文本文件</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_java修改xml文件/">java修改xml文件</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_如何修改php文件/">如何修改php文件</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_php修改php文件/">php修改php文件</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_php修改xml文件/">php修改xml文件</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_thinkphp修改配置文件/">thinkphp修改配置文件</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_怎么修改php文件/">怎么修改php文件</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_php修改hosts文件/">php修改hosts文件</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_php修改配置文件内容/">php修改配置文件内容</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_php修改ini文件/">php修改ini文件</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_php 修改配置文件/">php 修改配置文件</a></li>
+                <li><a href="http://www.ithao123.cn/search/key_怎样修改php文件/">怎样修改php文件</a></li>
+        
+
+    </ul>
+</div>
+
+<br><br>
+
+            						
+			
+			
+            
+
+        </div>
+    </div>
+    <div class="yp-copyright">
+
+    <div class="inner">
+        <p>
+            Copyright © 2011-2015 www.ithao123.cn IThao123.cn - IT行业第一站 All Rights Reserved 琼ICP备14001398号-3
+        </p>
+    </div>
+</div>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?8c1ae9ead8d05148084aa256a8a8f7eb";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</div>
+
+<div class="gotoBar" id="lph-footer-gotoBar">
+
+    <a class="top" rel="nofollow" href="javascript:;" data-goto="0" data-start="100" title="返回顶部" style="display: none;"></a>
+    <!--
+    <a class="sugg" href="#" target="_self"><span>意见<br>反馈</span></a>
+    -->
+</div>
+<!--
+<script type="text/javascript">
+    /*在线_IT_内容页_视窗广告_v2_250*200 创建于 2015-09-24*/
+var cpro_id = "u2326271";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+-->
+
+<!-- 广告位：ithao123 -->
+<script>
+(function() {
+    var s = "_" + Math.random().toString(36).slice(2);
+    document.write('<div id="' + s + '"></div>');
+    (window.slotbydup=window.slotbydup || []).push({
+        id: '2441137',
+        container: s,
+        size: '300,250',
+        display: 'float'
+    });
+})();
+</script>
+<script src="http://dup.baidustatic.com/js/os.js"></script>
+
+
+<!--
+<script type="text/javascript">
+    /*为了保证用户体验及收益，图片大小不得小于：200*180*/
+    /*在线_ithao123_内容页_图片+广告_v2 创建于 2015-11-13*/
+var cpro_id = "u2399328";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/i.js" type="text/javascript"></script>
+-->
+
+<!---->
+<script type="text/javascript">
+    /*在线_IT_内容页_对联广告_v2 创建于 2015-11-30*/
+var cpro_id = "u2425466";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+
+
+
+<!--对联
+<script src="http://ji.dazhantai.com/cpv/i.php?z=5961"></script>
+-->
+
+<!--右下角cpv
+<script src='http://www.676z.com/s.php?id=64'></script>
+-->
+
+
+<!-- 遮罩层 -->
+</body></html>
