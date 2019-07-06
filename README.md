@@ -32,4 +32,4 @@
 
 ## Script Learning
  
- 脚本学习
+ - [Script Learning: 传送门](https://github.com/dgynfi/Script/tree/master/Script%20Learning) -  脚本学习。
