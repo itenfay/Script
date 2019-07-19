@@ -41,7 +41,7 @@ while getopts $option optname
 do
     case "${optname}" in
     'i')
-        iconPath=$OPTARG
+        ICONPath=$OPTARG
         ;;
     'o')
         outputDir=$OPTARG
@@ -64,12 +64,12 @@ do
     esac
 done
 
-if [ ! "${iconPath}" -o ! "${outputDir}" ];then
+if [ ! "${ICONPath}" -o ! "${outputDir}" ];then
     guide
 fi
 
-if [ ! -e ${iconPath} ];then
-    echo 'Warning: '${iconPath}' not a valid file.'
+if [ ! -e ${ICONPath} ];then
+    echo 'Warning: '${ICONPath}' not a valid file.'
     exit 2
 fi
 
@@ -82,50 +82,50 @@ fi
 # 修改数字即修改ICON尺寸
 
 # MAC
-MacAppIconNames=(
+MacAppICONNames=(
  "16.png"  "32.png"
  "64.png"  "128.png"
  "256.png" "512.png"
 )
 
 # IOS
-IOSAppIconNames=(
+IOSAppICONNames=(
  "20.png" "20@2x.png" "20@3x.png"
  "29.png" "29@2x.png" "29@3x.png"
  "40.png" "40@2x.png" "40@3x.png"
  "60@2x.png" "60@3x.png"
- "76.png"    "76@2x.png"
+ "76.png" "76@2x.png"
  "83.5@2x.png"
 )
 
-AppIconNames=()
+AppICONNames=()
 
 if [ ${osType} = 'ios' ];then
-    AppIconNames=${IOSAppIconNames[@]}
+    AppICONNames=${IOSAppICONNames[@]}
 else
-    AppIconNames=${MacAppIconNames[@]}
+    AppICONNames=${MacAppICONNames[@]}
 fi
 
 sips_cmd='/usr/bin/sips'
 
-function genIcon()
+function resizeICON()
 {
     size=$1
     name=$2
-    ${sips_cmd} -Z ${size} ${iconPath} --out ${outputDir}/${name}
+    ${sips_cmd} -Z ${size} ${ICONPath} --out ${outputDir}/${name}
 }
 
-Prefix='Icon'
+Prefix='AppIcon'
 
-for IconName in ${AppIconNames[@]}
+for ICONName in ${AppICONNames[@]}
 do
-    size=`echo ${IconName} | awk -F [@~] '{print $1}'`
+    size=`echo ${ICONName} | awk -F [@~] '{print $1}'`
 
     if [[ ${size} =~ 'png' ]];then
         size=${size%.*}
     fi
 
-    scale=`echo ${IconName} | awk -F [@~] '{print $2}' | grep -Eo '[0-9]+'`
+    scale=`echo ${ICONName} | awk -F [@~] '{print $2}' | grep -Eo '[0-9]+'`
 
     if [ ! ${scale} ];then
         fullsize=$(echo "${size}")
@@ -133,10 +133,10 @@ do
         fullsize=$(echo "${size} * ${scale}" | bc)
     fi
 
-    #new_name=${Prefix}${size}'x'${IconName}
-    new_name=${Prefix}'-'${IconName}
+    #new_name=${Prefix}'-'${ICONName}
+    new_name=${Prefix}${size}'x'${ICONName}
 
     echo 'size : '$fullsize' new_name : '$new_name
 
-    genIcon $fullsize $new_name
+    resizeICON $fullsize $new_name
 done

@@ -590,50 +590,6 @@
 				<string>UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight</string>
 			</dict>
 		</dict>
-		<dict>
-			<key>XC_CHANNEL_NAME</key>
-			<string>taiqi</string>
-			<key>XC_ARCHS</key>
-			<string>armv7 arm64</string>
-			<key>XC_MIN_DEPLOYMENT</key>
-			<string>6.0</string>
-			<key>XC_INITSDK_ARGS</key>
-			<array>
-				<string>showTip:true</string>
-				<string>urlScheme:upay-com.taiqi.sandglass.fsn</string>
-				<string>wxAppId:wx4656db045cffd411</string>
-				<string>Ucid:20035</string>
-				<string>Ucat:UQ</string>
-			</array>
-			<key>XC_SYS_DYLIBS</key>
-			<array>
-				<string>libz.tbd</string>
-				<string>libsqlite3.tbd</string>
-			</array>
-			<key>XC_SYS_FRAMEWORK</key>
-			<array>
-				<string>UIKit.framework</string>
-				<string>Foundation.framework</string>
-				<string>CoreGraphics.framework</string>
-				<string>SystemConfiguration.framework</string>
-				<string>Adsupport.framework</string>
-				<string>Security.framework</string>
-				<string>Accelerate.framework</string>
-				<string>QuartzCore.framework</string>
-				<string>CoreText.framework</string>
-			</array>
-			<key>XC_INFOPLIST_ARGS</key>
-			<dict>
-				<key>BundleId</key>
-				<string>com.taiqi.upay.sandglass.fsn</string>
-				<key>QueriesSchemes</key>
-				<string>alipay,weixin,mqqapiwallet</string>
-				<key>URLTypes</key>
-				<string>alipay:upay-com.taiqi.sandglass.fsn,wenxin:wx4656db045cffd411</string>
-				<key>Orientations</key>
-				<string>UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight</string>
-			</dict>
-		</dict>
 	</array>
 </dict>
 </plist>

@@ -11,9 +11,11 @@
 
 在一个 Base 工程中，通过不断复制 .xcodeproj 和 修改 xcodeproj/project.pbxproj，为 project.pbxproj 文件添加资源、支持的架构、Target 名称、动静态库、修改最小兼容部署等，修改 Info.plist的BundleID、QueriesSchemes、URLTypes、Orientations，还有修改包的 ICON 和初始化参数，从而输出各种需求的 ipa 包。
 
-1. XCPkg Args <br />
-此脚本项目由本人独立开发完成，依赖 Python 和 Ruby 库：biplist, mod_pbxproj, rb_modproj。<br />
-自编写打包控制脚本 (PkgController.sh) 在内总计有26个脚本，加上调试，历经一个多月的时间，非常地辛苦！
+1. XCPkg Args
 
-2. XCPkg Encryption <br />
-将 XCPkg 所有脚本进行加密处理，后期把此项目集成到 MacOS 应用中。
+- 此脚本项目由本人独立开发完成，依赖 Python 和 Ruby 库：biplist, mod_pbxproj, rb_modproj。
+- 自编写打包控制脚本 (PkgController.sh) 在内总计有26个脚本，加上调试，历经一个多月的时间，非常地辛苦！
+
+2. XCPkg Encryption
+
+- 将 XCPkg 所有脚本进行加密处理，并集成到[ MacOS 应用 - IPAPkgTool](https://github.com/dgynfi/IPAPkgTool)。
