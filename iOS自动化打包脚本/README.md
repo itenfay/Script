@@ -1,4 +1,4 @@
-[如果你觉得能帮助到你，请给一颗小星星。谢谢！(If you think it can help you, please give it a star. Thanks!](https://github.com/dgynfi/Script/tree/master/iOS自动化打包脚本)
+[如果你觉得能帮助到你，请给一颗小星星。谢谢！(If you think it can help you, please give it a star. Thanks!)](https://github.com/dgynfi/Script/tree/master/iOS自动化打包脚本)
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
 
@@ -6,7 +6,7 @@
 
 - 欢迎加入技术交流群，一起探讨技术问题。
 
-<div align=center>
+<div align=left>
 <img src="https://github.com/dgynfi/Script/raw/master/images/qq155353383.jpg" width="20%" />
 </div>
 
@@ -16,7 +16,7 @@
 
 1. XCPkg Args 
 
-&emsp; 此脚本项目由本人独立开发完成，依赖 Python 和 Ruby 库：biplist , mod_pbxproj , rb_modproj 。
+&emsp; 此脚本项目由本人独立开发完成，依赖 Python 和 Ruby 库：biplist , mod_pbxproj , rb_modproj 。<br />
 &emsp; 自编写了打包控制脚本 (PkgController.sh) 在内总计有26个脚本，加上调试，历时一个多月，其过程非常地辛苦！
 
 2. XCPkg Encryption

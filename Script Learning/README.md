@@ -4,7 +4,7 @@
 
 - 欢迎加入技术交流群，一起探讨技术问题。
 
-<div align=center>
+<div align=left>
 <img src="https://github.com/dgynfi/Script/raw/master/images/qq155353383.jpg" width="20%" />
 </div>
 
