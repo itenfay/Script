@@ -12,13 +12,13 @@
 
 ## Script
 
-&emsp; 编写和收集Shell, Python, Ruby等一些实用脚本。如需了解使用说明，请查看脚本文件注释。
+&emsp; 编写和收集 Shell , Python , Ruby 等一些实用脚本。如需了解使用说明，请查看脚本文件注释。
 
 ## iOS自动化打包脚本
 
 &emsp; [Goto : iOS自动化打包脚本](https://github.com/dgynfi/Script/tree/master/iOS自动化打包脚本)
 
-&emsp; 在一个 Base 工程中，通过不断复制 .xcodeproj 和 修改 xcodeproj/project.pbxproj ，为 project.pbxproj 文件添加资源、支持的架构、Target 名称、动静态库、修改最小兼容部署等，修改 Info.plist的BundleID , QueriesSchemes, URLTypes, Orientations ，还有修改包的 ICON 和初始化参数，从而输出各种需求的 ipa 包。
+&emsp; 在一个 Base 工程中，通过不断复制 .xcodeproj 和 修改 xcodeproj/project.pbxproj ，为 project.pbxproj 文件添加资源、支持的架构、Target 名称、动静态库、修改最小兼容部署等，修改 Info.plist 的 Bundle identifier , QueriesSchemes , URLTypes , Orientations ，还有修改包的 ICON 和初始化参数，从而输出各种需求的 ipa 包。
 
 1. XCPkg Args 
 
@@ -33,7 +33,7 @@
 
 &emsp; [Goto : ExcelTxtScript](https://github.com/dgynfi/Script/tree/master/ExcelTxtScript)
 
-&emsp; 一个将excel文件(.xlsx)与txt文件(.txt)互相转换一个脚本项目，并集成到[ Mac 应用 - MacExcelTool ](https://github.com/dgynfi/MacExcelTool)。
+&emsp; 一个将 excel 文件 (.xlsx) 和 txt 文件 (.txt) 互相转换一个脚本项目，并集成到[ Mac 应用 - MacExcelTool ](https://github.com/dgynfi/MacExcelTool)。
 
 ## Recommend
 

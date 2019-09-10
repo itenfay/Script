@@ -12,7 +12,7 @@
 
 ## iOS自动化打包脚本
 
-&emsp; 在一个 Base 工程中，通过不断复制 .xcodeproj 和 修改 xcodeproj/project.pbxproj ，为 project.pbxproj 文件添加资源、支持的架构、Target 名称、动静态库、修改最小兼容部署等，修改 Info.plist的BundleID , QueriesSchemes , URLTypes, Orientations ，还有修改包的 ICON 和初始化参数，从而输出各种需求的 ipa 包。
+&emsp; 在一个 Base 工程中，通过不断复制 .xcodeproj 和 修改 xcodeproj/project.pbxproj ，为 project.pbxproj 文件添加资源、支持的架构、Target 名称、动静态库、修改最小兼容部署等，修改 Info.plist 的 Bundle identifier , QueriesSchemes , URLTypes , Orientations ，还有修改包的 ICON 和初始化参数，从而输出各种需求的 ipa 包。
 
 1. XCPkg Args 
 
