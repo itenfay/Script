@@ -1,5 +1,13 @@
 [如果你觉得能帮助到你，请给一颗小星星。谢谢！(If you think it can help you, please give it a star. Thanks!)](https://github.com/dgynfi/Script)
 
+## 技术交流群(群号:155353383)
+
+- 欢迎加入技术交流群，一起探讨技术问题。
+
+<div align=center>
+<img src="https://github.com/dgynfi/Script/raw/master/images/qq155353383.jpg" width="20%" />
+</div>
+
 ## MacOS App调用执行脚本
 
 - 调用执行脚本响应事件
