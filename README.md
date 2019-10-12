@@ -2,17 +2,17 @@
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
 
+## Script
+
+&emsp; 编写和收集 Shell , Python , Ruby 等一些实用脚本。如需了解使用说明，请查看脚本文件注释。
+
 ## 技术交流群(群号:155353383)
 
 - 欢迎加入技术交流群，一起探讨技术问题。
 
 <div align=left>
-<img src="https://github.com/dgynfi/Script/raw/master/images/qq155353383.jpg" width="20%" />
+&emsp; <img src="https://github.com/dgynfi/Script/raw/master/images/qq155353383.jpg" width="20%" />
 </div>
-
-## Script
-
-&emsp; 编写和收集 Shell , Python , Ruby 等一些实用脚本。如需了解使用说明，请查看脚本文件注释。
 
 ## iOS自动化打包脚本
 
@@ -44,3 +44,4 @@
 ## Script Learning
  
  - [Script Learning](https://github.com/dgynfi/Script/tree/master/Script%20Learning) -  脚本学习Demo。
+

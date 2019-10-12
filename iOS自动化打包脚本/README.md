@@ -7,7 +7,7 @@
 - 欢迎加入技术交流群，一起探讨技术问题。
 
 <div align=left>
-<img src="https://github.com/dgynfi/Script/raw/master/images/qq155353383.jpg" width="20%" />
+&emsp; <img src="https://github.com/dgynfi/Script/raw/master/images/qq155353383.jpg" width="20%" />
 </div>
 
 ## iOS自动化打包脚本
@@ -22,3 +22,4 @@
 2. XCPkg Encryption
 
 &emsp; 将 XCPkg 所有脚本进行加密处理，并集成到[ Mac 应用 - IPAPkgTool ](https://github.com/dgynfi/IPAPkgTool)。
+
