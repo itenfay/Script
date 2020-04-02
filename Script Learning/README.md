@@ -1,10 +1,10 @@
-[如果此项目能帮助到你，就请你给一颗星。谢谢！(If this project can help you, please give it a star. Thanks!)](https://github.com/dgynfi/Script)
 
 ## Group (ID:155353383)
 
 <div align=left>
 &emsp; <img src="https://github.com/dgynfi/Script/raw/master/images/qq155353383.jpg" width="30%" />
 </div>
+
 
 ## MacOS-App Invoke executable Script
 
@@ -29,7 +29,7 @@
 
 - 创建并配置任务
 
-``` objc
+```
 - (void)executeCMD:(NSString *)path dict:(NSDictionary *)dict {
     NSString *pxbprojPath = [dict objectForKey:@"pxbprojPath"];
     NSString *frameworkSearchPath = [dict objectForKey:@"frameworkSearchPath"];
