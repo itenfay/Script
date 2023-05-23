@@ -1,16 +1,18 @@
-[如果此项目能帮助到你，就请你给一颗星。谢谢！(If this project can help you, please give it a star. Thanks!)](https://github.com/dgynfi/Script/tree/master/iOS%20Automated%20Packaging%20Scripts)
+## iOS Automated Packaging Scripts
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
+
+在一个 Base 工程中，通过不断复制 .xcodeproj 和 修改 xcodeproj/project.pbxproj，为 project.pbxproj 文件添加资源、支持的架构、Target 名称、动静态库、修改最小兼容部署等，修改 Info.plist 的 Bundle identifier, QueriesSchemes, URLTypes, Orientations，还有修改包的 ICON 和初始化参数，从而输出各种需求的 ipa 包。
+
 
 ## Group (ID:614799921)
 
 <div align=left>
-&emsp; <img src="https://github.com/dgynfi/Script/raw/master/images/g614799921.jpg" width="30%" />
+&emsp; <img src="https://github.com/chenxing640/Script/raw/master/images/g614799921.jpg" width="30%" />
 </div>
 
-## iOS Automated Packaging Scripts
 
-在一个 Base 工程中，通过不断复制 .xcodeproj 和 修改 xcodeproj/project.pbxproj，为 project.pbxproj 文件添加资源、支持的架构、Target 名称、动静态库、修改最小兼容部署等，修改 Info.plist 的 Bundle identifier, QueriesSchemes, URLTypes, Orientations，还有修改包的 ICON 和初始化参数，从而输出各种需求的 ipa 包。
+## Catalog
 
 1. XCPkg Args 
 
@@ -20,5 +22,4 @@
 
 2. XCPkg Encryption
 
-将 XCPkg 所有脚本进行加密处理，并集成到[ Mac 应用 - IPAPkgTool ](https://github.com/dgynfi/IPAPkgTool)。
-
+将 XCPkg 所有脚本进行加密处理，并集成到[ Mac 应用 - IPAPkgTool ](https://github.com/chenxing640/IPAPkgTool)。
