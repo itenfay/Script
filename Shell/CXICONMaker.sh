@@ -4,22 +4,22 @@
 #
 # Generates each size image for ICON
 #
-# Usage: DYFICONMaker -i <path> -o <output directory> [-t ios | mac] [-h]
+# Usage: CXICONMaker -i <path> -o <output directory> [-t ios | mac] [-h]
 #
 # -i  path  the path of 1024x1024 pixel ICON
 # -o  path  the path of output directory for generated images
 # -t  type  os type, e.g.: ios or mac, default ios
 # -h        help
 #
-# Author: dyf
-# Email : 1659640627@qq.com
+# Author: chenxing
+# Email : chenxing640@foxmail.com
 # Date  : 2016/3/17
 #
 #------------------------------------------------------------------------------
 
 help()
 {
-    echo 'sh DYFICONMaker.sh -i <path> -o <output directory> [-t ios | mac] [-h]'
+    echo 'sh CXICONMaker.sh -i <path> -o <output directory> [-t ios | mac] [-h]'
     echo '-i  path  the path of 1024x1024 pixel ICON'
     echo '-o  path  the path of output directory for generated images'
     echo '-t  type  os type, e.g.: ios or mac, default ios'

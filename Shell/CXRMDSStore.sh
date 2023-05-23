@@ -5,8 +5,8 @@
 # Delete .DS_Store and first parameter is true that indicates os
 # no longer creates .DS_Store, otherwise creates
 #
-# Author: dyf
-# Email : 1659640627@qq.com
+# Author: chenxing
+# Email : chenxing640@foxmail.com
 # Date  : 2018/05/25
 #
 #------------------------------------------------------------------------------

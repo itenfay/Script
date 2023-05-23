@@ -8,8 +8,8 @@
 # 2. The second parameter is the name of certificate.
 # 3. The third parameter is the path of mobileprovision.
 #
-# Author: dyf
-# Email : 1659640627@qq.com
+# Author: chenxing
+# Email : chenxing640@foxmail.com
 # Date  : 2016/03/31
 #
 #-------------------------------------------------------

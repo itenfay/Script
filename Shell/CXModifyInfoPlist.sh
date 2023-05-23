@@ -7,24 +7,24 @@
 # 1.The first parameter is the path of Info.plist
 # 2.The second parameter is the contents of properties
 #
-# Author: dyf
-# Email : 1659640627@qq.com
+# Author: chenxing
+# Email : chenxing640@foxmail.com
 # Date  : 2016/03/21
 #
 #-------------------------------------------------------
 
 if [ $# -lt 1 ];then
-	echo 'DYFModifyInfoPlist: Error! Please enter the path of Info.plist after the command.'
+	echo 'CXModifyInfoPlist: Error! Please enter the path of Info.plist after the command.'
 	exit 2
 fi
 
 if [ ! -e $1 ];then
-	echo 'DYFModifyInfoPlist: Warning: '$1' not a file.'
+	echo 'CXModifyInfoPlist: Warning: '$1' not a file.'
 	exit 2
 fi
 
 if [ ! $2 ];then
-	echo "DYFModifyInfoPlist: Warning: please enter modify properties."
+	echo "CXModifyInfoPlist: Warning: please enter modify properties."
 	exit 2
 fi
 

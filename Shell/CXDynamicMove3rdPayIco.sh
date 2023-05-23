@@ -1,13 +1,14 @@
 #!/bin/sh
 
-##################################################
+#--------------------------------------------------
 #
-# Name：DYFDynamicMove3rdPayIco
+# Name：CXDynamicMove3rdPayIco
 # Desc：动态移动三方支付ico
+# Author: chenxing
+# Email : chenxing640@foxmail.com
 # Date：2017/07/10
-# Author：dyf
 #
-##################################################
+#--------------------------------------------------
 
 # 脚本路径
 SCRPATH=$SRCROOT

@@ -4,10 +4,10 @@
 # 功能：编译xcode项目并打ipa包
 # 使用说明：
 # 编译project
-# DYFPackageUtils <project directory> [-p <project name>] [-t <target name>] [-o <ipa output directory>]
+# CXPackageUtils <project directory> [-p <project name>] [-t <target name>] [-o <ipa output directory>]
 #				   [-f <project configuration>] [-h <channel name>] [-m <min deployment>] [-c]
 # 编译workspace
-# DYFPackageUtils <project directory> -w -s <schemeName> [-f <project configuration>] [-m <min deployment>] [-c]
+# CXPackageUtils <project directory> -w -s <schemeName> [-f <project configuration>] [-m <min deployment>] [-c]
 # 参数说明：
 # -h		帮助
 # -f  NAME  工程的configuration, 默认为Release
@@ -20,18 +20,18 @@
 # -n  NAME  渠道标识
 # -m  NUM   编译时设置SDK最低兼容版本, 不指定时默认编译配置的最低兼容版本
 #-------------------------------------------------------
-# 作者：dyf
-# 邮箱：1659640627@qq.com
+# 作者：chenxing
+# 邮箱：chenxing640@foxmail.com
 # 日期：2016/3/7
 #-------------------------------------------------------
 
 help()
 {
 	echo '编译project'
-	echo 'DYFPackageUtils <project directory> [-p <project name>] [-t <target name>] [-o <ipa output directory>]'
+	echo 'CXPackageUtils <project directory> [-p <project name>] [-t <target name>] [-o <ipa output directory>]'
 	echo '				   [-f <project configuration>] [-n <channel name>] [-m <min deployment>] [-c] [-h]'
 	echo '编译workspace'
-	echo 'DYFPackageUtils <project directory> -w -s <schemeName> [-f <project configuration>] [-m <min deployment>] [-c] [-h]'
+	echo 'CXPackageUtils <project directory> -w -s <schemeName> [-f <project configuration>] [-m <min deployment>] [-c] [-h]'
 	echo '参数说明：'
 	echo '-h		帮助'
 	echo '-f  NAME  工程的configuration, 默认为Release'
@@ -48,17 +48,17 @@ help()
 
 guide()
 {
-	echo 'DYFPackageUtils: Error, usage with "cmd -h"'
+	echo 'CXPackageUtils: Error, usage with "cmd -h"'
 	exit
 }
 
 if [ $#  -lt 1 ];then
-	echo 'DYFPackageUtils: Warning: enter the root directory of Xcode project.'
+	echo 'CXPackageUtils: Warning: enter the root directory of Xcode project.'
 	exit 2
 fi
 
 if [ ! -d $1 ];then
-	echo 'DYFPackageUtils: Warning: '$1' not a valid directory.'
+	echo 'CXPackageUtils: Warning: '$1' not a valid directory.'
 	exit 2
 fi
 
