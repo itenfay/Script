@@ -14,7 +14,7 @@
 
 ## iOS Automated Packaging Scripts
 
-==> [iOS Automated Packaging Scripts](https://github.com/chenxing640/Script/tree/master/iOS%20Automated%20Packaging%20Scripts)
+* [==> iOS Automated Packaging Scripts](https://github.com/chenxing640/Script/tree/master/iOS%20Automated%20Packaging%20Scripts)
 
 在一个 Base 工程中，通过不断复制 .xcodeproj 和 修改 xcodeproj/project.pbxproj，为 project.pbxproj 文件添加资源、支持的架构、Target 名称、动静态库、修改最小兼容部署等，修改 Info.plist 的 Bundle identifier, QueriesSchemes, URLTypes, Orientations，还有修改包的 ICON 和初始化参数，从而输出各种需求的 ipa 包。
 
@@ -31,16 +31,16 @@
 
 ## ExcelTxtScript
 
-==> [ExcelTxtScript](https://github.com/chenxing640/Script/tree/master/ExcelTxtScript)
+* [==> ExcelTxtScript](https://github.com/chenxing640/Script/tree/master/ExcelTxtScript)
 
 一个将 excel 文件 (.xlsx) 和 txt 文件 (.txt) 互相转换一个脚本项目，并集成到[ Mac应用 - MacExcelTool ](https://github.com/chenxing640/MacExcelTool)。
 
 
 ## Recommend
 
-- [Package IPA Script](https://github.com/chenxing640/Script/blob/master/Shell/DYFPackageUtils.sh) - 打包 ipa 脚本
-- [Resign App Script](https://github.com/chenxing640/Script/blob/master/Shell/DYFCodesign.sh) - 重签名 app 脚本
-- [App Icon Generator](https://github.com/chenxing640/Script/blob/master/Shell/DYFICONMaker.sh) - 生成 App 各个 Icon 尺寸的脚本
+- [Package IPA Script](https://github.com/chenxing640/Script/blob/master/Shell/CXPackageUtils.sh) - 打包 ipa 脚本
+- [Resign App Script](https://github.com/chenxing640/Script/blob/master/Shell/CXCodesign.sh) - 重签名 app 脚本
+- [App Icon Generator](https://github.com/chenxing640/Script/blob/master/Shell/CXICONMaker.sh) - 生成 App 各个 Icon 尺寸的脚本
 
 
 ## Script Learning
