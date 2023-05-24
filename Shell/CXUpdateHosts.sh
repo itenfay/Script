@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 #
 # Created by chenxing 2023/05/23.
 #
@@ -10,7 +10,9 @@ hostsPath=""
 finalPath=""
 
 function joinRawContent() {
-    echo "Step1: joinRawContent\n"
+    echo "\n**************************************"
+    echo "* Step1: joinRawContent"
+    echo "**************************************"
     content="${content}##"
     content="${content}\n# Host Database"
     content="${content}\n#"
@@ -22,57 +24,67 @@ function joinRawContent() {
     content="${content}\n127.0.0.1    localhost"
     content="${content}\n255.255.255.255    broadcasthost"
     content="${content}\n::1             localhost\n\n"
-    echo "Raw Content: $content"
+    echo "Raw Content: \n$content"
 }
 
 function getPaths() {
-    echo "Step2: getPaths\n"
+    echo "**************************************"
+    echo "* Step2: getPaths"
+    echo "**************************************"
     cd ~/Desktop/
     path=`pwd`
-    echo "CurrPath: $path"
+    echo "Current Path: $path"
     hostsPath="${path}/temp-hosts"
-    echo "Hosts Path: \n$hostsPath"
+    echo "Hosts Path: $hostsPath"
     finalPath="${path}/hosts"
-    echo "Final Path: \n$finalPath\n"
+    echo "Final Path: $finalPath\n"
 }
 
 function getHosts() {
-    echo "Step3: getHosts\n"
+    echo "**************************************"
+    echo "* Step3: getHosts"
+    echo "**************************************"
     curlHosts="curl -X GET -o ${hostsPath} https://raw.hellogithub.com/hosts"
     echo "${curlHosts}"
     `${curlHosts}`
     while read line
     do
-        lineN="$line\n"
-        content="${content}${lineN}"
+    lineN="$line\n"
+    content="${content}${lineN}"
     done < $hostsPath
-    echo "Final Content: \n$content\n"
+    echo "\nFinal Content: \n$content\n"
 }
 
 function writeToLocalFile() {
-    echo "Step4: writeToLocalFile\n"
+    echo "**************************************"
+    echo "* Step4: writeToLocalFile"
     echo ${content} > $finalPath
     cd
 }
 
 clean() {
-    echo "Step5: clean\n"
+    echo "* Step5: clean"
+    echo "**************************************\n"
     `rm -fr ${hostsPath}`
 }
 
-finish() {
-    echo "Step6: finish\n"
+copy() {
+    echo "**************************************"
+    echo "* Step6: copy"
+    echo "**************************************"
     etcHostsPath="/etc/hosts"
     cpi="sudo cp -fi ${finalPath} ${etcHostsPath}"
-    echo ${cpi}
+    echo "${cpi} \n"
     ${cpi}
 }
 
 updateDNS() {
-    echo "Step7: updateDNS\n"
+    echo "\n**************************************"
+    echo "* Step7: updateDNS"
+    echo "**************************************"
     uDns='sudo killall -HUP mDNSResponder'
-    echo "${uDns}"
-    # Executes the comand.
+    echo "${uDns}\n"
+    # Executes this comand.
     ${uDns}
 }
 
@@ -82,8 +94,9 @@ execute() {
     getHosts
     writeToLocalFile
     clean
-    finish
+    copy
     updateDNS
 }
 
+# Executes all steps.
 execute
