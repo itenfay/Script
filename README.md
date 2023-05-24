@@ -2,7 +2,7 @@
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
 
-编写和收集 Shell, Python, Ruby 等一些实用脚本。如需了解使用说明，就请查看脚本文件注释。
+编写 Shell, Python, Ruby 等一些实用脚本。
 
 
 ## Group (ID:155353383)
@@ -14,7 +14,7 @@
 
 ## iOS Automated Packaging Scripts
 
-* [==> iOS Automated Packaging Scripts](https://github.com/chenxing640/Script/tree/master/iOS%20Automated%20Packaging%20Scripts)
+* [iOS Automated Packaging Scripts](https://github.com/chenxing640/Script/tree/master/iOS%20Automated%20Packaging%20Scripts)
 
 在一个 Base 工程中，通过不断复制 .xcodeproj 和 修改 xcodeproj/project.pbxproj，为 project.pbxproj 文件添加资源、支持的架构、Target 名称、动静态库、修改最小兼容部署等，修改 Info.plist 的 Bundle identifier, QueriesSchemes, URLTypes, Orientations，还有修改包的 ICON 和初始化参数，从而输出各种需求的 ipa 包。
 
@@ -31,7 +31,7 @@
 
 ## ExcelTxtScript
 
-* [==> ExcelTxtScript](https://github.com/chenxing640/Script/tree/master/ExcelTxtScript)
+* [ExcelTxtScript](https://github.com/chenxing640/Script/tree/master/ExcelTxtScript)
 
 一个将 excel 文件 (.xlsx) 和 txt 文件 (.txt) 互相转换一个脚本项目，并集成到[ Mac应用 - MacExcelTool ](https://github.com/chenxing640/MacExcelTool)。
 
