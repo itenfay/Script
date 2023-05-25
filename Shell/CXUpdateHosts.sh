@@ -2,8 +2,18 @@
 #
 # Created by chenxing 2023/05/23.
 #
-# Update hosts.
+# Update hosts or refresh DNS.
 #
+
+if test $# -lt 1 ; then
+    echo "Please input a number: "
+    echo "  1 - update hosts."
+    echo "  2 - refresh DNS only."
+    exit 1
+fi
+
+arg1=$1
+echo "arg1=$arg1"
 
 content=""
 hostsPath=""
@@ -34,7 +44,7 @@ function getPaths() {
     cd ~/Desktop/
     path=`pwd`
     echo "Current Path: $path"
-    hostsPath="${path}/temp-hosts"
+    hostsPath="${path}/tmp-hosts"
     echo "Hosts Path: $hostsPath"
     finalPath="${path}/hosts"
     echo "Final Path: $finalPath\n"
@@ -73,17 +83,20 @@ copy() {
     echo "* Step6: copy"
     echo "**************************************"
     etcHostsPath="/etc/hosts"
-    cpi="sudo cp -fi ${finalPath} ${etcHostsPath}"
-    echo "${cpi} \n"
-    ${cpi}
+    #cpfile="sudo cp -fi ${finalPath} ${etcHostsPath}" #提示确认操作
+    cpfile="sudo cp ${finalPath} ${etcHostsPath}"
+    echo "${cpfile} \n"
+    ${cpfile}
 }
 
 updateDNS() {
-    echo "\n**************************************"
-    echo "* Step7: updateDNS"
-    echo "**************************************"
+    if test $1 -eq 1 ; then
+        echo "**************************************"
+        echo "* Step7: updateDNS"
+        echo "**************************************"
+    fi
     uDns='sudo killall -HUP mDNSResponder'
-    echo "${uDns}\n"
+    echo "${uDns}"
     # Executes this comand.
     ${uDns}
 }
@@ -95,8 +108,19 @@ execute() {
     writeToLocalFile
     clean
     copy
-    updateDNS
+    updateDNS 1
 }
 
-# Executes all steps.
-execute
+case $arg1 in
+    1)
+    # Executes all steps.
+    execute
+    ;;
+    2)
+    # Updates DNS only.
+    updateDNS 0
+    ;;
+    *)
+    echo "Invalid the parameter."
+    exit 1
+esac
