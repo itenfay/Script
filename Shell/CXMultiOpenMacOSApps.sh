@@ -12,7 +12,7 @@ if test $[argsLen] -lt $[1] ; then
 fi
 
 arg1=$1
-echo "Your number is: $arg1"
+echo "Your input number is $arg1"
 
 function multiOpen() {
     case $arg1 in

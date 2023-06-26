@@ -2,7 +2,7 @@
 #
 # Created by chenxing 2023/05/23.
 #
-# Update hosts or refresh DNS.
+# Update macOS hosts or refresh DNS.
 #
 
 if test $# -lt 1 ; then
@@ -20,9 +20,9 @@ hostsPath=""
 finalPath=""
 
 function joinRawContent() {
-    echo "\n**************************************"
-    echo "* Step1: joinRawContent"
-    echo "**************************************"
+    echo "######################################"
+    echo "Step1: joinRawContent"
+    echo "######################################"
     content="${content}##"
     content="${content}\n# Host Database"
     content="${content}\n#"
@@ -38,9 +38,9 @@ function joinRawContent() {
 }
 
 function getPaths() {
-    echo "**************************************"
-    echo "* Step2: getPaths"
-    echo "**************************************"
+    echo "######################################"
+    echo "Step2: getPaths"
+    echo "######################################"
     cd ~/Desktop/
     path=`pwd`
     echo "Current Path: $path"
@@ -50,10 +50,12 @@ function getPaths() {
     echo "Final Path: $finalPath\n"
 }
 
+# GitHub url: https://github.com/521xueweihan/GitHub520
+# Update url: https://raw.hellogithub.com/hosts
 function getHosts() {
-    echo "**************************************"
-    echo "* Step3: getHosts"
-    echo "**************************************"
+    echo "######################################"
+    echo "Step3: getHosts"
+    echo "######################################"
     curlHosts="curl -X GET -o ${hostsPath} https://raw.hellogithub.com/hosts"
     echo "${curlHosts}"
     `${curlHosts}`
@@ -66,22 +68,24 @@ function getHosts() {
 }
 
 function writeToLocalFile() {
-    echo "**************************************"
-    echo "* Step4: writeToLocalFile"
+    echo "######################################"
+    echo "Step4: writeToLocalFile"
+    echo "######################################\n"
     echo ${content} > $finalPath
     cd
 }
 
 clean() {
-    echo "* Step5: clean"
-    echo "**************************************\n"
+    echo "######################################"
+    echo "Step5: clean"
+    echo "######################################\n"
     `rm -fr ${hostsPath}`
 }
 
 copy() {
-    echo "**************************************"
-    echo "* Step6: copy"
-    echo "**************************************"
+    echo "######################################"
+    echo "Step6: copy"
+    echo "######################################"
     etcHostsPath="/etc/hosts"
     #cpfile="sudo cp -fi ${finalPath} ${etcHostsPath}" #提示确认操作
     cpfile="sudo cp ${finalPath} ${etcHostsPath}"
@@ -91,9 +95,9 @@ copy() {
 
 updateDNS() {
     if test $1 -eq 1 ; then
-        echo "**************************************"
-        echo "* Step7: updateDNS"
-        echo "**************************************"
+        echo "######################################"
+        echo "Step7: updateDNS"
+        echo "######################################"
     fi
     uDns='sudo killall -HUP mDNSResponder'
     echo "${uDns}"
